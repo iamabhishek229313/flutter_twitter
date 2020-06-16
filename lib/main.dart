@@ -14,7 +14,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Container()
+      initialRoute: '/',
+      routes: {
+        '/': (context) => HomePage(),
+        '/signup': (context) => SignupPage(),
+        // '/login': (context) => LoginPage(),
+      },
     );
   }
 }
