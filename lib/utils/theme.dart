@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
+import 'colors.dart';
+
 class Theming {
   static final lightTheme = ThemeData(
     primarySwatch: Colors.blue,
+    primaryColor: AppColors.lightBlue,
+    backgroundColor: AppColors.backgroundBlue,
+    scaffoldBackgroundColor: AppColors.backgroundBlue,
     fontFamily: 'HelveticaNeue',
     buttonTheme: ButtonThemeData(
       shape: RoundedRectangleBorder(
@@ -14,5 +19,6 @@ class Theming {
 
   static final darkTheme = lightTheme.copyWith(
     brightness: Brightness.dark,
+    primaryColor: AppColors.darkBlue,
   );
 }
