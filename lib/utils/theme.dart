@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
 
 import 'colors.dart';
+import 'colors.dart';
 
 class Theming {
   static final lightTheme = ThemeData(
     primarySwatch: Colors.blue,
-    primaryColor: AppColors.lightBlue,
+    primaryColor: AppColors.logoBlue,
     fontFamily: 'HelveticaNeue',
+    scaffoldBackgroundColor: Colors.white,
+    backgroundColor: Colors.white,
+
+    appBarTheme: AppBarTheme(
+      color: Colors.white,
+      centerTitle: true,
+      iconTheme: IconThemeData(
+        color: AppColors.logoBlue,
+      ),
+    ),
+
     buttonTheme: ButtonThemeData(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18.0),
