@@ -12,14 +12,48 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_bloc: ^4.0.1
+  font_awesome_flutter: ^8.8.1
+  http: ^0.12.1
 
   cupertino_icons: ^0.1.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.7.3"
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path_ios: "assets/logo/icon-400.png"
+  image_path_android: "assets/logo/icon-400.png"
 
 flutter:
   uses-material-design: true
 
+  assets:
+    - assets/images/
+    - assets/logo/
+
+  fonts:
+    - family: TwitterIcon
+      fonts:
+        - asset: assets/custom/icons.ttf
+    - family: HelveticaNeue
+      fonts:
+        - asset: assets/fonts/HelveticaNeue/HelveticaNeue.ttf
+        - asset: assets/fonts/HelveticaNeue/HelveticaNeue400.ttf
+          weight: 400
+        - asset: assets/fonts/HelveticaNeue/HelveticaNeue500.ttf
+          weight: 500
+        - asset: assets/fonts/HelveticaNeue/HelveticaNeue600.ttf
+          weight: 600
+        - asset: assets/fonts/HelveticaNeue/HelveticaNeue700.ttf
+          weight: 700
+        - asset: assets/fonts/HelveticaNeue/HelveticaNeue800.ttf
+          weight: 800
+        - asset: assets/fonts/HelveticaNeue/HelveticaNeue900.ttf
+          weight: 900
+        - asset: assets/fonts/HelveticaNeue/HelveticaNeueIt.ttf
+          style: italic
