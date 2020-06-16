@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'screens/home_page.dart';
+import 'screens/signup_page.dart';
+import 'utils/theme.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,11 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Twitter',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'Helvetica Neue',
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      theme: Theming.lightTheme,
+      darkTheme: Theming.darkTheme,
       initialRoute: '/',
       routes: {
         '/': (context) => HomePage(),
@@ -26,5 +25,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-
