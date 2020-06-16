@@ -6,8 +6,6 @@ class Theming {
   static final lightTheme = ThemeData(
     primarySwatch: Colors.blue,
     primaryColor: AppColors.lightBlue,
-    backgroundColor: AppColors.backgroundBlue,
-    scaffoldBackgroundColor: AppColors.backgroundBlue,
     fontFamily: 'HelveticaNeue',
     buttonTheme: ButtonThemeData(
       shape: RoundedRectangleBorder(

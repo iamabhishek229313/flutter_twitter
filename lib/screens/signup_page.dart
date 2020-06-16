@@ -11,26 +11,28 @@ class SignupPage extends StatelessWidget {
               'Create your account',
               style: Theme.of(context).textTheme.headline2,
             ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.20),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Form(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Name',
+                child: Form(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Name',
+                        ),
                       ),
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Phone number or email',
+                      TextFormField(
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          labelText: 'Phone number or email',
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),
