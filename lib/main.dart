@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:twitter_clone/screens/home_screen/home_screen.dart';
+import 'package:twitter_clone/screens/login_screen/login_screen.dart';
+import 'package:twitter_clone/screens/login_screen/start_screen.dart';
 import 'package:twitter_clone/screens/singnup_screen/signup_screen.dart';
 import 'package:twitter_clone/screens/splash_screen/splash_screen.dart';
+import 'package:twitter_clone/screens/wrapper_screen/wrapper_screen.dart';
 import 'utils/theme.dart';
 
 
@@ -24,8 +26,11 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => SplashScreen(),
-        '/home' : (context) => HomeScreen(),
+        '/wrapper': (context) => WrapperScreen(),
+        'start':(context) => StartScreen(),
         '/signup': (context) => SignupScreen(),
+        '/login' : (context) => LoginScreen() ,
+        '/home' : (context) => HomeScreen(),
       },
     );
   }

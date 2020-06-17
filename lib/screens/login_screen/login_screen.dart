@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginScreenState extends State<LoginScreen> {
   List<String> choices = ['About', 'Proxy'];
 
   @override
@@ -123,12 +123,10 @@ class _LoginPageState extends State<LoginPage> {
               child: Container(
                   width: 100,
                   height: 40,
-
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(20),
                       color: Color.fromRGBO(0, 172, 237, 10)
                       ),
-                    
                   child: RaisedButton(
                     child: Text('Log in',style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                     onPressed: null,
