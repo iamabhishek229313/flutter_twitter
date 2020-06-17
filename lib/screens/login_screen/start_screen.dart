@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/screens/LoginPage/LoginPage..dart';
+import 'package:twitter_clone/screens/login_screen/login_screen.dart';
 
-class StartPage extends StatefulWidget {
+
+class StartScreen extends StatefulWidget {
   @override
-  _StartPageState createState() => _StartPageState();
+  _StartScreeneState createState() => _StartScreeneState();
 }
 
-class _StartPageState extends State<StartPage> {
+class _StartScreeneState extends State<StartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(
-        //   backgroundColor: Colors.white,
-        //   actions: <Widget>[],
-        // ),
         body: Container(
       color: Colors.white,
       child: Column(
@@ -65,10 +62,7 @@ class _StartPageState extends State<StartPage> {
               ),
               FlatButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginPage())
-                  );
+                  Navigator.pushNamed(context, '/login');
                 }, 
                 child: Text('Log in',
                 style: TextStyle(color: Colors.blue))
