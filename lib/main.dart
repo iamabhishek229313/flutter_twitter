@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './screens/LoginPage/LoginPage.dart';
+import './screens/LoginPage/StartPage.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Twitter',
       debugShowCheckedModeBanner: false,
-      home: LoginPage()
+      home: StartPage()
     );
   }
 }
