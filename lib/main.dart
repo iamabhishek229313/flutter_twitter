@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+
 import 'package:twitter_clone/screens/home_screen/home_screen.dart';
 import 'package:twitter_clone/screens/singnup_screen/signup_screen.dart';
 import 'package:twitter_clone/screens/splash_screen/splash_screen.dart';
 import 'utils/theme.dart';
+
 
 void main() {
   runApp(MyApp());
