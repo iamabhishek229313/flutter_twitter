@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/screens/home_page/widget/fab.dart';
+import 'package:twitter_clone/screens/home_screen/widgets/fab.dart';
 import 'package:twitter_clone/utils/colors.dart';
 
-class HomePage extends StatefulWidget {
+class HomeScreen extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: white,
+      backgroundColor: AppColors.white,
       appBar: AppBar(
         elevation: 1.0,
-        backgroundColor: white,
+        backgroundColor: AppColors.white,
         leading: Container(
           height: screenHeight * 0.005,
           width: screenHeight * 0.005,
@@ -27,13 +27,13 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: Icon(Icons.star_border),
             onPressed: () {},
-            color: tLogoBlue,
+            color: AppColors.logoBlue,
             iconSize: 32.0,
           )
         ],
       ),
       body: Container(
-        color: white,
+        color: AppColors.white,
       ),
       floatingActionButton: FAB(screenHeight: screenHeight),
     );

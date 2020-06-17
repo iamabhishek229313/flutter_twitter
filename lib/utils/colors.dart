@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-
-const Color tDarkBlue = Color.fromRGBO(0, 132, 180, 1.0) ;
-const Color tLogoBlue = Color.fromRGBO(0, 172, 237, 1.0);
-const Color tVerifiedBlue = Color.fromRGBO(29, 202, 255, 1.0) ;
-const Color tBackgroundBlue = Color.fromRGBO(192, 222, 237, 1.0);
-const Color white = Color.fromRGBO(255, 255, 255, 1.0) ;
+class AppColors {
+  static const logoBlue = const Color(0xFF00ACED);
+  static const darkBlue = const Color(0xFF0084B4);
+  static const verifiedBlue = const Color(0xFF1DCAFF);
+  static const backgroundBlue = const Color(0xFFC0DEED);
+  static const white = const Color.fromRGBO(255, 255, 255, 1.0);
+}

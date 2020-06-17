@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:twitter_clone/utils/colors.dart';
 
 class FAB extends StatelessWidget {
   const FAB({
@@ -11,13 +13,12 @@ class FAB extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      backgroundColor: AppColors.logoBlue,
       elevation: 10.0,
       onPressed: () {},
-      child: Image(
-        height: screenHeight * 0.03,
-        width: screenHeight * 0.03,
-        image: AssetImage('assets/logo/t_feather.png'),
-        color: Colors.white,
+      child: IconButton(
+        icon :Icon(FontAwesomeIcons.pencilAlt),
+        onPressed: () {},
       ),
     );
   }
