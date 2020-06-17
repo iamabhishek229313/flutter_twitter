@@ -62,7 +62,7 @@ class _StartScreeneState extends State<StartScreen> {
               ),
               FlatButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, 'login');
+                  Navigator.pushNamed(context, '/login');
                 }, 
                 child: Text('Log in',
                 style: TextStyle(color: Colors.blue))
