@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'colors.dart';
 import 'colors.dart';
 
 class Theming {
@@ -13,7 +11,6 @@ class Theming {
 
     appBarTheme: AppBarTheme(
       color: Colors.white,
-      centerTitle: true,
       iconTheme: IconThemeData(
         color: AppColors.logoBlue,
       ),
