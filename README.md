@@ -20,6 +20,6 @@ As name said it's going to be TWITTER CLONE to be made on Flutter .
 **How to start**
 Make your own branch and just go with it .
 If find any kind of issue just open an issue and give some required information .
-Go for a merge request when sure . 
+Go for a merge request when sure . ::smile::
 
 
