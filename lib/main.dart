@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-
-import 'screens/home_page.dart';
-import 'screens/signup_page.dart';
+import 'package:twitter_clone/screens/home_screen/home_screen.dart';
+import 'package:twitter_clone/screens/login_screen/login_screen.dart';
+import 'package:twitter_clone/screens/login_screen/start_screen.dart';
+import 'package:twitter_clone/screens/singnup_screen/signup_screen.dart';
+import 'package:twitter_clone/screens/splash_screen/splash_screen.dart';
+import 'package:twitter_clone/screens/wrapper_screen/wrapper_screen.dart';
 import 'utils/theme.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -14,13 +18,19 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Twitter',
       debugShowCheckedModeBanner: false,
-      theme: Theming.lightTheme,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
       darkTheme: Theming.darkTheme,
       initialRoute: '/',
       routes: {
-        '/': (context) => HomePage(),
-        '/signup': (context) => SignupPage(),
-        // '/login': (context) => LoginPage(),
+        '/': (context) => SplashScreen(),
+        '/wrapper': (context) => WrapperScreen(),
+        '/start':(context) => StartScreen(),
+        '/login' : (context) => LoginScreen() ,
+        '/signup': (context) => SignupScreen(),
+        '/home' : (context) => HomeScreen(),
       },
     );
   }
