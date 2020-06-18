@@ -11,6 +11,62 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.blue),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          automaticallyImplyLeading: true,
+          backgroundColor: Colors.white,
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(left: 38),
+              child: FlatButton(
+                onPressed: (){
+                  Navigator.pushNamed(context, '/signup');
+                },
+                child: Text(
+                  'Sign up',
+                  style: TextStyle(color: Colors.blue[300]),
+                ),
+                textColor: Colors.blue,
+              ),
+            ),
+            PopupMenuButton(
+              child: IconButton(
+                icon: Icon(Icons.more_vert),
+                color: Colors.blue,
+                onPressed: () {},
+              ),
+              color: Colors.blue,
+              initialValue: choices[0],
+              onCanceled: () {
+                print('You Have not selected anything');
+              },
+              tooltip: 'This is tool tip',
+              itemBuilder: (BuildContext context) {
+                return choices.map((choice) {
+                  return PopupMenuItem(
+                    value: choice,
+                    child: Text(choice[1]),
+                  );
+                }).toList();
+              },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)),
+            ),
+          ],
+          elevation: 0.0,
+          centerTitle: true,
+          title: Container(
+              child: IconButton(
+            icon: new Image.asset(
+              'assets/logo/icon-480.png',
+              alignment: Alignment.center,
+            ),
+            onPressed: () {},
+          ))),
       body: Container(
         padding: EdgeInsets.only(left: 10),
         color: Colors.white,
@@ -18,49 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Container(
-                  child: IconButton(
-                      icon: Icon(Icons.arrow_back),
-                      onPressed: () => Navigator.pop(context)),
-                ),
                 Padding(padding: EdgeInsets.only(left: 125, right: 5)),
-                Container(
-                  child: IconButton(
-                      icon: new Image.asset(
-                        'assets/logo/icon-480.png',
-                        alignment: Alignment.center,
-                      ),
-                      onPressed: null),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 38),
-                  child: FlatButton(
-                    onPressed: null,
-                    child: Text(
-                      'Sign up',
-                      style: TextStyle(color: Colors.blue[300]),
-                    ),
-                    textColor: Colors.blue,
-                  ),
-                ),
-                PopupMenuButton(
-                  elevation: 2.2,
-                  initialValue: choices[0],
-                  onCanceled: () {
-                    print('You Have not selected anything');
-                  },
-                  tooltip: 'This is tool tip',
-                  itemBuilder: (BuildContext context) {
-                    return choices.map((choice) {
-                      return PopupMenuItem(
-                        value: choice,
-                        child: Text(choice[1]),
-                      );
-                    }).toList();
-                  },
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                )
               ],
             ),
             Container(
@@ -111,30 +125,29 @@ class _LoginScreenState extends State<LoginScreen> {
               textColor: Colors.grey,
             ),
             Container(
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: EdgeInsets.only(left: 20, right: 20 ,top: 250),
               child: Divider(
-                height: 300,
+                height: 20,
                 color: Colors.grey,
               ),
             ),
-
             Padding(
-              padding: EdgeInsets.only(left: 250,top: 20),
+              padding: EdgeInsets.only(left: 250, top: 20),
               child: Container(
                   width: 100,
                   height: 40,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(20),
-                      color: Color.fromRGBO(0, 172, 237, 10)
-                      ),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Color.fromRGBO(0, 172, 237, 10)),
                   child: RaisedButton(
-                    child: Text('Log in',style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                    child: Text('Log in',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold)),
                     onPressed: null,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),
                     ),
-                  )
-                ),
+                  )),
             ),
           ],
         ),

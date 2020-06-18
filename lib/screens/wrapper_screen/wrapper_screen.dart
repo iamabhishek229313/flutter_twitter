@@ -12,6 +12,6 @@ class _WrapperScreenState extends State<WrapperScreen> {
   @override
   Widget build(BuildContext context) {
     // If you want to debug Change the code below to return your desired screen .
-    return HomeScreen(); // For this time being we are triggering scrren to the startscreen .
+    return StartScreen(); // For this time being we are triggering scrren to the startscreen .
   }
 }

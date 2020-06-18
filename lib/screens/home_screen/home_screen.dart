@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twitter_clone/models/post.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/fab.dart';
+import 'package:twitter_clone/screens/home_screen/widgets/home_drawer.dart';
 import 'package:twitter_clone/utils/colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,27 +14,27 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBar(
-        elevation: 1.0,
-        backgroundColor: AppColors.white,
-        leading: Container(
-          height: screenHeight * 0.005,
-          width: screenHeight * 0.005,
-          decoration:
-              BoxDecoration(shape: BoxShape.circle, color: Colors.amber),
+        elevation: 0.0,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        title: IconButton(
+          icon: new Image.asset(
+            'assets/logo/icon-480.png',
+            alignment: Alignment.center,
+          ),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.star_border),
-            onPressed: () {},
-            color: AppColors.logoBlue,
-            iconSize: 32.0,
-          )
-        ],
+        leading: Icon(
+          Icons.menu,
+          color: Colors.blue,
+        ),
       ),
+      drawer: HomeDrawer(following: 10, followers: 1),
       body: ListView(
         shrinkWrap: true,
         physics: BouncingScrollPhysics(),
@@ -136,9 +137,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         Container(
                           height: screenHeight * 0.4,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            color: Colors.indigo
-                          ),
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.indigo),
                         ),
                         Divider(
                           thickness: 1.1,
@@ -156,4 +156,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
