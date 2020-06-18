@@ -23,7 +23,9 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: EdgeInsets.only(left: 38),
               child: FlatButton(
-                onPressed: null,
+                onPressed: (){
+                  Navigator.pushNamed(context, '/signup');
+                },
                 child: Text(
                   'Sign up',
                   style: TextStyle(color: Colors.blue[300]),

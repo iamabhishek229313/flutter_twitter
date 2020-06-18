@@ -34,7 +34,7 @@ flutter:
 
   assets:
     - assets/logo/
-
+    - assets/images/
   fonts:
     - family: TwitterIcon
       fonts:
