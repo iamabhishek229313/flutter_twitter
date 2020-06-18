@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/screens/drawer_screen/drawer_screen.dart';
 import 'package:twitter_clone/screens/home_screen/home_screen.dart';
 import 'package:twitter_clone/screens/login_screen/login_screen.dart';
 import 'package:twitter_clone/screens/login_screen/start_screen.dart';
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
       darkTheme: Theming.darkTheme,
       initialRoute: '/',
       routes: {
-        '/': (context) => DrawerScreen(),
+        '/': (context) => SplashScreen(),
         '/wrapper': (context) => WrapperScreen(),
         '/start':(context) => StartScreen(),
         '/login' : (context) => LoginScreen() ,

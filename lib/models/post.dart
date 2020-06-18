@@ -30,7 +30,7 @@ String dummy_tweet =
     
 User dummy_user = User(
   name: "Abhishek kumar",
-  user_id: "iamabhhishek",
+  user_id: "@iamabhhishek",
   user_imageUrl: "assets/logo/icon-400.png"
 );
 
@@ -38,7 +38,7 @@ User dummy_user = User(
 List<Post> dummy_posts = <Post>[
   Post(
       user: dummy_user,
-      timeStamp: "XXXXXXXXX",
+      timeStamp: "1d",
       tweet: dummy_tweet,
       attached_images: [
         "assets/logo/icon-400.png",
@@ -63,7 +63,7 @@ List<Post> dummy_posts = <Post>[
   ),
   Post(
       user: dummy_user,
-      timeStamp: "XXXXXXXXX",
+      timeStamp: "1d",
       tweet: dummy_tweet,
       attached_images: [
         "assets/logo/icon-400.png",

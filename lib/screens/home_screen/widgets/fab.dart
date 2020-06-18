@@ -16,10 +16,7 @@ class FAB extends StatelessWidget {
       backgroundColor: AppColors.logoBlue,
       elevation: 10.0,
       onPressed: () {},
-      child: IconButton(
-        icon :Icon(FontAwesomeIcons.pencilAlt),
-        onPressed: () {},
-      ),
+      child: Image.asset('assets/images/t_feather_plus.png',fit: BoxFit.contain,height: 35.0,),
     );
   }
 }
