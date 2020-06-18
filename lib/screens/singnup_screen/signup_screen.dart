@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:twitter_clone/utils/bottom_button.dart';
 
 class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.white,
         title: SizedBox(
           height: kToolbarHeight,
@@ -14,18 +16,20 @@ class SignupScreen extends StatelessWidget {
         elevation: 0,
         leading: null,
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Text(
-              'Create your account',
-              style: Theme.of(context).textTheme.headline4.copyWith(
-                fontWeight: FontWeight.w800,
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              Text(
+                'Create your account',
+                style: Theme.of(context)
+                    .textTheme
+                    .headline4
+                    .copyWith(fontWeight: FontWeight.w800, color: Colors.black),
               ),
-            ),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.20),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal : 20.0),
                 child: Form(
                   child: Column(
                     children: [
@@ -39,7 +43,7 @@ class SignupScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.08,
+                        height: MediaQuery.of(context).size.height * 0.05,
                       ),
                       TextFormField(
                         keyboardType: TextInputType.emailAddress,
@@ -51,24 +55,10 @@ class SignupScreen extends StatelessWidget {
                   ),
                 ),
               ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: SizedBox(
-        height: MediaQuery.of(context).size.height * 0.1,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              FlatButton(
-                onPressed: () {},
-                child: Text('Next'),
-                color: Theme.of(context).primaryColor,
-              ),
             ],
           ),
-        ),
+          Bottom_Button(title: 'Next', onPressed: () {})
+        ],
       ),
     );
   }

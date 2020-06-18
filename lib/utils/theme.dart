@@ -20,6 +20,7 @@ class Theming {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18.0),
       ),
+      buttonColor: AppColors.logoBlue
     ),
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );

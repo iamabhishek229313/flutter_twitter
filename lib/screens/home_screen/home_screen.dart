@@ -29,10 +29,10 @@ class _HomeScreenState extends State<HomeScreen> {
             Scaffold.of(context).openDrawer();
           },
         ),
-        leading: Icon(
-          Icons.menu,
-          color: Colors.blue,
-        ),
+        // leading: Icon(
+        //   Icons.menu,
+        //   color: Colors.blue,
+        // ),
       ),
       drawer: HomeDrawer(following: 10, followers: 1),
       body: ListView(
