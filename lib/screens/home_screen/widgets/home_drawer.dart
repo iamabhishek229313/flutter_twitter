@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeDrawer extends StatelessWidget {
   const HomeDrawer({
@@ -13,11 +14,11 @@ class HomeDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(children: <Widget>[
-        Container(
-          color: Colors.white,
-          height: 180,
-          child: UserAccountsDrawerHeader(
+      elevation: 10.0,
+      child: Container(
+        color: Colors.white,
+        child: Column(children: <Widget>[
+          UserAccountsDrawerHeader(
             decoration: BoxDecoration(color: Colors.white),
             accountName: Text(
               "Awesome Kumar",
@@ -35,48 +36,35 @@ class HomeDrawer extends StatelessWidget {
                   fontSize: 14,
                   fontWeight: FontWeight.bold),
             ),
-            currentAccountPicture: Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: CircleAvatar(
-                backgroundColor: Colors.grey,
-              ),
+            currentAccountPicture: CircleAvatar(
+              backgroundColor: Colors.grey,
             ),
           ),
-        ),
-        Container(
-            color: Colors.white,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Row(
-          children: [
-            Padding(padding: EdgeInsets.only(left: 16,bottom: 40)),
-            Text(
-              '$following Following',
-              style: TextStyle(
-                  fontFamily: 'HelveticaNeue',
-                  color: Colors.grey[10],
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold),
+              children: [
+                Text(
+                  '$following Following',
+                  style: TextStyle(
+                      fontFamily: 'HelveticaNeue',
+                      color: Colors.grey[10],
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  '  $followers Followers',
+                  style: TextStyle(
+                      fontFamily: 'HelveticaNeue',
+                      color: Colors.grey[10],
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
-            Text(
-              '  $followers Followers',
-              style: TextStyle(
-                  fontFamily: 'HelveticaNeue',
-                  color: Colors.grey[10],
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold),
-            ),
-          ],
-        )),
-        Divider(
-          color: Colors.black,
-        ),
-        Container(
-          color: Colors.white,
-          height: 400,
-          child: ListView(
-            physics: AlwaysScrollableScrollPhysics(),
-            shrinkWrap: true,
-            children: <Widget>[
-              Column(
+          ),
+          Expanded(
+            child: ListView(
                 children: <Widget>[
                   ListTile(
                     leading: Icon(Icons.account_circle),
@@ -104,7 +92,7 @@ class HomeDrawer extends StatelessWidget {
                     onTap: () {},
                   ),
                   Divider(
-                    color: Colors.black,
+                    color: Colors.grey,
                   ),
                   ListTile(
                     title: Text("Settings and privacy"),
@@ -120,28 +108,28 @@ class HomeDrawer extends StatelessWidget {
                   ),
                 ],
               ),
-            ],
           ),
-        ),
-        Divider(
-          color: Colors.black,
-        ),
-        Container(
-          child: Row(
-            children: <Widget>[
-              Icon(
-                Icons.lightbulb_outline,
-                color: Colors.blue,
-              ),
-              Padding(padding: EdgeInsets.only(right: 250)),
-              Icon(
-                Icons.all_out,
-                color: Colors.blue,
-              )
-            ],
+          Divider(
+            color: Colors.grey,
           ),
-        )
-      ]),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 4.0),
+            child: Row(
+              children: <Widget>[
+                Icon(
+                  Icons.lightbulb_outline,
+                  color: Colors.blue,
+                ),
+                Padding(padding: EdgeInsets.only(right: 250)),
+                Icon(
+                  FontAwesomeIcons.qrcode,
+                  color: Colors.blue,
+                )
+              ],
+            ),
+          )
+        ]),
+      ),
     );
   }
 }
