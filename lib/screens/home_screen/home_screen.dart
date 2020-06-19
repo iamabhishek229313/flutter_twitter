@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:twitter_clone/models/post.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/fab.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/home_drawer.dart';
+import 'package:twitter_clone/services/google_firebase_authentication.dart';
 import 'package:twitter_clone/utils/colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,6 +13,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final Authentication _authnticationDelegate = Authentication();
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -33,6 +37,11 @@ class _HomeScreenState extends State<HomeScreen> {
         //   Icons.menu,
         //   color: Colors.blue,
         // ),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.exit_to_app),
+              onPressed: _authnticationDelegate.handleSignOut)
+        ],
       ),
       drawer: HomeDrawer(following: 10, followers: 1),
       body: ListView(
