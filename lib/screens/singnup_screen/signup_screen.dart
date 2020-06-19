@@ -13,6 +13,21 @@ class SignupScreen extends StatelessWidget {
           height: kToolbarHeight,
           child: Image.asset('assets/logo/icon-48.png'),
         ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(left: 38),
+            child: FlatButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/login');
+              },
+              child: Text(
+                'Log in',
+                style: TextStyle(color: Colors.blue[300]),
+              ),
+              textColor: Colors.blue,
+            ),
+          ),
+        ],
         elevation: 0,
         leading: null,
       ),
@@ -29,7 +44,7 @@ class SignupScreen extends StatelessWidget {
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.20),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal : 20.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Form(
                   child: Column(
                     children: [
