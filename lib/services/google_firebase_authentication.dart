@@ -27,9 +27,9 @@ class Authentication {
 
     return user;
   }
-
-  Future handleSignOut() async {
-    _googleSignIn.signOut();
-    return;
+  
+  Future handleSignOut() async{
+    await _firebaseAuth.signOut() ;
+    return null ;
   }
 }
