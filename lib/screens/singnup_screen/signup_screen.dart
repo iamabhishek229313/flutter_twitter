@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:twitter_clone/services/google_firebase_authentication.dart';
 import 'package:twitter_clone/utils/bottom_button.dart';
 
 class SignupScreen extends StatelessWidget {
+  final Authentication _authnticationDelegate = Authentication() ;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
