@@ -12,7 +12,7 @@ class Bottom_Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: 0.0,
+      bottom: MediaQuery.of(context).viewInsets.bottom,
       left: 0.0,
       right: 0.0,
       child: Container(
