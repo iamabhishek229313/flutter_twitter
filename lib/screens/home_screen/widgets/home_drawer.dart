@@ -1,13 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class HomeDrawer extends StatelessWidget {
   const HomeDrawer({
     Key key,
+    @required this.user,
     @required this.following,
     @required this.followers,
   }) : super(key: key);
 
+  final FirebaseUser user;
   final int following;
   final int followers;
 
@@ -21,23 +25,29 @@ class HomeDrawer extends StatelessWidget {
           UserAccountsDrawerHeader(
             decoration: BoxDecoration(color: Colors.white),
             accountName: Text(
-              "Awesome Kumar",
+              user.displayName,
               style: TextStyle(
                   fontFamily: 'HelveticaNeuelt',
                   color: Colors.black,
-                  fontSize: 16,
+                  fontSize: 17,
+                  letterSpacing: 1.1,
                   fontWeight: FontWeight.w800),
             ),
             accountEmail: Text(
-              "@awesome786689",
+              user.email,
               style: TextStyle(
                   fontFamily: 'HelveticaNeue',
                   color: Colors.black87,
                   fontSize: 14,
                   fontWeight: FontWeight.bold),
             ),
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.grey,
+            currentAccountPicture: ClipRRect(
+              borderRadius: BorderRadius.circular(100.0),
+              child: FadeInImage.memoryNetwork(
+                placeholder: kTransparentImage,
+                image: user.photoUrl,
+                fit: BoxFit.fitHeight,
+              ),
             ),
           ),
           Padding(
@@ -64,7 +74,9 @@ class HomeDrawer extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ListView(
+            child: ScrollConfiguration(
+              behavior: ScrollBehavior(),
+              child: ListView(
                 children: <Widget>[
                   ListTile(
                     leading: Icon(Icons.account_circle),
@@ -108,22 +120,25 @@ class HomeDrawer extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
           ),
           Divider(
             color: Colors.grey,
           ),
           Container(
-            padding: EdgeInsets.symmetric(vertical: 4.0),
+            padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Icon(
                   Icons.lightbulb_outline,
                   color: Colors.blue,
+                  size: 30.0,
                 ),
-                Padding(padding: EdgeInsets.only(right: 250)),
                 Icon(
                   FontAwesomeIcons.qrcode,
                   color: Colors.blue,
+                  size: 30.0,
                 )
               ],
             ),
