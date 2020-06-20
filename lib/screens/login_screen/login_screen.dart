@@ -47,7 +47,6 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           Container(
             padding: EdgeInsets.symmetric(horizontal: 30),
-            color: Colors.amber,
             child: Form(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

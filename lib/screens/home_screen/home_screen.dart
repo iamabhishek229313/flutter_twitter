@@ -173,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            floatingActionButton: FAB(screenHeight: screenHeight),
+            floatingActionButton: FAB(user: user,screenHeight: screenHeight),
           );
         }
         return Scaffold(
