@@ -44,6 +44,7 @@ class _WrapperScreenState extends State<WrapperScreen> {
     return StreamBuilder(
       stream: FirebaseAuth.instance.onAuthStateChanged,
       builder: (BuildContext context,snapshot) {
+        print("Sanpshot Data is : " + snapshot.data.toString());
         if(snapshot.hasData) {
           return HomeScreen();
         }
