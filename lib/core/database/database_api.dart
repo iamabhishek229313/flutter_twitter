@@ -9,28 +9,24 @@ class DatabaseAPI {
     _ref = _db.collection(path);
   }
 
-  Future<QuerySnapshot> getDataCollection() {
-    return _ref.getDocuments();
-  }
-
   Stream<QuerySnapshot> streamDataCollection() {
     return _ref.snapshots();
   }
 
+  // Document data scrapping .
+  Future<void> getAllDocuments(String collectionName) async {
+    return await _ref.getDocuments();
+  }
   Future<DocumentSnapshot> getDocumentById(String id) {
     return _ref.document(id).get();
   }
-
-  Future<void> removeDocument(String id) {
-    return _ref.document(id).delete();
-  }
-
-  Future<DocumentReference> addDocument(Map data) {
+  Future<DocumentReference> addDocumentInCollection(Map data) {
     return _ref.add(data);
   }
-
-  Future<void> updateDocument(Map data, String id) {
+  Future<void> updateDocumentInCollection(Map data, String id) {
     return _ref.document(id).updateData(data);
   }
-
+  Future<void> removeDocumentInCollection(String id) {
+    return _ref.document(id).delete();
+  }
 }
