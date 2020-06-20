@@ -126,20 +126,17 @@ class HomeDrawer extends StatelessWidget {
             color: Colors.grey,
           ),
           Container(
-            padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 10.0),
+            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Icon(
-                  Icons.lightbulb_outline,
-                  color: Colors.blue,
-                  size: 30.0,
-                ),
-                Icon(
-                  FontAwesomeIcons.qrcode,
-                  color: Colors.blue,
-                  size: 30.0,
-                )
+                IconButton(
+                  icon: Image.asset('assets/images/bulb.png'), 
+                  onPressed: null),
+                
+                IconButton(
+                  icon: Image.asset('assets/images/qr.png'), 
+                  onPressed: null),
               ],
             ),
           )
