@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:twitter_clone/screens/home_screen/home_screen.dart';
 import 'package:twitter_clone/screens/login_screen/login_screen.dart';
 import 'package:twitter_clone/screens/login_screen/start_screen.dart';
+import 'package:twitter_clone/services/google_firebase_authentication.dart';
 
   /**
    * Below class is fo the debug purpose only .
@@ -42,8 +43,8 @@ class _WrapperScreenState extends State<WrapperScreen> {
     // If you want to debug Change the code below to return your desired screen .
     return StreamBuilder(
       stream: FirebaseAuth.instance.onAuthStateChanged,
-      builder: (BuildContext context,snapshot){
-        if(snapshot.hasData){
+      builder: (BuildContext context,snapshot) {
+        if(snapshot.hasData) {
           return HomeScreen();
         }
         return StartScreen();

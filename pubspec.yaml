@@ -21,7 +21,7 @@ dependencies:
   cloud_firestore: ^0.13.0+1
   cloud_functions: ^0.4.1+6
   firebase_auth: ^0.15.3
-
+  transparent_image:
 dev_dependencies:
   flutter_test:
     sdk: flutter

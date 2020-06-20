@@ -27,7 +27,10 @@ class Authentication {
 
     return user;
   }
-  
+  Future<FirebaseUser> getCurrentUser() async{
+    FirebaseUser user = await _firebaseAuth.currentUser() ;
+    return user ;
+  }
   Future handleSignOut() async{
     await _firebaseAuth.signOut() ;
     return null ;
