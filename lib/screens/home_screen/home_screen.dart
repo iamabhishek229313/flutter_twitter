@@ -8,6 +8,7 @@ import 'package:twitter_clone/core/database/database_api.dart';
 import 'package:twitter_clone/core/models/postModel.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/fab.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/home_drawer.dart';
+import 'package:twitter_clone/screens/home_screen/widgets/home_navigation_bar.dart';
 import 'package:twitter_clone/services/google_firebase_authentication.dart';
 import 'package:twitter_clone/utils/colors.dart';
 
@@ -123,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Flexible(
                                     fit: FlexFit.tight,
                                     child: Text(
-                                      '@'+eachPost.user.email_id,
+                                      '@' + eachPost.user.email_id,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontFamily: "HelveticaNeue",
@@ -197,6 +198,20 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             floatingActionButton: FAB(user: user, screenHeight: screenHeight),
+            bottomNavigationBar: NavigationBar(
+              icon1: Icon(
+                Icons.home,
+              ),
+              icon2: Icon(
+                Icons.search,
+              ),
+              icon3: Icon(
+                Icons.notifications,
+              ),
+              icon4: Icon(
+                Icons.message,
+              ),
+            ),
           );
         }
         return Scaffold(
