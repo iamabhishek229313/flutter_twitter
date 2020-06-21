@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:twitter_clone/screens/home_screen/widgets/navigationbar_home.dart';
 import 'package:twitter_clone/utils/bottom_button.dart';
 import 'package:twitter_clone/utils/colors.dart';
 
@@ -122,7 +123,24 @@ class _WritingPanelState extends State<WritingPanel> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8.0, vertical: 4.0),
                         child: Container(
-                          color: Colors.red,
+                          child: NavigationBar(
+                            icon1: Icon(
+                              Icons.image,
+                              color: Colors.grey,
+                            ),
+                            icon2: Icon(
+                              Icons.gif,
+                              color: Colors.grey,
+                            ),
+                            icon3: Icon(
+                              Icons.poll,
+                              color: Colors.grey,
+                            ),
+                            icon4: Icon(
+                              Icons.location_on,
+                              color: Colors.grey,
+                            ),
+                          ),
                         )),
                   ),
                 ],
