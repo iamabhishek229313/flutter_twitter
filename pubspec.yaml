@@ -25,6 +25,8 @@ dependencies:
   provider:
   get_it:
   percent_indicator: ^2.1.5
+  image_picker: ^0.6.7+2
+
 
 dev_dependencies:
   flutter_test:
