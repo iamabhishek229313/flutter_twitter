@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:twitter_clone/core/database/database_api.dart';
 import 'package:twitter_clone/core/models/postModel.dart';
@@ -11,6 +9,7 @@ import 'package:twitter_clone/screens/home_screen/widgets/home_drawer.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/home_navigation_bar.dart';
 import 'package:twitter_clone/services/google_firebase_authentication.dart';
 import 'package:twitter_clone/utils/colors.dart';
+import 'package:twitter_clone/utils/constant_icons.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -72,13 +71,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       List.generate(snapshot.data?.documents?.length, (index) {
                     Post eachPost = Post.fromSnapshot(
                         snapshot.data?.documents.elementAt(index));
-                    // print(snapshot.data?.documents.elementAt(index));
-
-                    // return Container(
-                    //   margin: const EdgeInsets.all(8.0),
-                    //   color: Colors.green,
-                    //   height: 200.0,
-                    // );
                     return IntrinsicHeight(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -200,16 +192,18 @@ class _HomeScreenState extends State<HomeScreen> {
             floatingActionButton: FAB(user: user, screenHeight: screenHeight),
             bottomNavigationBar: NavigationBar(
               icon1: Icon(
-                Icons.home,
+                CustomIconData(AppIcon.home)
               ),
               icon2: Icon(
-                Icons.search,
+                CustomIconData(AppIcon.search),
               ),
               icon3: Icon(
-                Icons.notifications,
+                CustomIconData(AppIcon.notification),
               ),
               icon4: Icon(
-                Icons.message,
+                CustomIconData(
+                  AppIcon.messageEmpty
+                )
               ),
             ),
           );

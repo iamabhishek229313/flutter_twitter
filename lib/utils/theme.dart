@@ -15,7 +15,6 @@ class Theming {
       iconTheme: IconThemeData(
         color: AppColors.logoBlue,
       ),
-      centerTitle: true,
     ),
 
     buttonTheme: ButtonThemeData(
@@ -29,7 +28,6 @@ class Theming {
   );
 
   static final darkTheme = lightTheme.copyWith(
-    // TODO
     brightness: Brightness.dark,
   );
 }
