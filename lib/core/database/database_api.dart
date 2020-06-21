@@ -14,7 +14,7 @@ class DatabaseAPI {
   }
 
   // Document data scrapping .
-  Future<void> getAllDocuments(String collectionName) async {
+  Future<QuerySnapshot> getAllDocuments() async {
     return await _ref.getDocuments();
   }
   Future<DocumentSnapshot> getDocumentById(String id) {

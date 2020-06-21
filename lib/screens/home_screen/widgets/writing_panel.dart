@@ -4,7 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:twitter_clone/core/database/database_api.dart';
+import 'package:twitter_clone/core/models/postModel.dart';
+import 'package:twitter_clone/core/models/userModel.dart';
 import 'package:twitter_clone/utils/bottom_button.dart';
 import 'package:twitter_clone/utils/colors.dart';
 
@@ -19,11 +24,18 @@ class WritingPanel extends StatefulWidget {
 
 class _WritingPanelState extends State<WritingPanel> {
   TextEditingController _tweetController;
-
+  DatabaseAPI _dbAPIofPosts ;
   @override
   void initState() {
     super.initState();
     _tweetController = TextEditingController();
+    _dbAPIofPosts = DatabaseAPI("posts");
+  }
+
+  @override
+  void dispose() {
+    _tweetController.dispose();
+    super.dispose();
   }
 
   @override
@@ -38,12 +50,33 @@ class _WritingPanelState extends State<WritingPanel> {
                 const EdgeInsets.symmetric(vertical: 12.0, horizontal: 4.0),
             child: RaisedButton(
               elevation: 0.0,
+              disabledColor: AppColors.logoBlue.withAlpha(100),
               child: Text("Tweet",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold)),
-              onPressed: () {},
+              onPressed: _tweetController.text.isEmpty
+                  ? null
+                  : () {
+                      User user = User(
+                        name: widget.user.displayName,
+                        email_id: widget.user.email,
+                        user_imageUrl: widget.user.photoUrl
+                      );
+
+                      _dbAPIofPosts.addDocumentInCollection(
+                        Post(
+                          attached_images: null,
+                          user: user,
+                          post_comments: null,
+                          timeStamp: DateTime.now().millisecondsSinceEpoch,
+                          post_likes: null,
+                          tweet: _tweetController.text
+                        ).toJson()
+                      );
+                      Navigator.pop(context);
+                    },
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),
               ),
@@ -85,8 +118,11 @@ class _WritingPanelState extends State<WritingPanel> {
               new Expanded(
                   flex: 12,
                   child: TextField(
-                    cursorColor: AppColors.logoBlue,
+                    onChanged: (value) {
+                      setState(() {});
+                    },
                     controller: _tweetController,
+                    cursorColor: AppColors.logoBlue,
                     decoration: InputDecoration(
                       hintText: 'What\'s happening?',
                       border: InputBorder.none,
@@ -94,7 +130,7 @@ class _WritingPanelState extends State<WritingPanel> {
                     keyboardType: TextInputType.multiline,
                     // maxLength: 280, : To hide the letter count .
                     inputFormatters: [LengthLimitingTextInputFormatter(280)],
-                    maxLines: 99999,
+                    maxLines: 50,
                     style: TextStyle(
                         color: Colors.black,
                         fontFamily: 'HelveticaNeue',
@@ -121,8 +157,24 @@ class _WritingPanelState extends State<WritingPanel> {
                     child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8.0, vertical: 4.0),
-                        child: Container(
-                          color: Colors.red,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircularPercentIndicator(
+                              radius: 35.0,
+                              progressColor: _tweetController.text.length < 125
+                                  ? Colors.green
+                                  : (_tweetController.text.length >= 125 && _tweetController.text.length < 220)
+                                      ? Colors.amber
+                                      : _tweetController.text.length >= 220
+                                          ? Colors.redAccent
+                                          : Colors.transparent,
+                              lineWidth: 3.0,
+                              percent: _tweetController.text.length / 280,
+                              center: Text((280 - _tweetController.text.length)
+                                  .toString()),
+                            )
+                          ],
                         )),
                   ),
                 ],
