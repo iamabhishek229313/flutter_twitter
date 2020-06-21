@@ -31,6 +31,8 @@ class _NavigationBarState extends State<NavigationBar> {
       unselectedItemColor: Colors.grey,
       onTap: onItemTapped,
       elevation: 10.0,
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
     );
   }
 
