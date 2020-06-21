@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'dart:math';
 
+import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,7 +26,7 @@ class WritingPanel extends StatefulWidget {
 
 class _WritingPanelState extends State<WritingPanel> {
   TextEditingController _tweetController;
-  DatabaseAPI _dbAPIofPosts ;
+  DatabaseAPI _dbAPIofPosts;
   @override
   void initState() {
     super.initState();
@@ -60,21 +62,18 @@ class _WritingPanelState extends State<WritingPanel> {
                   ? null
                   : () {
                       User user = User(
-                        name: widget.user.displayName,
-                        email_id: widget.user.email,
-                        user_imageUrl: widget.user.photoUrl
-                      );
+                          name: widget.user.displayName,
+                          email_id: widget.user.email,
+                          user_imageUrl: widget.user.photoUrl);
 
-                      _dbAPIofPosts.addDocumentInCollection(
-                        Post(
-                          attached_images: null,
-                          user: user,
-                          post_comments: null,
-                          timeStamp: DateTime.now().millisecondsSinceEpoch,
-                          post_likes: null,
-                          tweet: _tweetController.text
-                        ).toJson()
-                      );
+                      _dbAPIofPosts.addDocumentInCollection(Post(
+                              attached_images: null,
+                              user: user,
+                              post_comments: null,
+                              timeStamp: DateTime.now().millisecondsSinceEpoch,
+                              post_likes: null,
+                              tweet: _tweetController.text)
+                          .toJson());
                       Navigator.pop(context);
                     },
               shape: RoundedRectangleBorder(
@@ -117,25 +116,31 @@ class _WritingPanelState extends State<WritingPanel> {
                   )),
               new Expanded(
                   flex: 12,
-                  child: TextField(
-                    onChanged: (value) {
-                      setState(() {});
-                    },
-                    controller: _tweetController,
-                    cursorColor: AppColors.logoBlue,
-                    decoration: InputDecoration(
-                      hintText: 'What\'s happening?',
-                      border: InputBorder.none,
-                    ),
-                    keyboardType: TextInputType.multiline,
-                    // maxLength: 280, : To hide the letter count .
-                    inputFormatters: [LengthLimitingTextInputFormatter(280)],
-                    maxLines: 50,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'HelveticaNeue',
-                        fontSize: 21.0,
-                        fontWeight: FontWeight.w500),
+                  child: Center(
+                    child: _image != null
+                        ? Container(child: Image.file(_image))
+                        : TextField(
+                            onChanged: (value) {
+                              setState(() {});
+                            },
+                            controller: _tweetController,
+                            cursorColor: AppColors.logoBlue,
+                            decoration: InputDecoration(
+                              hintText: 'What\'s happening?',
+                              border: InputBorder.none,
+                            ),
+                            keyboardType: TextInputType.multiline,
+                            // maxLength: 280, : To hide the letter count .
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(280)
+                            ],
+                            maxLines: 50,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'HelveticaNeue',
+                                fontSize: 21.0,
+                                fontWeight: FontWeight.w500),
+                          ),
                   )),
             ],
           ),
@@ -158,13 +163,18 @@ class _WritingPanelState extends State<WritingPanel> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8.0, vertical: 4.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
+                            IconButton(
+                                icon: Icon(Icons.image),
+                                color: Colors.blue,
+                                onPressed: getImage),
                             CircularPercentIndicator(
                               radius: 35.0,
                               progressColor: _tweetController.text.length < 125
                                   ? Colors.green
-                                  : (_tweetController.text.length >= 125 && _tweetController.text.length < 220)
+                                  : (_tweetController.text.length >= 125 &&
+                                          _tweetController.text.length < 220)
                                       ? Colors.amber
                                       : _tweetController.text.length >= 220
                                           ? Colors.redAccent
@@ -184,5 +194,16 @@ class _WritingPanelState extends State<WritingPanel> {
         ],
       ),
     );
+  }
+
+  File _image;
+  final picker = ImagePicker();
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      _image = File(pickedFile.path);
+    });
   }
 }
