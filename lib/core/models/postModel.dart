@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:twitter_clone/core/models/userModel.dart';
 
@@ -17,8 +18,8 @@ class Post {
       @required this.post_comments,
       @required this.post_likes});
 
-  Post.fromMap(Map snapshot, User user)
-      : this.user = snapshot['user'],
+  Post.fromSnapshot(DocumentSnapshot snapshot)
+       : this.user = User.fromSnapshot(snapshot),
         this.timeStamp = snapshot['timeStamp'],
         this.tweet = snapshot['tweet'],
         this.attached_images = snapshot['attached_images'],
@@ -27,8 +28,8 @@ class Post {
 
   toJson() {
     return {
-      "user": user,
-      "timeStamp": DateTime.now().millisecondsSinceEpoch,
+      "user": user.toJson(),
+      "timeStamp": timeStamp,
       "tweet": tweet,
       "attached_images": attached_images,
       "post_comments": post_comments,
