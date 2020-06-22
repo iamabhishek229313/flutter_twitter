@@ -1,6 +1,4 @@
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 
 class ImagesCarousel extends StatefulWidget {
   @override
@@ -10,34 +8,30 @@ class ImagesCarousel extends StatefulWidget {
 class _ImagesCarouselState extends State<ImagesCarousel> {
   @override
   Widget build(BuildContext context) {
-    return CarouselSlider(
-      options: CarouselOptions(
-        height: 400.0,
-        enableInfiniteScroll: false,
-        aspectRatio: 16/9,
-        scrollDirection: Axis.horizontal),
-      items: [1, 2, 3, 4, 5].map((e) {
-        return Builder(
-          builder: (BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+      height: MediaQuery.of(context).size.height * 0.35,
+      child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: 5,
+          itemBuilder: (context, index) {
             return Container(
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.symmetric(horizontal: 5.0),
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(20)
-                //image: Image.file(file)
+              height: MediaQuery.of(context).size.height * 0.22,
+              width: MediaQuery.of(context).size.width * 0.22,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
-              child: RaisedButton(
-                onPressed: () => {},
-                              child: Text(
-                  '$e',
-                  style: TextStyle(fontSize: 16.0),
+                color: Colors.blue,
+                child: Container(
+                  child: Center(
+                    child: Text('Hello',
+                        style: TextStyle(color: Colors.white, fontSize: 20.0)),
+                  ),
                 ),
               ),
             );
-          },
-        );
-      }).toList(),
+          }),
     );
   }
 }
