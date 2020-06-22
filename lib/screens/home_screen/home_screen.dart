@@ -191,20 +191,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             floatingActionButton: FAB(user: user, screenHeight: screenHeight),
             bottomNavigationBar: NavigationBar(
-              icon1: Icon(
-                CustomIconData(AppIcon.home)
-              ),
-              icon2: Icon(
-                CustomIconData(AppIcon.search),
-              ),
-              icon3: Icon(
-                CustomIconData(AppIcon.notification),
-              ),
-              icon4: Icon(
-                CustomIconData(
-                  AppIcon.messageEmpty
-                )
-              ),
+              icon1: Icon(AppIcon.home),
+              icon2: Icon(AppIcon.search),
+              icon3: Icon(AppIcon.notification),
+              icon4: Icon(AppIcon.messageEmpty),
             ),
           );
         }
