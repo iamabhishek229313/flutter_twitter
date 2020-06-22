@@ -12,6 +12,7 @@ import 'package:transparent_image/transparent_image.dart';
 import 'package:twitter_clone/core/database/database_api.dart';
 import 'package:twitter_clone/core/models/postModel.dart';
 import 'package:twitter_clone/core/models/userModel.dart';
+import 'package:twitter_clone/screens/home_screen/widgets/images_carousel.dart';
 import 'package:twitter_clone/utils/bottom_button.dart';
 import 'package:twitter_clone/utils/colors.dart';
 import 'package:twitter_clone/utils/constant_icons.dart';
@@ -151,10 +152,18 @@ class _WritingPanelState extends State<WritingPanel> {
             right: 0.0,
             child: Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.08,
+              height: MediaQuery.of(context).size.height * 0.25,
               decoration: BoxDecoration(),
               child: Column(
                 children: [
+                  Container(
+                    child: ImagesCarousel(),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.15
+                  ),
+                  SizedBox(
+                   // height: 220,
+                  ),
                   Divider(
                     thickness: 1.2,
                     height: 1.0,
@@ -201,7 +210,7 @@ class _WritingPanelState extends State<WritingPanel> {
   final picker = ImagePicker();
 
   Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
     setState(() {
       _image = File(pickedFile.path);
