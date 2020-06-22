@@ -20,7 +20,7 @@ class _ImagesCarouselState extends State<ImagesCarousel> {
               width: MediaQuery.of(context).size.width * 0.22,
               child: Card(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(16.0),
                 ),
                 color: Colors.blue,
                 child: Container(
