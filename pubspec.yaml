@@ -26,6 +26,7 @@ dependencies:
   get_it:
   percent_indicator: ^2.1.5
   image_picker: ^0.6.7+2
+  carousel_slider: ^2.1.0
 
 
 dev_dependencies:
