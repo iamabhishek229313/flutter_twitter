@@ -195,7 +195,6 @@ class _WritingPanelState extends State<WritingPanel> {
       ),
     );
   }
-
   File _image;
   final picker = ImagePicker();
 

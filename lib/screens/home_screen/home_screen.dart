@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             drawer: HomeDrawer(user: user, following: 10, followers: 1),
             body: StreamBuilder(
-              stream: Firestore.instance.collection('posts').snapshots(),
+              stream: Firestore.instance.collection('posts').orderBy('timeStamp',descending: true).snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (!snapshot.hasData) return CircularProgressIndicator();
                 return ListView(
