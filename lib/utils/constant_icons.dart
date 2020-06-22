@@ -52,3 +52,14 @@ class AppIcon {
 IconData CustomIconData(int codePoint){
   return IconData(codePoint , fontFamily: 'TwitterIcon', fontPackage: null);
 }
+
+class CustomIcon extends StatelessWidget {
+  final int codePoint;
+
+  const CustomIcon(this.codePoint, {Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Icon(IconData(codePoint, fontFamily: 'TwitterIcon'));
+  }
+}
