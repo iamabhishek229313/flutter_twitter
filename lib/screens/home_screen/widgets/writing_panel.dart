@@ -14,6 +14,7 @@ import 'package:twitter_clone/core/models/postModel.dart';
 import 'package:twitter_clone/core/models/userModel.dart';
 import 'package:twitter_clone/utils/bottom_button.dart';
 import 'package:twitter_clone/utils/colors.dart';
+import 'package:twitter_clone/utils/constant_icons.dart';
 
 class WritingPanel extends StatefulWidget {
   final FirebaseUser user;
@@ -166,7 +167,7 @@ class _WritingPanelState extends State<WritingPanel> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             IconButton(
-                                icon: Icon(Icons.image),
+                                icon: Icon(AppIcon.image),
                                 color: Colors.blue,
                                 onPressed: getImage),
                             CircularPercentIndicator(
