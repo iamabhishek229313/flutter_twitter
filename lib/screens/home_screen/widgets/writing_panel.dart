@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path/path.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:twitter_clone/core/database/database_api.dart';
@@ -23,9 +25,10 @@ class WritingPanel extends StatefulWidget {
 class _WritingPanelState extends State<WritingPanel> {
   TextEditingController _tweetController;
   DatabaseAPI _dbAPIofPosts;
-
+  User user;
   File _image;
   ImagePicker _picker;
+  String _uploadedImageURL;
 
   @override
   void initState() {
@@ -33,10 +36,16 @@ class _WritingPanelState extends State<WritingPanel> {
     _tweetController = TextEditingController();
     _dbAPIofPosts = DatabaseAPI("posts");
     _picker = ImagePicker();
+    user = User(
+        name: widget.user.displayName,
+        email_id: widget.user.email,
+        user_imageUrl: widget.user.photoUrl);
+    print("Everthing is initialized.");
   }
 
   @override
   void dispose() {
+    print("Everything is disposed");
     _tweetController.dispose();
     super.dispose();
   }
@@ -53,6 +62,27 @@ class _WritingPanelState extends State<WritingPanel> {
     final pickedFile = await _picker?.getImage(source: ImageSource.camera);
     setState(() {
       _image = pickedFile == null ? _image : File(pickedFile.path);
+    });
+  }
+
+  Future _uploadFile() async {
+    StorageReference _storageReference = FirebaseStorage.instance
+        .ref()
+        .child('twitter_clone/${basename(_image.path)}');
+    StorageUploadTask _uploadTask = _storageReference.putFile(_image);
+    await _uploadTask.onComplete;
+    print("Tweet Image uploaded!");
+    _storageReference.getDownloadURL().then((fileURL) {
+      _uploadedImageURL = fileURL;
+      print("Uploaded Image URL is : " + _uploadedImageURL);
+      _dbAPIofPosts.addDocumentInCollection(Post(
+              attached_image: _uploadedImageURL,
+              user: user,
+              post_comments: null,
+              timeStamp: DateTime.now().millisecondsSinceEpoch,
+              post_likes: null,
+              tweet: _tweetController.text)
+          .toJson());
     });
   }
 
@@ -74,23 +104,25 @@ class _WritingPanelState extends State<WritingPanel> {
                       color: Colors.white,
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold)),
-              onPressed: _tweetController.text.isEmpty
+              onPressed: (_tweetController.text.isEmpty && _image == null)
                   ? null
-                  : () {
-                      User user = User(
-                          name: widget.user.displayName,
-                          email_id: widget.user.email,
-                          user_imageUrl: widget.user.photoUrl);
-
-                      _dbAPIofPosts.addDocumentInCollection(Post(
-                              attached_images: null,
-                              user: user,
-                              post_comments: null,
-                              timeStamp: DateTime.now().millisecondsSinceEpoch,
-                              post_likes: null,
-                              tweet: _tweetController.text)
-                          .toJson());
-                      Navigator.pop(context);
+                  : () async {
+                      if (_image != null) {
+                        _uploadFile().then((val) {
+                          Navigator.pop(context);
+                        });
+                      } else {
+                        _dbAPIofPosts.addDocumentInCollection(Post(
+                                attached_image: null,
+                                user: user,
+                                post_comments: null,
+                                timeStamp:
+                                    DateTime.now().millisecondsSinceEpoch,
+                                post_likes: null,
+                                tweet: _tweetController.text)
+                            .toJson());
+                        Navigator.pop(context);
+                      }
                     },
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0),
