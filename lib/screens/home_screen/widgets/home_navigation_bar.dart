@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/utils/colors.dart';
+import 'package:twitter_clone/utils/constant_icons.dart';
 
 class NavigationBar extends StatefulWidget {
   final Icon icon1, icon2, icon3, icon4, icon5, icon6;
@@ -11,22 +12,43 @@ class NavigationBar extends StatefulWidget {
 }
 
 class _NavigationBarState extends State<NavigationBar> {
-  int selectedIndex = 0;
+  int _selectedIndex = 0;
   Color color;
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
       items: [
         BottomNavigationBarItem(
-            icon: widget.icon1, title:SizedBox.shrink()),
+            icon: _selectedIndex == 0
+                ? Icon((AppIcon.homeFill))
+                : widget.icon1,
+            title: SizedBox(
+              height: 20.0,
+            )),
         BottomNavigationBarItem(
-            icon: widget.icon2, title:SizedBox.shrink()),
+            icon: _selectedIndex == 1
+                ? Icon((AppIcon.searchFill))
+                : widget.icon2,
+            title: SizedBox(
+              height: 20.0,
+            )),
         BottomNavigationBarItem(
-            icon: widget.icon3, title:SizedBox.shrink()),
+            icon: _selectedIndex == 2
+                ? Icon((AppIcon.notificationFill))
+                : widget.icon3,
+            title: SizedBox(
+              height: 20.0,
+            )),
         BottomNavigationBarItem(
-            icon: widget.icon4, title:SizedBox.shrink()),
+            icon: _selectedIndex == 3
+                ? Icon((AppIcon.messageFill))
+                : widget.icon4,
+            title: SizedBox(
+              height: 20.0,
+            )),
       ],
-      currentIndex: selectedIndex,
+      currentIndex: _selectedIndex,
       fixedColor: AppColors.logoBlue,
       unselectedItemColor: Colors.grey,
       onTap: onItemTapped,
@@ -38,7 +60,7 @@ class _NavigationBarState extends State<NavigationBar> {
 
   void onItemTapped(int index) {
     setState(() {
-      selectedIndex = index;
+      _selectedIndex = index;
       color = Colors.blue;
     });
   }

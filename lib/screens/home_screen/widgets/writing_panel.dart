@@ -1,18 +1,13 @@
 import 'dart:io';
-import 'dart:math';
-
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:twitter_clone/core/database/database_api.dart';
 import 'package:twitter_clone/core/models/postModel.dart';
 import 'package:twitter_clone/core/models/userModel.dart';
-import 'package:twitter_clone/utils/bottom_button.dart';
 import 'package:twitter_clone/utils/colors.dart';
 import 'package:twitter_clone/utils/constant_icons.dart';
 
@@ -28,17 +23,37 @@ class WritingPanel extends StatefulWidget {
 class _WritingPanelState extends State<WritingPanel> {
   TextEditingController _tweetController;
   DatabaseAPI _dbAPIofPosts;
+
+  File _image;
+  ImagePicker _picker;
+
   @override
   void initState() {
     super.initState();
     _tweetController = TextEditingController();
     _dbAPIofPosts = DatabaseAPI("posts");
+    _picker = ImagePicker();
   }
 
   @override
   void dispose() {
     _tweetController.dispose();
     super.dispose();
+  }
+
+  Future getGalleryImage() async {
+    final pickedFile = await _picker?.getImage(source: ImageSource.gallery);
+    print("Picked File is : " + pickedFile.toString());
+    setState(() {
+      _image = pickedFile == null ? _image : File(pickedFile.path);
+    });
+  }
+
+  Future getCameraImage() async {
+    final pickedFile = await _picker?.getImage(source: ImageSource.camera);
+    setState(() {
+      _image = pickedFile == null ? _image : File(pickedFile.path);
+    });
   }
 
   @override
@@ -92,119 +107,172 @@ class _WritingPanelState extends State<WritingPanel> {
           ),
         ),
       ),
-      body: Stack(
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              new Expanded(
-                  flex: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: CircleAvatar(
-                      radius: 23.0,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100.0),
-                        child: FadeInImage.memoryNetwork(
-                          placeholder: kTransparentImage,
-                          image: widget.user.photoUrl,
-                          fit: BoxFit.fitHeight,
+      body: Container(
+        child: Stack(
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                new Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: CircleAvatar(
+                        radius: 23.0,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100.0),
+                          child: FadeInImage.memoryNetwork(
+                            placeholder: kTransparentImage,
+                            image: widget.user.photoUrl,
+                            fit: BoxFit.fitHeight,
+                          ),
                         ),
                       ),
-                    ),
-                  )),
-              new Expanded(
-                  flex: 12,
-                  child: Center(
-                    child: _image != null
-                        ? Container(child: Image.file(_image))
-                        : TextField(
-                            onChanged: (value) {
-                              setState(() {});
-                            },
-                            controller: _tweetController,
-                            cursorColor: AppColors.logoBlue,
-                            decoration: InputDecoration(
-                              hintText: 'What\'s happening?',
-                              border: InputBorder.none,
-                            ),
-                            keyboardType: TextInputType.multiline,
-                            // maxLength: 280, : To hide the letter count .
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(280)
-                            ],
-                            maxLines: 50,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'HelveticaNeue',
-                                fontSize: 21.0,
-                                fontWeight: FontWeight.w500),
-                          ),
-                  )),
-            ],
-          ),
-          Positioned(
-            bottom: 0.0,
-            left: 0.0,
-            right: 0.0,
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.08,
-              decoration: BoxDecoration(),
-              child: Column(
-                children: [
-                  Divider(
-                    thickness: 1.2,
-                    height: 1.0,
-                  ),
-                  Expanded(
-                    child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8.0, vertical: 4.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    )),
+                new Expanded(
+                    flex: 12,
+                    child: SingleChildScrollView(
+                      child: Container(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
                           children: [
-                            IconButton(
-                                icon: Icon(AppIcon.image),
-                                color: Colors.blue,
-                                onPressed: getImage),
-                            CircularPercentIndicator(
-                              radius: 35.0,
-                              progressColor: _tweetController.text.length < 125
-                                  ? Colors.green
-                                  : (_tweetController.text.length >= 125 &&
-                                          _tweetController.text.length < 220)
-                                      ? Colors.amber
-                                      : _tweetController.text.length >= 220
-                                          ? Colors.redAccent
-                                          : Colors.transparent,
-                              lineWidth: 3.0,
-                              percent: _tweetController.text.length / 280,
-                              center: Text((280 - _tweetController.text.length)
-                                  .toString()),
-                            )
+                            TextField(
+                              onChanged: (value) {
+                                setState(() {});
+                              },
+                              controller: _tweetController,
+                              cursorColor: AppColors.logoBlue,
+                              decoration: InputDecoration(
+                                hintText: 'What\'s happening?',
+                                border: InputBorder.none,
+                              ),
+                              keyboardType: TextInputType.multiline,
+                              // maxLength: 280, : To hide the letter count .
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(280)
+                              ],
+                              maxLines: null,
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'HelveticaNeue',
+                                  fontSize: 21.0,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            _image == null
+                                ? Container()
+                                : Stack(
+                                    children: [
+                                      Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.27,
+                                        decoration: BoxDecoration(
+                                            color: Colors.indigo,
+                                            borderRadius:
+                                                BorderRadius.circular(10.0)),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          child: Image.file(
+                                            _image,
+                                            width: double.infinity,
+                                            fit: BoxFit.fitWidth,
+                                          ),
+                                        ),
+                                      ),
+                                      Align(
+                                        alignment: Alignment.topRight,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              _image = null;
+                                            });
+                                          },
+                                          child: Container(
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Color.fromRGBO(
+                                                      240, 240, 240, 0.6)),
+                                              child: Icon(
+                                                Icons.delete_forever,
+                                                size: 35.0,
+                                              )),
+                                        ),
+                                      )
+                                    ],
+                                  )
                           ],
-                        )),
-                  ),
-                ],
-              ),
+                        ),
+                      ),
+                    )),
+              ],
             ),
-          )
-        ],
+            Align(alignment: Alignment.bottomCenter, child: bottomBar(context))
+          ],
+        ),
       ),
     );
   }
 
-  File _image;
-  final picker = ImagePicker();
+  Container bottomBar(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height * 0.07,
+      color: Colors.white,
+      child: Container(
+        child: Column(
+          children: [
+            Divider(
+              thickness: 1.2,
+              height: 1.0,
+            ),
+            Expanded(
+              child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 4.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [selectImage(), characterCount()],
+                  )),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-  Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
+  Row selectImage() {
+    return Row(
+      children: [
+        IconButton(
+          icon: Icon(AppIcon.camera),
+          onPressed: getCameraImage,
+          color: AppColors.logoBlue,
+        ),
+        IconButton(
+            icon: Icon(AppIcon.image),
+            color: AppColors.logoBlue,
+            onPressed: getGalleryImage),
+      ],
+    );
+  }
 
-    setState(() {
-      _image = File(pickedFile.path);
-    });
+  CircularPercentIndicator characterCount() {
+    return CircularPercentIndicator(
+      radius: 35.0,
+      progressColor: _tweetController.text.length < 125
+          ? Colors.green
+          : (_tweetController.text.length >= 125 &&
+                  _tweetController.text.length < 220)
+              ? Colors.amber
+              : _tweetController.text.length >= 220
+                  ? Colors.redAccent
+                  : Colors.transparent,
+      lineWidth: 3.0,
+      percent: _tweetController.text.length / 280,
+      center: Text((280 - _tweetController.text.length).toString()),
+    );
   }
 }
