@@ -21,28 +21,28 @@ class _NavigationBarState extends State<NavigationBar> {
       items: [
         BottomNavigationBarItem(
             icon: _selectedIndex == 0
-                ? Icon(CustomIconData(AppIcon.homeFill))
+                ? Icon((AppIcon.homeFill))
                 : widget.icon1,
             title: SizedBox(
               height: 20.0,
             )),
         BottomNavigationBarItem(
             icon: _selectedIndex == 1
-                ? Icon(CustomIconData(AppIcon.searchFill))
+                ? Icon((AppIcon.searchFill))
                 : widget.icon2,
             title: SizedBox(
               height: 20.0,
             )),
         BottomNavigationBarItem(
             icon: _selectedIndex == 2
-                ? Icon(CustomIconData(AppIcon.notificationFill))
+                ? Icon((AppIcon.notificationFill))
                 : widget.icon3,
             title: SizedBox(
               height: 20.0,
             )),
         BottomNavigationBarItem(
             icon: _selectedIndex == 3
-                ? Icon(CustomIconData(AppIcon.messageFill))
+                ? Icon((AppIcon.messageFill))
                 : widget.icon4,
             title: SizedBox(
               height: 20.0,
