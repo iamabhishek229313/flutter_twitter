@@ -61,7 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             drawer: HomeDrawer(user: user, following: 10, followers: 1),
             body: StreamBuilder(
-              stream: Firestore.instance.collection('posts').orderBy('timeStamp',descending: true).snapshots(),
+              stream: Firestore.instance
+                  .collection('posts')
+                  .orderBy('timeStamp', descending: true)
+                  .snapshots(),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (!snapshot.hasData) return CircularProgressIndicator();
                 return ListView(
@@ -83,14 +86,18 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                CircleAvatar(
-                                  radius: 30.0,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(100.0),
-                                    child: FadeInImage.memoryNetwork(
-                                      placeholder: kTransparentImage,
-                                      image: eachPost.user.user_imageUrl,
-                                      fit: BoxFit.fitHeight,
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: CircleAvatar(
+                                    radius: 30.0,
+                                    child: ClipRRect(
+                                      borderRadius:
+                                          BorderRadius.circular(100.0),
+                                      child: FadeInImage.memoryNetwork(
+                                        placeholder: kTransparentImage,
+                                        image: eachPost.user.user_imageUrl,
+                                        fit: BoxFit.fitHeight,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -168,12 +175,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                         fontSize: 16.0),
                                   ),
                                   // Will do in the new example.
+                                  (eachPost.attached_image == null) ? Container() :
                                   Container(
-                                    height: screenHeight * 0.4,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.27,
                                     decoration: BoxDecoration(
+                                        color: Colors.blueGrey[200],
+                                        borderRadius:
+                                            BorderRadius.circular(10.0)),
+                                    child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(10.0),
-                                        color: Colors.indigo),
+                                        child: FadeInImage.memoryNetwork(
+                                          placeholder: kTransparentImage,
+                                          image: eachPost.attached_image,
+                                          fit: BoxFit.fitHeight,
+                                        )),
                                   ),
                                   Divider(
                                     thickness: 1.1,
