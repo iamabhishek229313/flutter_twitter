@@ -24,32 +24,34 @@ class ProfileScreen extends StatelessWidget {
                           StretchMode.zoomBackground,
                           StretchMode.blurBackground
                         ],
-                        title: Text("Collapsing Toolbar"),
+                        // title: Text("Collapsing Toolbar"),
                         background: Stack(
                           alignment: Alignment.topCenter,
                           children: <Widget>[
                             SizedBox.expand(
-                              child: Container(                   //This is the inner most layer of the Flexible space bar.
+                              child: Container(
+                                //This is the inner most layer of the Flexible space bar.
                                 padding: EdgeInsets.only(top: 50),
                                 height: 30,
-                                color: Colors.red,  
+                                color: Colors.red,
                               ),
                             ),
 
-                            
-
-                            Container(          //Cover photo here.
+                            Container(
+                                //Cover photo here.
                                 height: 130,
                                 //padding: EdgeInsets.only(top: 30),
                                 child: Container(
                                   color: Colors.amber,
-                                )
-                            ),
+                                )),
 
                             //User avatar ,message ,profile following and followers button.
 
-                            Container(
-                                alignment: Alignment.bottomLeft,
+                            Positioned(
+                              top: MediaQuery.of(context).size.height * 0.1,
+                              left: MediaQuery.of(context).size.width * 0.1,
+                              child: Container(
+                                // alignment: Alignment.bottomLeft,
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -57,8 +59,8 @@ class ProfileScreen extends StatelessWidget {
                                   children: <Widget>[
                                     AnimatedContainer(
                                       duration: Duration(microseconds: 500),
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 10),
+                                      // padding:
+                                      //     EdgeInsets.symmetric(horizontal: 10),
                                       decoration: BoxDecoration(
                                           border: Border.all(
                                               color: Colors.blue, width: 5),
@@ -71,14 +73,17 @@ class ProfileScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                                Container(
-                                  margin: EdgeInsets.only(top:90, right: 30),
-                                  child: Row(
-                                    children: [
-                                      Container(color: Colors.blueAccent,height: 40,)
-                                    ],
-                                  )
-                                )
+                            ),
+                            Container(
+                                margin: EdgeInsets.only(top: 90, right: 30),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      color: Colors.blueAccent,
+                                      height: 40,
+                                    )
+                                  ],
+                                ))
                           ],
                         )),
                   ),
