@@ -8,12 +8,9 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-
-
-  TextEditingController _name,_bio,_location,_dob;
+  TextEditingController _name, _bio, _location, _dob;
   File _image;
   String dob;
-  
 
   @override
   void initState() {
@@ -24,17 +21,20 @@ class _EditProfileState extends State<EditProfile> {
     super.initState();
   }
 
-  Widget _details(String title, {TextEditingController controller}) {
+  Widget _details(String title, {TextEditingController controller, maxLines}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(title),
+          Text(
+            title,
+            style: TextStyle(fontFamily: 'HelveticaNeue', fontSize: 16),
+          ),
           TextField(
             enabled: true,
             controller: controller,
-            maxLines: 1,
+            maxLines: maxLines,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             ),
@@ -48,11 +48,11 @@ class _EditProfileState extends State<EditProfile> {
     DateTime picked = await showDatePicker(
       context: context,
       initialDate: DateTime(2020, DateTime.now().month, DateTime.now().day),
-      firstDate: DateTime(1970, DateTime.now().month,DateTime.now().day),
+      firstDate: DateTime(1970, DateTime.now().month, DateTime.now().day),
       lastDate: DateTime.now().add(Duration(days: 7)),
     );
     setState(() {
-      if(picked != null) {
+      if (picked != null) {
         dob = picked.toString();
       }
     });
@@ -63,22 +63,68 @@ class _EditProfileState extends State<EditProfile> {
       // _image = file;
     });
   }
+
+  Widget _profileImage() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 0),
+      height: 90,
+      width: 90,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.white, width: 5),
+        shape: BoxShape.circle,
+        
+      ),
+      child: CircleAvatar(
+        radius: 40,
+        //backgroundImage:FileImage(_image),
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.black38,
+          ),
+          child: Center(
+            child: IconButton(
+              color: Colors.black,
+              onPressed: () {
+                
+              },
+              icon: Icon(Icons.camera_alt, color: Colors.white),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.blue),
-        title: Text('Profile Edit'),
+        title: Text(
+          'Edit Profile',
+          style: TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              fontFamily: 'HelveticaNeuelt'),
+        ),
+        leading: Icon(
+          Icons.arrow_back,
+          color: Colors.blue,
+        ),
         actions: <Widget>[
-          InkWell(
-            onTap: () {},
-            child: Text(
-              'Save',
-              style: TextStyle(
-                color: Colors.blue,
-                fontSize: 17,
-                fontWeight: FontWeight.bold,
+          Container(
+            padding: EdgeInsets.only(top: 20),
+            child: InkWell(
+              onTap: () {},
+              child: Text(
+                'SAVE',
+                style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'HelveticaNeuelt'),
               ),
             ),
           ),
@@ -99,18 +145,20 @@ class _EditProfileState extends State<EditProfile> {
                     height: 180,
                     padding: EdgeInsets.only(bottom: 50),
                     child: Container(
-                      color: Colors.red,
+                      color: Colors.blue,
                     ),
                   ),
                   Align(
                     alignment: Alignment.bottomLeft,
+                    child: _profileImage(),
                   ),
                 ],
               ),
             ),
             _details('Name', controller: _name),
-            _details('Bio', controller: _dob),
+            _details('Bio', controller: _dob, maxLines: 4),
             _details('Location', controller: _location),
+            _details('Website', controller: _dob),
             InkWell(
               onTap: datePicker,
               child: _details('Date of birth', controller: _dob),
