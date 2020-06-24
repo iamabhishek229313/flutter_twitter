@@ -7,9 +7,12 @@ import 'package:twitter_clone/core/models/postModel.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/fab.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/home_drawer.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/home_navigation_bar.dart';
+import 'package:twitter_clone/screens/home_screen/widgets/view_image_screen.dart';
 import 'package:twitter_clone/services/google_firebase_authentication.dart';
 import 'package:twitter_clone/utils/colors.dart';
 import 'package:twitter_clone/utils/constant_icons.dart';
+// import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -146,13 +149,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                               shape: BoxShape.circle),
                                         ),
                                         Text(
-                                          'X',
+                                          timeago.format(DateTime
+                                              .fromMillisecondsSinceEpoch(
+                                                  eachPost.timeStamp)),
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                               fontFamily: "HelveticaNeue",
                                               color: Colors.grey,
                                               fontWeight: FontWeight.w500,
-                                              fontSize: 17.0),
+                                              fontSize: 15.0),
                                         ),
                                       ],
                                     ),
@@ -188,17 +193,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 borderRadius:
                                                     BorderRadius.circular(
                                                         10.0)),
-                                            child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                                child:
-                                                    FadeInImage.memoryNetwork(
-                                                  placeholder:
-                                                      kTransparentImage,
-                                                  image:
-                                                      eachPost.attached_image,
-                                                  fit: BoxFit.fitHeight,
-                                                )),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(context, MaterialPageRoute(
+                                                  builder: (context) => ViewImageScreen(
+                                                    imageUrl: eachPost.attached_image,
+                                                  )
+                                                ));
+                                              },
+                                              child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                  child:
+                                                      FadeInImage.memoryNetwork(
+                                                    placeholder:
+                                                        kTransparentImage,
+                                                    image:
+                                                        eachPost.attached_image,
+                                                    fit: BoxFit.fitHeight,
+                                                  )),
+                                            ),
                                           ),
                                     SizedBox(
                                       height: 5.0,
@@ -312,3 +327,32 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+// String readTimestamp(int timestamp) {
+//   var now = DateTime.now();
+//   var format = new DateFormat('HH:mm a');
+//   var date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+//   var diff = now.difference(date);
+//   var time = '';
+
+//   if (diff.inSeconds <= 0 ||
+//       diff.inSeconds > 0 && diff.inMinutes == 0 ||
+//       diff.inMinutes > 0 && diff.inHours == 0 ||
+//       diff.inHours > 0 && diff.inDays == 0) {
+//     time = format.format(date);
+//   } else if (diff.inDays > 0 && diff.inDays < 7) {
+//     if (diff.inDays == 1) {
+//       time = diff.inDays.toString() + ' DAY AGO';
+//     } else {
+//       time = diff.inDays.toString() + ' DAYS AGO';
+//     }
+//   } else {
+//     if (diff.inDays == 7) {
+//       time = (diff.inDays / 7).floor().toString() + ' WEEK AGO';
+//     } else {
+//       time = (diff.inDays / 7).floor().toString() + ' WEEKS AGO';
+//     }
+//   }
+
+//   return time;
+// }
