@@ -14,6 +14,17 @@ class _EditProfileState extends State<EditProfile> {
   ImagePicker _picker;
   String dob;
 
+  @override
+  void initState() {
+    super.initState();
+    _name = TextEditingController();
+    _bio = TextEditingController();
+    _location = TextEditingController();
+    _dob = TextEditingController();
+    _website = TextEditingController();
+    _picker = ImagePicker();
+  }
+
   Future getGalleryImage() async {
     final pickedFile = await _picker?.getImage(source: ImageSource.gallery);
     print("Picked File is : " + pickedFile.toString());
@@ -23,20 +34,10 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   Future getCameraImage() async {
-    final pickedFile = await _picker?.getImage(source: ImageSource.camera);
+    final pickedFile = await ImagePicker.pickImage(source: ImageSource.camera);
     setState(() {
       _image = pickedFile == null ? _image : File(pickedFile.path);
     });
-  }
-
-  @override
-  void initState() {
-    _name = TextEditingController();
-    _bio = TextEditingController();
-    _location = TextEditingController();
-    _dob = TextEditingController();
-    _website = TextEditingController();
-    super.initState();
   }
 
   Widget _details(String title,
@@ -96,18 +97,16 @@ class _EditProfileState extends State<EditProfile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  new FlatButton(
-                      //padding: EdgeInsets.symmetric(horizontal: 150),
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      onPressed: getCameraImage,
+                  new GestureDetector(
+                      onTap: getCameraImage,
                       child: Text(
                         'Take Image',
                         style: TextStyle(
                             color: Colors.black, fontFamily: 'HelvticaNeue'),
                       )),
-                  new FlatButton(
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      onPressed: getGalleryImage,
+                  Padding(padding: EdgeInsets.all(12.0),),
+                  new GestureDetector(
+                      onTap: getGalleryImage,
                       child: Text(
                         'Choose existing photo',
                         style: TextStyle(
