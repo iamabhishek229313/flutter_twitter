@@ -46,7 +46,7 @@ class _WrapperScreenState extends State<WrapperScreen> {
       builder: (BuildContext context,snapshot) {
         print("Snapshot Data is : " + snapshot.data.toString());
         if(snapshot.hasData) {
-          return ProfileScreen();
+          return HomeScreen();
         }
         return StartScreen();
       }
