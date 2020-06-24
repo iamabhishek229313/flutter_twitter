@@ -2,10 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/screens/home_screen/home_screen.dart';
 import 'package:twitter_clone/screens/login_screen/start_screen.dart';
-<<<<<<< HEAD
+import 'package:twitter_clone/screens/profile_screen/profile_screen.dart';
 import 'package:twitter_clone/services/google_firebase_authentication.dart';
-=======
->>>>>>> 6ae8a952c7d5a57e8d3b5960ce678cef7a8972c1
+
 
   /**
    * Below class is fo the debug purpose only .
@@ -48,7 +47,7 @@ class _WrapperScreenState extends State<WrapperScreen> {
       builder: (BuildContext context,snapshot) {
         print("Snapshot Data is : " + snapshot.data.toString());
         if(snapshot.hasData) {
-          return HomeScreen();
+          return ProfileScreen();
         }
         return StartScreen();
       }

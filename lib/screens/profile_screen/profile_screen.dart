@@ -15,7 +15,7 @@ class ProfileScreen extends StatelessWidget {
                     stretch: true,
                     elevation: 0,
                     forceElevated: false,
-                    expandedHeight: 200.0,
+                    expandedHeight: 300.0,
                     floating: true,
                     pinned: true,
                     snap: false,
@@ -39,8 +39,8 @@ class ProfileScreen extends StatelessWidget {
                             
 
                             Container(          //Cover photo here.
-                                height: 120,
-                                padding: EdgeInsets.only(top: 28),
+                                height: 130,
+                                //padding: EdgeInsets.only(top: 30),
                                 child: Container(
                                   color: Colors.amber,
                                 )
@@ -61,15 +61,24 @@ class ProfileScreen extends StatelessWidget {
                                           EdgeInsets.symmetric(horizontal: 10),
                                       decoration: BoxDecoration(
                                           border: Border.all(
-                                              color: Colors.blue, width: 15),
+                                              color: Colors.blue, width: 5),
                                           shape: BoxShape.circle),
                                       child: CircleAvatar(
-                                        radius: 0,
+                                        radius: 30,
                                         backgroundColor: Colors.blue,
                                       ),
                                     )
                                   ],
-                                )),
+                                ),
+                              ),
+                                Container(
+                                  margin: EdgeInsets.only(top:90, right: 30),
+                                  child: Row(
+                                    children: [
+                                      Container(color: Colors.blueAccent,height: 40,)
+                                    ],
+                                  )
+                                )
                           ],
                         )),
                   ),
