@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:timeago/timeago.dart' as timeago;
+
 import 'package:twitter_clone/core/models/postModel.dart';
+import 'package:twitter_clone/screens/home_screen/widgets/view_image_screen.dart';
+import 'package:twitter_clone/utils/constant_icons.dart';
 
 class PostWidget extends StatelessWidget {
   @required final Post post;
