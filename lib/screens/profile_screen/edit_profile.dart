@@ -21,7 +21,8 @@ class _EditProfileState extends State<EditProfile> {
     super.initState();
   }
 
-  Widget _details(String title, {TextEditingController controller, maxLines}) {
+  Widget _details(String title,
+      {TextEditingController controller, maxLines, hints}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
       child: Column(
@@ -35,6 +36,7 @@ class _EditProfileState extends State<EditProfile> {
             enabled: true,
             controller: controller,
             maxLines: maxLines,
+            autofillHints: hints,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             ),
@@ -72,7 +74,6 @@ class _EditProfileState extends State<EditProfile> {
       decoration: BoxDecoration(
         border: Border.all(color: Colors.white, width: 5),
         shape: BoxShape.circle,
-        
       ),
       child: CircleAvatar(
         radius: 40,
@@ -85,9 +86,7 @@ class _EditProfileState extends State<EditProfile> {
           child: Center(
             child: IconButton(
               color: Colors.black,
-              onPressed: () {
-                
-              },
+              onPressed: () {},
               icon: Icon(Icons.camera_alt, color: Colors.white),
             ),
           ),
@@ -105,9 +104,7 @@ class _EditProfileState extends State<EditProfile> {
         title: Text(
           'Edit Profile',
           style: TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-              fontFamily: 'HelveticaNeuelt'),
+              color: Colors.black, fontSize: 20, fontFamily: 'HelveticaNeuelt'),
         ),
         leading: Icon(
           Icons.arrow_back,
@@ -145,6 +142,12 @@ class _EditProfileState extends State<EditProfile> {
                     height: 180,
                     padding: EdgeInsets.only(bottom: 50),
                     child: Container(
+                      child: Center(
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: Colors.white,
+                        ),
+                      ),
                       color: Colors.blue,
                     ),
                   ),
@@ -161,7 +164,8 @@ class _EditProfileState extends State<EditProfile> {
             _details('Website', controller: _dob),
             InkWell(
               onTap: datePicker,
-              child: _details('Date of birth', controller: _dob),
+              child: _details('Date of birth',
+                  controller: _dob, hints: 'Add your date of birth'),
             )
           ],
         ),
