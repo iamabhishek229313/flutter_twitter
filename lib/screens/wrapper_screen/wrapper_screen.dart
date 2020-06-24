@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/screens/home_screen/home_screen.dart';
-import 'package:twitter_clone/screens/login_screen/login_screen.dart';
 import 'package:twitter_clone/screens/login_screen/start_screen.dart';
+<<<<<<< HEAD
 import 'package:twitter_clone/services/google_firebase_authentication.dart';
+=======
+>>>>>>> 6ae8a952c7d5a57e8d3b5960ce678cef7a8972c1
 
   /**
    * Below class is fo the debug purpose only .
@@ -25,7 +27,7 @@ import 'package:twitter_clone/services/google_firebase_authentication.dart';
 
 /**
  * Below class is fo the proper implementation which listens to the wether the
- * use is logged in or logged out .export '
+ * user is logged in or logged out .export '
  * 
  * <A TRUE implementation of the Wrapper class .
  * 
@@ -44,7 +46,7 @@ class _WrapperScreenState extends State<WrapperScreen> {
     return StreamBuilder(
       stream: FirebaseAuth.instance.onAuthStateChanged,
       builder: (BuildContext context,snapshot) {
-        print("Sanpshot Data is : " + snapshot.data.toString());
+        print("Snapshot Data is : " + snapshot.data.toString());
         if(snapshot.hasData) {
           return HomeScreen();
         }
