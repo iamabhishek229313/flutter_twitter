@@ -11,24 +11,85 @@ class ProfileScreen extends StatelessWidget {
                   (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
                   SliverAppBar(
-                    expandedHeight: 200.0,
+                    backgroundColor: Colors.transparent,
+                    stretch: true,
+                    elevation: 0,
+                    forceElevated: false,
+                    expandedHeight: 300.0,
                     floating: true,
                     pinned: true,
                     snap: false,
                     flexibleSpace: FlexibleSpaceBar(
-                      centerTitle: true,
-                      title: Text("Collapsing Toolbar"),
-                      background: Container(
-                        color: Colors.blue,
-                      ),
-                    ),
+                        stretchModes: <StretchMode>[
+                          StretchMode.zoomBackground,
+                          StretchMode.blurBackground
+                        ],
+                        title: Text("Collapsing Toolbar"),
+                        background: Stack(
+                          alignment: Alignment.topCenter,
+                          children: <Widget>[
+                            SizedBox.expand(
+                              child: Container(                   //This is the inner most layer of the Flexible space bar.
+                                padding: EdgeInsets.only(top: 50),
+                                height: 30,
+                                color: Colors.red,  
+                              ),
+                            ),
+
+                            
+
+                            Container(          //Cover photo here.
+                                height: 130,
+                                //padding: EdgeInsets.only(top: 30),
+                                child: Container(
+                                  color: Colors.amber,
+                                )
+                            ),
+
+                            //User avatar ,message ,profile following and followers button.
+
+                            Container(
+                                alignment: Alignment.bottomLeft,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: <Widget>[
+                                    AnimatedContainer(
+                                      duration: Duration(microseconds: 500),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 10),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.blue, width: 5),
+                                          shape: BoxShape.circle),
+                                      child: CircleAvatar(
+                                        radius: 30,
+                                        backgroundColor: Colors.blue,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                                Container(
+                                  margin: EdgeInsets.only(top:90, right: 30),
+                                  child: Row(
+                                    children: [
+                                      Container(color: Colors.blueAccent,height: 40,)
+                                    ],
+                                  )
+                                )
+                          ],
+                        )),
                   ),
                   SliverPersistentHeader(
                     delegate: _SliverAppBarDelegate(
                       TabBar(
                         tabs: [
                           Tab(
-                            text: 'Tweets',
+                            child: Text(
+                              'Tweets',
+                            ),
                           ),
                           Tab(text: 'Tweets & replies'),
                           Tab(text: 'Media'),

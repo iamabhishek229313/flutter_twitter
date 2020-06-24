@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:twitter_clone/screens/login_screen/start_screen.dart';
 
 class Authentication {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -19,14 +18,15 @@ class Authentication {
     }
     GoogleSignInAccount _googleUser ;
     try{
-      _googleUser = await _googleSignIn.signIn();
+      _googleUser = await _googleSignIn?.signIn();
     }catch(error){
       print("Error Caught");
       return null;
     }
-
+    if(_googleUser == null) return null;
     final GoogleSignInAuthentication _googleAuth =
-        await _googleUser.authentication;
+        await _googleUser?.authentication;
+    if(_googleAuth == null) return null;
 
     final AuthCredential _authCredential = GoogleAuthProvider.getCredential(
         idToken: _googleAuth.idToken, accessToken: _googleAuth.accessToken);
