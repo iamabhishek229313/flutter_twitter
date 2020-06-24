@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -8,9 +9,25 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
-  TextEditingController _name, _bio, _location, _dob;
+  TextEditingController _name, _bio, _location, _dob, _website;
   File _image;
+  ImagePicker _picker;
   String dob;
+
+  Future getGalleryImage() async {
+    final pickedFile = await _picker?.getImage(source: ImageSource.gallery);
+    print("Picked File is : " + pickedFile.toString());
+    setState(() {
+      _image = pickedFile == null ? _image : File(pickedFile.path);
+    });
+  }
+
+  Future getCameraImage() async {
+    final pickedFile = await _picker?.getImage(source: ImageSource.camera);
+    setState(() {
+      _image = pickedFile == null ? _image : File(pickedFile.path);
+    });
+  }
 
   @override
   void initState() {
@@ -18,11 +35,12 @@ class _EditProfileState extends State<EditProfile> {
     _bio = TextEditingController();
     _location = TextEditingController();
     _dob = TextEditingController();
+    _website = TextEditingController();
     super.initState();
   }
 
   Widget _details(String title,
-      {TextEditingController controller, maxLines, hints}) {
+      {TextEditingController controller, maxLines, hints, isEnable = true}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
       child: Column(
@@ -33,7 +51,7 @@ class _EditProfileState extends State<EditProfile> {
             style: TextStyle(fontFamily: 'HelveticaNeue', fontSize: 16),
           ),
           TextField(
-            enabled: true,
+            enabled: isEnable,
             controller: controller,
             maxLines: maxLines,
             autofillHints: hints,
@@ -56,6 +74,7 @@ class _EditProfileState extends State<EditProfile> {
     setState(() {
       if (picked != null) {
         dob = picked.toString();
+        //  _dob = ;
       }
     });
   }
@@ -64,6 +83,43 @@ class _EditProfileState extends State<EditProfile> {
     setState(() {
       // _image = file;
     });
+  }
+
+  void imageDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          actions: [
+            Container(
+              padding: EdgeInsets.only(right: 100),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  new FlatButton(
+                      //padding: EdgeInsets.symmetric(horizontal: 150),
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      onPressed: getCameraImage,
+                      child: Text(
+                        'Take Image',
+                        style: TextStyle(
+                            color: Colors.black, fontFamily: 'HelvticaNeue'),
+                      )),
+                  new FlatButton(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      onPressed: getGalleryImage,
+                      child: Text(
+                        'Choose existing photo',
+                        style: TextStyle(
+                            color: Colors.black, fontFamily: 'HelvticaNeue'),
+                      )),
+                ],
+              ),
+            )
+          ],
+        );
+      },
+    );
   }
 
   Widget _profileImage() {
@@ -86,7 +142,7 @@ class _EditProfileState extends State<EditProfile> {
           child: Center(
             child: IconButton(
               color: Colors.black,
-              onPressed: () {},
+              onPressed: imageDialog,
               icon: Icon(Icons.camera_alt, color: Colors.white),
             ),
           ),
@@ -143,8 +199,9 @@ class _EditProfileState extends State<EditProfile> {
                     padding: EdgeInsets.only(bottom: 50),
                     child: Container(
                       child: Center(
-                        child: Icon(
-                          Icons.camera_alt,
+                        child: IconButton(
+                          onPressed: imageDialog,
+                          icon: Icon(Icons.camera_alt),
                           color: Colors.white,
                         ),
                       ),
@@ -159,14 +216,14 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
             _details('Name', controller: _name),
-            _details('Bio', controller: _dob, maxLines: 4),
+            _details('Bio', controller: _bio, maxLines: 4),
             _details('Location', controller: _location),
-            _details('Website', controller: _dob),
-            InkWell(
-              onTap: datePicker,
-              child: _details('Date of birth',
-                  controller: _dob, hints: 'Add your date of birth'),
-            )
+            _details('Website', controller: _website),
+            // InkWell(
+            //   onTap: datePicker,
+            //   child: _details('Date of birth',
+            //       controller: _dob, hints: 'Add your date of birth' ,isEnable: false),
+            // )
           ],
         ),
       ),
