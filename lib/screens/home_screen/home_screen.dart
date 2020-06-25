@@ -11,7 +11,6 @@ import 'package:twitter_clone/screens/home_screen/widgets/view_image_screen.dart
 import 'package:twitter_clone/services/google_firebase_authentication.dart';
 import 'package:twitter_clone/utils/colors.dart';
 import 'package:twitter_clone/utils/constant_icons.dart';
-// import 'package:intl/intl.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class HomeScreen extends StatefulWidget {
@@ -195,11 +194,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         10.0)),
                                             child: GestureDetector(
                                               onTap: () {
-                                                Navigator.push(context, MaterialPageRoute(
-                                                  builder: (context) => ViewImageScreen(
-                                                    imageUrl: eachPost.attached_image,
-                                                  )
-                                                ));
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ViewImageScreen(
+                                                              imageUrl: eachPost
+                                                                  .attached_image,
+                                                            )));
                                               },
                                               child: ClipRRect(
                                                   borderRadius:
