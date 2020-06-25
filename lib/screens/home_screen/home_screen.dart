@@ -10,7 +10,6 @@ import 'package:twitter_clone/screens/home_screen/widgets/home_navigation_bar.da
 import 'package:twitter_clone/services/google_firebase_authentication.dart';
 import 'package:twitter_clone/utils/colors.dart';
 import 'package:twitter_clone/utils/constant_icons.dart';
-// import 'package:intl/intl.dart';
 import 'package:twitter_clone/utils/post_widget.dart';
 
 class HomeScreen extends StatefulWidget {
