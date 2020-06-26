@@ -6,11 +6,34 @@ import 'package:twitter_clone/core/models/postModel.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/view_image_screen.dart';
 import 'package:twitter_clone/utils/constant_icons.dart';
 
-class PostWidget extends StatelessWidget {
-  @required final Post post;
+class PostWidget extends StatefulWidget {
+  @required
+  final Post post;
 
   const PostWidget({Key key, this.post}) : super(key: key);
-  
+
+  @override
+  _PostWidgetState createState() => _PostWidgetState();
+}
+
+class _PostWidgetState extends State<PostWidget> {
+  void _handleBottomSheet() {
+    showModalBottomSheet(
+        context: context,
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        builder: (builder) {
+          return Column(
+            children: [
+              Container(
+                height: 150.0,
+                color: Colors.amber,
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -34,7 +57,7 @@ class PostWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(100.0),
                         child: FadeInImage.memoryNetwork(
                           placeholder: kTransparentImage,
-                          image: post.user.user_imageUrl,
+                          image: widget.post.user.user_imageUrl,
                           fit: BoxFit.fitHeight,
                         ),
                       ),
@@ -49,7 +72,7 @@ class PostWidget extends StatelessWidget {
                 title: Row(
                   children: [
                     Text(
-                      post.user.name,
+                      widget.post.user.name,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontFamily: "HelveticaNeue",
@@ -62,7 +85,7 @@ class PostWidget extends StatelessWidget {
                     Flexible(
                       fit: FlexFit.tight,
                       child: Text(
-                        '@' + post.user.email_id,
+                        '@' + widget.post.user.email_id,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontFamily: "HelveticaNeue",
@@ -71,30 +94,35 @@ class PostWidget extends StatelessWidget {
                             fontSize: 17.0),
                       ),
                     ),
-                    Wrap(
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.all(6.0),
-                          height: 3.0,
-                          width: 3.0,
-                          decoration: BoxDecoration(
-                              color: Colors.grey, shape: BoxShape.circle),
-                        ),
-                        Text(
-                          timeago.format(DateTime.fromMillisecondsSinceEpoch(
-                              post.timeStamp)),
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontFamily: "HelveticaNeue",
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15.0),
-                        ),
-                      ],
+                    Flexible(
+                      child: Row(
+                        //crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.all(6.0),
+                            height: 3.0,
+                            width: 3.0,
+                            decoration: BoxDecoration(
+                                color: Colors.grey, shape: BoxShape.circle),
+                          ),
+                          Flexible(
+                            child: Text(
+                              timeago.format(
+                                  DateTime.fromMillisecondsSinceEpoch(
+                                      widget.post.timeStamp)),
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontFamily: "HelveticaNeue",
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 15.0),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     GestureDetector(
-                        onTap: () {},
+                        onTap: _handleBottomSheet,
                         child: Icon(
                           Icons.keyboard_arrow_down,
                           color: Colors.grey,
@@ -106,14 +134,14 @@ class PostWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      post.tweet,
+                      widget.post.tweet,
                       style: TextStyle(
                           fontFamily: 'HelveticaNeue',
                           color: Colors.black,
                           fontSize: 16.0),
                     ),
                     // Will do in the new example.
-                    (post.attached_image == null)
+                    (widget.post.attached_image == null)
                         ? Container()
                         : Container(
                             height: MediaQuery.of(context).size.height * 0.27,
@@ -126,14 +154,15 @@ class PostWidget extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => ViewImageScreen(
-                                              imageUrl: post.attached_image,
+                                              imageUrl:
+                                                  widget.post.attached_image,
                                             )));
                               },
                               child: ClipRRect(
                                   borderRadius: BorderRadius.circular(10.0),
                                   child: FadeInImage.memoryNetwork(
                                     placeholder: kTransparentImage,
-                                    image: post.attached_image,
+                                    image: widget.post.attached_image,
                                     fit: BoxFit.fitHeight,
                                   )),
                             ),
