@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/screens/home_screen/home_screen.dart';
 import 'package:twitter_clone/screens/login_screen/start_screen.dart';
-import 'package:twitter_clone/screens/profile_screen/profile_screen.dart';
 import 'package:twitter_clone/services/google_firebase_authentication.dart';
 
 

@@ -24,31 +24,36 @@ class HomeDrawer extends StatelessWidget {
       child: Container(
         color: Colors.white,
         child: Column(children: <Widget>[
-          UserAccountsDrawerHeader(
-            decoration: BoxDecoration(color: Colors.white),
-            accountName: Text(
-              user.displayName,
-              style: TextStyle(
-                  fontFamily: 'HelveticaNeuelt',
-                  color: Colors.black,
-                  fontSize: 17,
-                  letterSpacing: 1.1,
-                  fontWeight: FontWeight.w800),
-            ),
-            accountEmail: Text(
-              user.email,
-              style: TextStyle(
-                  fontFamily: 'HelveticaNeue',
-                  color: Colors.black87,
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold),
-            ),
-            currentAccountPicture: ClipRRect(
-              borderRadius: BorderRadius.circular(100.0),
-              child: FadeInImage.memoryNetwork(
-                placeholder: kTransparentImage,
-                image: user.photoUrl,
-                fit: BoxFit.fitHeight,
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/profile');
+            },
+            child: UserAccountsDrawerHeader(
+              decoration: BoxDecoration(color: Colors.white),
+              accountName: Text(
+                user.displayName,
+                style: TextStyle(
+                    fontFamily: 'HelveticaNeuelt',
+                    color: Colors.black,
+                    fontSize: 17,
+                    letterSpacing: 1.1,
+                    fontWeight: FontWeight.w800),
+              ),
+              accountEmail: Text(
+                user.email,
+                style: TextStyle(
+                    fontFamily: 'HelveticaNeue',
+                    color: Colors.black87,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold),
+              ),
+              currentAccountPicture: ClipRRect(
+                borderRadius: BorderRadius.circular(100.0),
+                child: FadeInImage.memoryNetwork(
+                  placeholder: kTransparentImage,
+                  image: user.photoUrl,
+                  fit: BoxFit.fitHeight,
+                ),
               ),
             ),
           ),
