@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
+import 'package:twitter_clone/core/models/userModel.dart';
+import 'package:twitter_clone/screens/home_screen/widgets/fab.dart';
+import 'package:twitter_clone/utils/colors.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final User user = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       body: DefaultTabController(
           length: 4,
@@ -32,8 +37,9 @@ class ProfileScreen extends StatelessWidget {
                               child: Container(
                                 //This is the inner most layer of the Flexible space bar.
                                 padding: EdgeInsets.only(top: 50),
-                                height: 30,
-                                color: Colors.red,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.2,
+                                color: Colors.white,
                               ),
                             ),
 
@@ -42,7 +48,8 @@ class ProfileScreen extends StatelessWidget {
                                 height: 130,
                                 //padding: EdgeInsets.only(top: 30),
                                 child: Container(
-                                  color: Colors.amber,
+                                  color: Color.lerp(AppColors.verifiedBlue,
+                                      Colors.white, 0.25),
                                 )),
 
                             //User avatar ,message ,profile following and followers button.
@@ -62,12 +69,20 @@ class ProfileScreen extends StatelessWidget {
                                       // padding:
                                       //     EdgeInsets.symmetric(horizontal: 10),
                                       decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Colors.blue, width: 5),
-                                          shape: BoxShape.circle),
-                                      child: CircleAvatar(
-                                        radius: 30,
-                                        backgroundColor: Colors.blue,
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 5,
+                                        ),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(100.0),
+                                        child: FadeInImage.memoryNetwork(
+                                          placeholder: kTransparentImage,
+                                          image: user.user_imageUrl,
+                                          fit: BoxFit.fitHeight,
+                                        ),
                                       ),
                                     )
                                   ],
@@ -91,16 +106,10 @@ class ProfileScreen extends StatelessWidget {
                     delegate: _SliverAppBarDelegate(
                       TabBar(
                         tabs: [
-                          Tab(
-                            child: Text(
-                              'Tweets',
-                            ),
-                          ),
+                          Tab(text: 'Tweets'),
                           Tab(text: 'Tweets & replies'),
                           Tab(text: 'Media'),
-                          Tab(
-                            text: 'Likes',
-                          )
+                          Tab(text: 'Likes'),
                         ],
                       ),
                     ),
@@ -108,9 +117,17 @@ class ProfileScreen extends StatelessWidget {
                   )
                 ];
               },
-              body: Container(
-                child: Text('Hello'),
+              body: SafeArea(
+                              child: Positioned(
+                  top: kToolbarHeight + kTextTabBarHeight,
+                  child: Container(
+                    child: Text('Hello'),
+                  ),
+                ),
               ))),
+      floatingActionButton: FAB(
+        screenHeight: MediaQuery.of(context).size.height,
+      ),
     );
   }
 }

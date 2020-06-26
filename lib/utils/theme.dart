@@ -22,15 +22,21 @@ class Theming {
       buttonColor: AppColors.logoBlue,
       textTheme: ButtonTextTheme.accent,
     ),
-
     tabBarTheme: TabBarTheme(
       labelColor: AppColors.logoBlue,
+      indicator: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: AppColors.logoBlue,
+            width: 4.0,
+          ),
+        ),
+      ),
       labelPadding: EdgeInsets.all(0.0),
       unselectedLabelColor: Colors.grey,
       labelStyle: TextStyle(fontSize: 12.0),
       unselectedLabelStyle: TextStyle(fontSize: 12.0),
     ),
-
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
 
