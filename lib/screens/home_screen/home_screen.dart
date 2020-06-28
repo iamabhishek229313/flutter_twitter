@@ -1,9 +1,17 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:twitter_clone/bloc/current_user/current_user_bloc.dart';
+import 'package:twitter_clone/bloc/fake_loading/fake_loading_bloc.dart';
 import 'package:twitter_clone/core/database/database_api.dart';
-import 'package:twitter_clone/core/models/postModel.dart';
+import 'package:twitter_clone/core/database_models/postModel.dart';
+import 'package:twitter_clone/core/database_models/userModel.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/fab.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/home_drawer.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/home_navigation_bar.dart';
@@ -28,8 +36,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _handleBackend() async {
+    print("Handle BAckend is invoked");
     user = await _authnticationDelegate.getCurrentUser();
-    return true;
+
+    /// Register the current user in the CurrentUserBloc .
+    BlocProvider.of<CurrentUserBloc>(context).add(GetCurrentUser(User(
+        name: user.displayName,
+        email_id: user.email,
+        user_imageUrl: user.photoUrl)));
+    return user;
   }
 
   @override
@@ -61,24 +76,55 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             drawer: HomeDrawer(user: user, following: 10, followers: 1),
-            body: StreamBuilder(
-              stream: Firestore.instance
-                  .collection('posts')
-                  .orderBy('timeStamp', descending: true)
-                  .snapshots(),
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (!snapshot.hasData) return CircularProgressIndicator();
-                return ListView(
-                  shrinkWrap: true,
-                  physics: BouncingScrollPhysics(),
-                  children:
-                      List.generate(snapshot.data?.documents?.length, (index) {
-                    Post eachPost = Post.fromSnapshot(
-                        snapshot.data?.documents.elementAt(index));
-                    return PostWidget(post: eachPost);
-                  }),
-                );
-              },
+            body: Stack(
+              children: [
+                StreamBuilder(
+                  stream: Firestore.instance
+                      .collection('posts')
+                      .orderBy('timeStamp', descending: true)
+                      .snapshots(),
+                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (!snapshot.hasData) return CircularProgressIndicator();
+                    return ListView(
+                      shrinkWrap: true,
+                      physics: BouncingScrollPhysics(),
+                      children: List.generate(snapshot.data?.documents?.length,
+                          (index) {
+                        Post eachPost = Post.fromSnapshot(
+                            snapshot.data?.documents.elementAt(index),
+                            snapshot.data.documents
+                                .elementAt(index)
+                                .documentID);
+                        return PostWidget(post: eachPost);
+                      }),
+                    );
+                  },
+                ),
+                BlocBuilder<FakeLoadingBloc, bool>(
+                    bloc: BlocProvider.of<FakeLoadingBloc>(context),
+                    builder: (context, bool toShow) {
+                      return toShow
+                          ? ClipRect(
+                              child: BackdropFilter(
+                                filter:
+                                    ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                                child: Container(
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white.withOpacity(0.6)),
+                                  child: Center(
+                                    child: SpinKitFadingCircle(
+                                      color: AppColors.logoBlue,
+                                      size: 60.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : SizedBox();
+                    }),
+              ],
             ),
             floatingActionButton: FAB(user: user, screenHeight: screenHeight),
             bottomNavigationBar: NavigationBar(

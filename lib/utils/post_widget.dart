@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:timeago/timeago.dart' as timeago;
-
-import 'package:twitter_clone/core/models/postModel.dart';
+import 'package:twitter_clone/bloc/current_user/current_user_bloc.dart';
+import 'package:twitter_clone/bloc/fake_loading/fake_loading_bloc.dart';
+import 'package:twitter_clone/core/database/database_api.dart';
+import 'package:twitter_clone/core/database_models/postModel.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/view_image_screen.dart';
+import 'package:twitter_clone/utils/colors.dart';
 import 'package:twitter_clone/utils/constant_icons.dart';
 
 class PostWidget extends StatefulWidget {
@@ -17,19 +21,55 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> {
+  DatabaseAPI _dbAPIforPost;
+
+  @override
+  void initState() {
+    super.initState();
+    _dbAPIforPost = DatabaseAPI("posts");
+  }
+
   void _handleBottomSheet() {
     showModalBottomSheet(
         context: context,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         builder: (builder) {
-          return Column(
-            children: [
-              Container(
-                height: 150.0,
-                color: Colors.amber,
-              )
-            ],
+          return Container(
+            // height: MediaQuery.of(context).size.height * 0.38,
+            margin: const EdgeInsets.all(20.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                    width: 55.0,
+                    height: 6.0,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: Colors.blueGrey[400])),
+                ListTile(
+                  leading: Icon(
+                    Icons.delete_outline,
+                    size: 28.0,
+                  ),
+                  title: Text("Delete this Post"),
+                  onTap: () {
+                    /// Here we're going to delete the post.
+                    _dbAPIforPost
+                        .removeDocumentInCollectionById(widget.post.docID);
+                    BlocProvider.of<FakeLoadingBloc>(context).add(
+                      TriggerChange.TRUE
+                    );
+                    Future.delayed(Duration(milliseconds: 1200), () {
+                      BlocProvider.of<FakeLoadingBloc>(context).add(
+                      TriggerChange.FALSE
+                    );
+                    });
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            ),
           );
         });
   }
@@ -122,7 +162,14 @@ class _PostWidgetState extends State<PostWidget> {
                       ),
                     ),
                     GestureDetector(
-                        onTap: _handleBottomSheet,
+                        onTap: () {
+                          var currentUser =
+                              BlocProvider.of<CurrentUserBloc>(context).state;
+
+                          /// If the user want's to delete its post then.
+                          if (currentUser.email_id == widget.post.user.email_id)
+                            _handleBottomSheet();
+                        },
                         child: Icon(
                           Icons.keyboard_arrow_down,
                           color: Colors.grey,

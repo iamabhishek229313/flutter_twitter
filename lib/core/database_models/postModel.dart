@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
-import 'package:twitter_clone/core/models/userModel.dart';
-
+import 'package:twitter_clone/core/database_models/userModel.dart';
+/// These are the documents .
 class Post {
+  String docID;
   User user;
   int timeStamp;
   String tweet;
@@ -11,15 +12,16 @@ class Post {
   List<User> post_likes;
 
   Post(
-      {@required this.user,
+      {this.docID = "",
+      @required this.user,
       @required this.timeStamp,
       @required this.tweet,
       @required this.attached_image,
       @required this.post_comments,
       @required this.post_likes});
 
-  Post.fromSnapshot(DocumentSnapshot snapshot)
-       : this.user = User.fromSnapshot(snapshot),
+  Post.fromSnapshot(DocumentSnapshot snapshot,String docID)
+      : this.docID = docID , this.user = User.fromSnapshot(snapshot),
         this.timeStamp = snapshot['timeStamp'],
         this.tweet = snapshot['tweet'],
         this.attached_image = snapshot['attached_image'],
@@ -28,6 +30,7 @@ class Post {
 
   toJson() {
     return {
+      "id": docID,
       "user": user.toJson(),
       "timeStamp": timeStamp,
       "tweet": tweet,
