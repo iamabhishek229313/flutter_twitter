@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -55,15 +56,29 @@ class _PostWidgetState extends State<PostWidget> {
                   title: Text("Delete this Post"),
                   onTap: () {
                     /// Here we're going to delete the post.
+                    BlocProvider.of<FakeLoadingBloc>(context)
+                        .add(TriggerChange.TRUE);
                     _dbAPIforPost
                         .removeDocumentInCollectionById(widget.post.docID);
-                    BlocProvider.of<FakeLoadingBloc>(context).add(
-                      TriggerChange.TRUE
-                    );
+                    if (widget.post.attached_image != null) {
+                      String filePath =
+                          widget.post.attached_image.toString()
+                              .replaceAll(
+                                  new RegExp(
+                                      'https://firebasestorage.googleapis.com/v0/b/test-flutter-twitter.appspot.com/o/twitter_clone%2F'),
+                                  '')
+                              .split('?')[0];
+
+                      FirebaseStorage.instance
+                          .ref()
+                          .child('twitter_clone/${filePath}')
+                          .delete()
+                          .then((_) => print(
+                              'Successfully deleted $filePath storage item'));
+                    }
                     Future.delayed(Duration(milliseconds: 1200), () {
-                      BlocProvider.of<FakeLoadingBloc>(context).add(
-                      TriggerChange.FALSE
-                    );
+                      BlocProvider.of<FakeLoadingBloc>(context)
+                          .add(TriggerChange.FALSE);
                     });
                     Navigator.of(context).pop();
                   },
