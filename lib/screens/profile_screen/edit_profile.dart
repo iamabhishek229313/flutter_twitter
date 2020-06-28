@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -10,7 +10,7 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   TextEditingController _name, _bio, _location, _dob, _website;
-  File _image;
+  File _imageprofile, _imagecover ,_image;
   ImagePicker _picker;
   String dob;
 
@@ -29,19 +29,23 @@ class _EditProfileState extends State<EditProfile> {
     final pickedFile = await _picker?.getImage(source: ImageSource.gallery);
     print("Picked File is : " + pickedFile.toString());
     setState(() {
-      _image = pickedFile == null ? _image : File(pickedFile.path);
+      _imageprofile =
+          pickedFile == null ? _imageprofile : File(pickedFile.path);
+      _imagecover = pickedFile == null ? _imagecover : File(pickedFile.path);
     });
   }
 
   Future getCameraImage() async {
-    final pickedFile = await ImagePicker.pickImage(source: ImageSource.camera);
+    final pickedFile = await _picker?.getImage(source: ImageSource.camera);
     setState(() {
-      _image = pickedFile == null ? _image : File(pickedFile.path);
+      _imageprofile =
+          pickedFile == null ? _imageprofile : File(pickedFile.path);
+      _imagecover = pickedFile == null ? _imagecover : File(pickedFile.path);
     });
   }
 
   Widget _details(String title,
-      {TextEditingController controller, maxLines, hints, isEnable = true}) {
+      {TextEditingController controller, maxLines, isEnable = true}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
       child: Column(
@@ -49,13 +53,13 @@ class _EditProfileState extends State<EditProfile> {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontFamily: 'HelveticaNeue', fontSize: 16),
+            style: TextStyle(fontFamily: 'HelveticaNeue', fontSize: 16,),
           ),
           TextField(
             enabled: isEnable,
             controller: controller,
             maxLines: maxLines,
-            autofillHints: hints,
+            style: TextStyle(fontFamily: 'HelveticaNeue', fontSize: 20),
             decoration: InputDecoration(
               contentPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             ),
@@ -64,6 +68,15 @@ class _EditProfileState extends State<EditProfile> {
       ),
     );
   }
+
+  String getDob(String date) {
+  if (date == null || date.isEmpty) {
+    return '';
+  }
+  var dt = DateTime.parse(date).toLocal();
+  var dat = DateFormat.yMMMd().format(dt);
+  return dat;
+}
 
   void datePicker() async {
     DateTime picked = await showDatePicker(
@@ -75,14 +88,14 @@ class _EditProfileState extends State<EditProfile> {
     setState(() {
       if (picked != null) {
         dob = picked.toString();
-        //  _dob = ;
+        _dob.text = getDob(dob);
       }
     });
   }
 
   void uploadProfileImage() {
     setState(() {
-      // _image = file;
+      _image = _imageprofile;
     });
   }
 
@@ -104,7 +117,9 @@ class _EditProfileState extends State<EditProfile> {
                         style: TextStyle(
                             color: Colors.black, fontFamily: 'HelvticaNeue'),
                       )),
-                  Padding(padding: EdgeInsets.all(12.0),),
+                  Padding(
+                    padding: EdgeInsets.all(12.0),
+                  ),
                   new GestureDetector(
                       onTap: getGalleryImage,
                       child: Text(
@@ -132,7 +147,9 @@ class _EditProfileState extends State<EditProfile> {
       ),
       child: CircleAvatar(
         radius: 40,
-        //backgroundImage:FileImage(_image),
+        backgroundImage: _image != null
+            ? FileImage(_image)
+            : AssetImage('assets/logo/icon-48.png'),
         child: Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
@@ -196,7 +213,15 @@ class _EditProfileState extends State<EditProfile> {
                   Container(
                     height: 180,
                     padding: EdgeInsets.only(bottom: 50),
-                    child: Container(
+                    child: Container( 
+                      //width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                          fit: BoxFit.fill,
+                        image: _imagecover != null
+                            ? FileImage(_imagecover)
+                            : AssetImage('assets/logo/icon-480.png'),
+                      )),
                       child: Center(
                         child: IconButton(
                           onPressed: imageDialog,
@@ -204,7 +229,6 @@ class _EditProfileState extends State<EditProfile> {
                           color: Colors.white,
                         ),
                       ),
-                      color: Colors.blue,
                     ),
                   ),
                   Align(
@@ -218,11 +242,11 @@ class _EditProfileState extends State<EditProfile> {
             _details('Bio', controller: _bio, maxLines: 4),
             _details('Location', controller: _location),
             _details('Website', controller: _website),
-            // InkWell(
-            //   onTap: datePicker,
-            //   child: _details('Date of birth',
-            //       controller: _dob, hints: 'Add your date of birth' ,isEnable: false),
-            // )
+            InkWell(
+              onTap: datePicker,
+              child: _details('Date of birth',
+                  controller: _dob,isEnable: false),
+            )
           ],
         ),
       ),
