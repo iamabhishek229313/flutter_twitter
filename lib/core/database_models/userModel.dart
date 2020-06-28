@@ -1,6 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
+
+
+/// This data will be under the each document.
+
+
 class User {
   String name;
   String email_id;
