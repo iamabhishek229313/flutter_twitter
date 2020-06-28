@@ -8,8 +8,8 @@ import 'package:path/path.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:twitter_clone/core/database/database_api.dart';
-import 'package:twitter_clone/core/models/postModel.dart';
-import 'package:twitter_clone/core/models/userModel.dart';
+import 'package:twitter_clone/core/database_models/postModel.dart';
+import 'package:twitter_clone/core/database_models/userModel.dart';
 import 'package:twitter_clone/utils/colors.dart';
 import 'package:twitter_clone/utils/constant_icons.dart';
 

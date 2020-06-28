@@ -26,7 +26,7 @@ class DatabaseAPI {
   Future<void> updateDocumentInCollection(Map data, String id) {
     return _ref.document(id).updateData(data);
   }
-  Future<void> removeDocumentInCollection(String id) {
+  Future<void> removeDocumentInCollectionById(String id) {
     return _ref.document(id).delete();
   }
 }
