@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:transparent_image/transparent_image.dart';
-import 'package:twitter_clone/core/models/userModel.dart';
+import 'package:twitter_clone/core/database_models/userModel.dart';
 import 'package:twitter_clone/utils/constant_icons.dart';
 
 class HomeDrawer extends StatelessWidget {
