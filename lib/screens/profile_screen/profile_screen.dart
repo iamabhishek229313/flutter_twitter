@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
-import 'package:twitter_clone/core/models/userModel.dart';
+import 'package:twitter_clone/core/database_models/userModel.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/fab.dart';
 import 'package:twitter_clone/utils/colors.dart';
 
@@ -118,7 +118,7 @@ class ProfileScreen extends StatelessWidget {
                 ];
               },
               body: SafeArea(
-                              child: Positioned(
+                child: Positioned(
                   top: kToolbarHeight + kTextTabBarHeight,
                   child: Container(
                     child: Text('Hello'),
