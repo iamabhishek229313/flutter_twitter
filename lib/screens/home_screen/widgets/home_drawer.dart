@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:twitter_clone/core/database_models/userModel.dart';
+import 'package:twitter_clone/utils/constant_icons.dart';
 
 class HomeDrawer extends StatelessWidget {
   const HomeDrawer({
@@ -84,9 +86,19 @@ class HomeDrawer extends StatelessWidget {
               child: ListView(
                 children: <Widget>[
                   ListTile(
-                    leading: Icon(Icons.account_circle),
+                    leading: Icon(AppIcon.profile),
                     title: Text("Profile"),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        '/profile',
+                        arguments: User(
+                          name: user.displayName,
+                          email_id: user.email,
+                          user_imageUrl: user.photoUrl,
+                        ),
+                      );
+                    },
                   ),
                   ListTile(
                     leading: Icon(Icons.library_books),
@@ -136,7 +148,7 @@ class HomeDrawer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Icon(
-                  Icons.lightbulb_outline,
+                  AppIcon.bulb,
                   color: Colors.blue,
                   size: 30.0,
                 ),
