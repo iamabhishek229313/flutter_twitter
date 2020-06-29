@@ -1,0 +1,252 @@
+[33mcommit 9d846731174e083009ab28d4b480c7d36593d180[m[33m ([m[1;36mHEAD -> [m[1;32mdev_abhishek[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/dev_abhishek[m[33m)[m
+Merge: 0010f69 dc112bc
+Author: Abhishek Kumar <44896537+iamabhishek229313@users.noreply.github.com>
+Date:   Mon Jun 29 09:51:12 2020 +0530
+
+    Merge pull request #69 from iamabhishek229313/dev_sbm
+    
+    Profile Screen
+
+[33mcommit 0010f69a266913125c14bd847e8a68f1159bb285[m
+Merge: dc2b9c5 1092f7a
+Author: Abhishek Kumar <44896537+iamabhishek229313@users.noreply.github.com>
+Date:   Sun Jun 28 22:16:08 2020 +0530
+
+    Merge pull request #70 from iamabhishek229313/dev_abhishek
+    
+    Added the functionality to delete the images uploaded on Post.
+
+[33mcommit 1092f7a88b05a6f0f5a7ba10badd25cf23f619ff[m
+Author: Abhishek Kumar <iamabhishek229313@gmail.com>
+Date:   Sun Jun 28 22:13:18 2020 +0530
+
+    Added the functionality to delete the imges uploaded on Post.
+
+[33mcommit dc112bcb3ca62246b226288f05f0fe678a1d2b9e[m
+Author: Sudhansu Bhushan Mishra <sbmishra2000@gmail.com>
+Date:   Sun Jun 28 16:51:32 2020 +0530
+
+    Minor Fixes to Profile
+
+[33mcommit 162e1b0a56be325f64b2c211645ff1fe99d9356b[m
+Author: Sudhansu Bhushan Mishra <sbmishra2000@gmail.com>
+Date:   Sun Jun 28 15:40:11 2020 +0530
+
+    Renaming fixes applied
+
+[33mcommit fde9e30c437f3c4aba6ad31e00f18c3031b0ccbe[m
+Author: Sudhansu Bhushan Mishra <sbmishra2000@gmail.com>
+Date:   Sun Jun 28 15:33:14 2020 +0530
+
+    Fix renamed stuff
+
+[33mcommit 4387732149a4d13a47c43800ee4f718e2dc27660[m
+Merge: 396ba20 dc2b9c5
+Author: Sudhansu <sbmishra2000@gmail.com>
+Date:   Sun Jun 28 15:25:28 2020 +0530
+
+    Merge pull request #68 from iamabhishek229313/master
+
+[33mcommit dc2b9c5f05233dda8f07b64978842b3f53c8f484[m
+Merge: 90742f5 ee90991
+Author: Abhishek Kumar <44896537+iamabhishek229313@users.noreply.github.com>
+Date:   Sun Jun 28 14:40:57 2020 +0530
+
+    Merge pull request #66 from iamabhishek229313/dev_nishant
+    
+    Edit Profile ready to take images from gallery
+
+[33mcommit 90742f599ff48e371c1fb0166b2935ffdf8589b3[m
+Merge: 17393b9 f520133
+Author: Abhishek Kumar <44896537+iamabhishek229313@users.noreply.github.com>
+Date:   Sun Jun 28 14:40:44 2020 +0530
+
+    Merge pull request #67 from iamabhishek229313/dev_abhishek
+    
+    Now you can delete your posts.
+
+[33mcommit f5201337f0fb9fda8058dd88929120518a2daf29[m
+Author: Abhishek Kumar <iamabhishek229313@gmail.com>
+Date:   Sun Jun 28 14:40:05 2020 +0530
+
+    Delete post, fake image laoding bloc, currentUser bloc, some cool fake animations were added.
+
+[33mcommit ee90991fed56fd7a5dda3e37ad9ef64652d2204e[m
+Author: Nishant Kumar <asknishant.39@gmail.com>
+Date:   Fri Jun 26 17:54:56 2020 +0530
+
+    Route given
+
+[33mcommit b0c61219c6e2bd5c934c3921f53ced7fe86429a9[m
+Author: Nishant Kumar <asknishant.39@gmail.com>
+Date:   Fri Jun 26 17:52:32 2020 +0530
+
+    Small bugs fixed.Edit profile ready.
+
+[33mcommit 8b42c0ccff8943f30b68129d3075444b9068e9f8[m
+Author: Abhishek Kumar <iamabhishek229313@gmail.com>
+Date:   Fri Jun 26 14:49:35 2020 +0530
+
+    Layout issue is fixed.
+
+[33mcommit 396ba20365c2250bd5acc2dc5b85cd5fb15e5fc8[m
+Merge: 360d6b0 caaacaa
+Author: Sudhansu Bhushan Mishra <sbmishra2000@gmail.com>
+Date:   Fri Jun 26 10:05:58 2020 +0530
+
+    Merge remote-tracking branch 'refs/remotes/origin/dev_sbm' into dev_sbm
+    
+    Resolve merge conflicts in wrapper_screen.dart
+
+[33mcommit 360d6b0fbaccc854c895b4f052721a65376f814c[m
+Author: Sudhansu Bhushan Mishra <sbmishra2000@gmail.com>
+Date:   Fri Jun 26 10:00:59 2020 +0530
+
+    Fix a lot of stuff on profile tabs and homescreen drawer.
+
+[33mcommit caaacaa5ab7d0f8a341a1a3b398630e065bc372f[m
+Merge: 5538cb3 17393b9
+Author: Sudhansu <sbmishra2000@gmail.com>
+Date:   Thu Jun 25 21:17:31 2020 +0530
+
+    Merge pull request #65 from iamabhishek229313/master
+    
+    thanks @iamabhishek229313 and @asknishant
+
+[33mcommit 17393b902b447f87d53f466575f499f9a5c50627[m
+Merge: 5e7df66 aa09533
+Author: Abhishek Kumar <44896537+iamabhishek229313@users.noreply.github.com>
+Date:   Thu Jun 25 13:06:53 2020 +0530
+
+    Merge pull request #64 from iamabhishek229313/dev_nishant
+    
+    Edit profile page already complete.
+
+[33mcommit aa0953304fad15814c77cd9999e64f4d758da8ac[m
+Author: Abhishek Kumar <44896537+iamabhishek229313@users.noreply.github.com>
+Date:   Thu Jun 25 13:05:55 2020 +0530
+
+    Changed the default to HomeScreen
+
+[33mcommit 5e7df66c8d5b41bb60f5cc72b5abc1e6792a431d[m
+Merge: a1f89db 1af26dc
+Author: Abhishek Kumar <44896537+iamabhishek229313@users.noreply.github.com>
+Date:   Thu Jun 25 11:44:08 2020 +0530
+
+    Merge pull request #63 from iamabhishek229313/dev_abhishek
+    
+    Tap on userprofile at drawer to open profile screen.
+
+[33mcommit 1af26dc2f1450696471b59892fbd4ae64e2862d3[m
+Merge: 3e4d453 a1f89db
+Author: Abhishek Kumar <iamabhishek229313@gmail.com>
+Date:   Thu Jun 25 11:43:04 2020 +0530
+
+    Tap on drawer user profile to open profile page.
+
+[33mcommit 3e4d4532d17775989675b86f01f615d35820ee0c[m
+Author: Abhishek Kumar <iamabhishek229313@gmail.com>
+Date:   Thu Jun 25 11:34:53 2020 +0530
+
+    Don't know what the change is
+
+[33mcommit a1f89db81a4f2836709fcd49531921655cf27c92[m
+Merge: f522ef2 5538cb3
+Author: Abhishek Kumar <44896537+iamabhishek229313@users.noreply.github.com>
+Date:   Thu Jun 25 11:28:59 2020 +0530
+
+    Merge pull request #62 from iamabhishek229313/dev_sbm
+    
+    Refactor post into separate widget
+
+[33mcommit 1509775ab8660e9a444592bc786014978ee301a0[m
+Author: Nishant Kumar <asknishant.39@gmail.com>
+Date:   Thu Jun 25 03:29:38 2020 +0530
+
+    working on Image Picker
+
+[33mcommit ca1564808df7e1c79bb93e8d8fd52cc7469b7dcb[m
+Author: Nishant Kumar <asknishant.39@gmail.com>
+Date:   Thu Jun 25 03:29:21 2020 +0530
+
+    working on image pikcer
+
+[33mcommit 959886176c96d53f296e9196cae85a798bf1a11a[m
+Author: Nishant Kumar <asknishant.39@gmail.com>
+Date:   Thu Jun 25 00:06:33 2020 +0530
+
+    camera_icons added
+
+[33mcommit 75c190d1fed6bbf201bf1553816a3ac0537eeb15[m
+Author: Nishant Kumar <asknishant.39@gmail.com>
+Date:   Wed Jun 24 23:46:18 2020 +0530
+
+    adding datepicker
+
+[33mcommit 5538cb323ad3ded9d1ed21dc93de29825f1fa5d9[m
+Author: Sudhansu Bhushan Mishra <sbmishra2000@gmail.com>
+Date:   Wed Jun 24 21:54:11 2020 +0530
+
+    Minor fixes after refactor
+
+[33mcommit ccae9a189bc6e97ba490f98b718cd531870aae9a[m
+Author: Sudhansu Bhushan Mishra <sbmishra2000@gmail.com>
+Date:   Wed Jun 24 21:53:24 2020 +0530
+
+    Refactor post widget and fix sliverappbar layout
+
+[33mcommit d45557d2ba111b12bae66f94f667c4803e0903e2[m
+Author: Sudhansu Bhushan Mishra <sbmishra2000@gmail.com>
+Date:   Wed Jun 24 21:42:06 2020 +0530
+
+    Fix image positioning
+
+[33mcommit 2af6b91d2c6a5f7be2bf1128bcbb8bd00f89cf58[m
+Author: Sudhansu Bhushan Mishra <sbmishra2000@gmail.com>
+Date:   Wed Jun 24 21:23:54 2020 +0530
+
+    fix tab bar hiccups
+
+[33mcommit bb1ee5a746b679ebed0f78a408423b98d9c6b285[m
+Author: Sudhansu Bhushan Mishra <sbmishra2000@gmail.com>
+Date:   Wed Jun 24 21:11:01 2020 +0530
+
+    Remove my unfinished work
+
+[33mcommit 3e2a583417700de88ee1e74032f0cfa5fdbdf041[m
+Author: Sudhansu Bhushan Mishra <sbmishra2000@gmail.com>
+Date:   Wed Jun 24 21:09:58 2020 +0530
+
+    Add stuff
+
+[33mcommit ca371de6e7e0d729e1c06355bfb6725855705eda[m
+Author: Nishant Kumar <asknishant.39@gmail.com>
+Date:   Wed Jun 24 21:08:55 2020 +0530
+
+    Edit Profile Screen almost ready
+
+[33mcommit 02fda23d790e4632de8213c39b122053e6a3f028[m
+Merge: b3be1dd f522ef2
+Author: Sudhansu <sbmishra2000@gmail.com>
+Date:   Wed Jun 24 20:56:45 2020 +0530
+
+    Merge pull request #61 from iamabhishek229313/master
+
+[33mcommit f522ef2d43d959a01ff914403d0f8267aede7956[m
+Merge: 6ae8a95 980be64
+Author: Abhishek Kumar <44896537+iamabhishek229313@users.noreply.github.com>
+Date:   Wed Jun 24 20:36:05 2020 +0530
+
+    Merge pull request #60 from iamabhishek229313/dev_nishant
+    
+    Sliver App Bar Changes
+
+[33mcommit 980be64bdfb3f4b87759ec1b24b46076dc1be29a[m
+Author: Nishant Kumar <asknishant.39@gmail.com>
+Date:   Wed Jun 24 17:43:43 2020 +0530
+
+    slight changes
+
+[33mcommit 971ee54291170a1fd02605c09a0591ee59bf187c[m
+Author: Nishant Kumar <asknishant.39@gmail.com>
+Date:
