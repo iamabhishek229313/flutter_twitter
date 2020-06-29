@@ -26,6 +26,7 @@ class HomeDrawer extends StatelessWidget {
         child: Column(children: <Widget>[
           GestureDetector(
             onTap: () {
+              print("Go to profile screen invoked.");
               Navigator.pushNamed(context, '/profile');
             },
             child: UserAccountsDrawerHeader(
@@ -42,10 +43,7 @@ class HomeDrawer extends StatelessWidget {
               accountEmail: Text(
                 user.email,
                 style: TextStyle(
-                    fontFamily: 'HelveticaNeue',
-                    color: Colors.black87,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold),
+                    fontFamily: 'HelveticaNeue', color: Colors.black87, fontSize: 14, fontWeight: FontWeight.bold),
               ),
               currentAccountPicture: ClipRRect(
                 borderRadius: BorderRadius.circular(100.0),
@@ -64,18 +62,12 @@ class HomeDrawer extends StatelessWidget {
                 Text(
                   '$following Following',
                   style: TextStyle(
-                      fontFamily: 'HelveticaNeue',
-                      color: Colors.grey[10],
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold),
+                      fontFamily: 'HelveticaNeue', color: Colors.grey[10], fontSize: 14, fontWeight: FontWeight.bold),
                 ),
                 Text(
                   '  $followers Followers',
                   style: TextStyle(
-                      fontFamily: 'HelveticaNeue',
-                      color: Colors.grey[10],
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold),
+                      fontFamily: 'HelveticaNeue', color: Colors.grey[10], fontSize: 14, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
