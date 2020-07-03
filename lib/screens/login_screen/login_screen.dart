@@ -65,8 +65,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     style: TextStyle(color: Colors.black, fontSize: 25),
-                    decoration:
-                        InputDecoration(labelText: 'Phone,email or username'),
+                    decoration: InputDecoration(
+                      labelText: 'Phone,email or username',
+                    ),
                   ),
                   TextFormField(
                     autofocus: true,

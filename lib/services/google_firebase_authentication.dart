@@ -16,34 +16,34 @@ class Authentication {
       user = await _firebaseAuth.currentUser();
       return user;
     }
-    GoogleSignInAccount _googleUser ;
-    try{
+    GoogleSignInAccount _googleUser;
+    try {
       _googleUser = await _googleSignIn?.signIn();
-    }catch(error){
+    } catch (error) {
       print("Error Caught");
       return null;
     }
-    if(_googleUser == null) return null;
-    final GoogleSignInAuthentication _googleAuth =
-        await _googleUser?.authentication;
-    if(_googleAuth == null) return null;
+    if (_googleUser == null) return null;
+    final GoogleSignInAuthentication _googleAuth = await _googleUser?.authentication;
+    if (_googleAuth == null) return null;
 
-    final AuthCredential _authCredential = GoogleAuthProvider.getCredential(
-        idToken: _googleAuth.idToken, accessToken: _googleAuth.accessToken);
+    final AuthCredential _authCredential =
+        GoogleAuthProvider.getCredential(idToken: _googleAuth.idToken, accessToken: _googleAuth.accessToken);
 
     user = (await _firebaseAuth.signInWithCredential(_authCredential)).user;
 
     return user;
   }
-  Future<FirebaseUser> getCurrentUser() async{
-    FirebaseUser user = await _firebaseAuth.currentUser() ;
-    return user ;
+
+  Future<FirebaseUser> getCurrentUser() async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    return user;
   }
 
-  handleSignOut() async{
+  handleSignOut() async {
     _googleSignIn.disconnect();
-    await _firebaseAuth.signOut().then((value){
+    await _firebaseAuth.signOut().then((value) {
       print("User is Signed out");
-    }) ;
+    });
   }
 }

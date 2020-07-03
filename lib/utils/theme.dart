@@ -5,7 +5,7 @@ class Theming {
   static final lightTheme = ThemeData(
     primarySwatch: Colors.blue,
     primaryColor: AppColors.logoBlue,
-    accentColor: AppColors.white,
+    accentColor: AppColors.darkBlue,
     fontFamily: 'HelveticaNeue',
     scaffoldBackgroundColor: Colors.white,
     backgroundColor: Colors.white,
