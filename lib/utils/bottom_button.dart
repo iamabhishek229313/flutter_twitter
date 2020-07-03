@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_clone/services/firebase_authentication.dart';
+import 'package:twitter_clone/utils/colors.dart';
 
 class Bottom_Button extends StatelessWidget {
-  const Bottom_Button({
-    Key key,
-    @required String title,
-    @required Function onPressed
-  }) : title = title , onPressed = onPressed , super(key: key);
+  Bottom_Button({Key key, @required String title, @required Function onPressed})
+      : title = title,
+        onPressed = onPressed,
+        super(key: key);
 
-  final String title ;
-  final Function onPressed ;
+  final String title;
+  final Function onPressed;
+  final Authentication _authenticationDelegate = Authentication();
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -26,16 +28,25 @@ class Bottom_Button extends StatelessWidget {
                 thickness: 1.2,
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: RaisedButton(
-                  child: Text(this.title,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold)),
-                  onPressed: this.onPressed,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    OutlineButton(
+                      child: Text("Google", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+                      onPressed: _authenticationDelegate.handleSignIn,
+                      borderSide: BorderSide(color: AppColors.logoBlue),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                      color: Colors.white,
+                    ),
+                    RaisedButton(
+                      child: Text(this.title, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                      onPressed: this.onPressed,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

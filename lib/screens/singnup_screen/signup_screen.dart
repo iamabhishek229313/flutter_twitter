@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:twitter_clone/services/google_firebase_authentication.dart';
+import 'package:twitter_clone/services/firebase_authentication.dart';
 import 'package:twitter_clone/utils/bottom_button.dart';
 
 class SignupScreen extends StatelessWidget {
-  final Authentication _authnticationDelegate = Authentication() ;
+  final Authentication _authnticationDelegate = Authentication();
+  TextEditingController _userIdController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,46 +38,79 @@ class SignupScreen extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          Column(
+          ListView(
             children: [
-              Text(
-                'Create your account',
-                style: Theme.of(context)
-                    .textTheme
-                    .headline4
-                    .copyWith(fontWeight: FontWeight.w800, color: Colors.black),
+              Align(
+                child: Text(
+                  'Create your account',
+                  style:
+                      Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.w800, color: Colors.black),
+                ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.20),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.07),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Form(
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        maxLength: 50,
-                        inputFormatters: [
-                          LengthLimitingTextInputFormatter(50),
-                        ],
-                        decoration: InputDecoration(
-                          hintText: 'Name',
-                        ),
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _userIdController,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(50),
+                      ],
+                      decoration: InputDecoration(
+                        hintText: 'Username',
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.05,
+                      style: TextStyle(color: Colors.black, fontSize: 25),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.018,
+                    ),
+                    TextFormField(
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(50),
+                      ],
+                      decoration: InputDecoration(
+                        hintText: 'Full name',
                       ),
-                      TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          hintText: 'Phone number or email',
-                        ),
+                      style: TextStyle(color: Colors.black, fontSize: 25),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.018,
+                    ),
+                    TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(50),
+                      ],
+                      decoration: InputDecoration(
+                        hintText: 'Phone number or email',
                       ),
-                    ],
-                  ),
+                      style: TextStyle(color: Colors.black, fontSize: 25),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.018,
+                    ),
+                    TextFormField(
+                      controller: _passwordController,
+                      keyboardType: TextInputType.text,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        hintText: 'Password',
+                      ),
+                      style: TextStyle(color: Colors.black, fontSize: 25),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-          Bottom_Button(title: 'Next', onPressed: () {})
+          Bottom_Button(
+              title: 'Next',
+              onPressed: () {
+                _authnticationDelegate
+                    .handleSignUp(_userIdController.text, _passwordController.text)
+                    .then((value) => Navigator.popAndPushNamed(context, '/wrapper'));
+              })
         ],
       ),
     );
