@@ -5,6 +5,8 @@ import 'package:twitter_clone/utils/bottom_button.dart';
 
 class SignupScreen extends StatelessWidget {
   final Authentication _authnticationDelegate = Authentication();
+  TextEditingController _userIdController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +53,7 @@ class SignupScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: _userIdController,
                       inputFormatters: [
                         LengthLimitingTextInputFormatter(50),
                       ],
@@ -88,6 +91,7 @@ class SignupScreen extends StatelessWidget {
                       height: MediaQuery.of(context).size.height * 0.018,
                     ),
                     TextFormField(
+                      controller: _passwordController,
                       keyboardType: TextInputType.text,
                       obscureText: true,
                       decoration: InputDecoration(
@@ -100,7 +104,13 @@ class SignupScreen extends StatelessWidget {
               ),
             ],
           ),
-          Bottom_Button(title: 'Next', onPressed: () {})
+          Bottom_Button(
+              title: 'Next',
+              onPressed: () {
+                _authnticationDelegate
+                    .handleSignUp(_userIdController.text, _passwordController.text)
+                    .then((value) => Navigator.pop(context));
+              })
         ],
       ),
     );

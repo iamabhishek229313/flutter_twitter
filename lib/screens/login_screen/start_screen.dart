@@ -11,7 +11,7 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreeneState extends State<StartScreen> {
-  final Authentication _authenticationDelegate = Authentication() ;
+  final Authentication _authenticationDelegate = Authentication();
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class _StartScreeneState extends State<StartScreen> {
                   height: MediaQuery.of(context).size.height * 0.05,
                 ),
                 Large_Button(
-                  text: "Create account",
+                  text: "CREATE AN ACCOUNT",
                   onPressed: () {
                     Navigator.popAndPushNamed(context, '/signup');
                   },
@@ -66,17 +66,14 @@ class _StartScreeneState extends State<StartScreen> {
                   children: [
                     Text(
                       'Have an account already?',
-                      style: TextStyle(
-                          color: Color.fromRGBO(70, 70, 70, 20),
-                          fontSize: 14.0),
+                      style: TextStyle(color: Color.fromRGBO(70, 70, 70, 20), fontSize: 14.0),
                     ),
                     SizedBox(width: 8.0),
                     GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(context, '/login');
                         },
-                        child: Text('Log in',
-                            style: TextStyle(color: Colors.blue)))
+                        child: Text('Log in', style: TextStyle(color: Colors.blue)))
                   ],
                 ),
                 SizedBox(
@@ -88,4 +85,3 @@ class _StartScreeneState extends State<StartScreen> {
         ));
   }
 }
-
