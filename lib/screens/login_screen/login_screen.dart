@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/screens/login_screen/widgets/more_button.dart';
+import 'package:twitter_clone/services/firebase_authentication.dart';
 import 'package:twitter_clone/utils/bottom_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -9,6 +10,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   List<String> choices = ['About', 'Proxy'];
+  Authentication _authenticationDelegate = Authentication();
+  TextEditingController _userIdController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -63,12 +67,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 30.0,
                   ),
                   TextFormField(
+                    controller: _userIdController,
                     keyboardType: TextInputType.emailAddress,
                     style: TextStyle(color: Colors.black, fontSize: 25),
-                    decoration:
-                        InputDecoration(labelText: 'Phone,email or username'),
+                    decoration: InputDecoration(
+                      labelText: 'Username',
+                    ),
                   ),
                   TextFormField(
+                    controller: _passwordController,
                     autofocus: true,
                     style: TextStyle(color: Colors.black, fontSize: 25),
                     obscureText: true,
@@ -91,7 +98,9 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           Bottom_Button(
             title: 'Log in',
-            onPressed: () {},
+            onPressed: () {
+              _authenticationDelegate.handleSignInEmail(_userIdController.text, _passwordController.text);
+            },
           ),
         ],
       ),

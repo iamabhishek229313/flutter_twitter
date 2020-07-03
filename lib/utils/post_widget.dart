@@ -10,6 +10,7 @@ import 'package:twitter_clone/core/database_models/postModel.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/view_image_screen.dart';
 import 'package:twitter_clone/utils/colors.dart';
 import 'package:twitter_clone/utils/constant_icons.dart';
+import 'package:twitter_clone/utils/some_const.dart';
 
 class PostWidget extends StatefulWidget {
   @required
@@ -33,8 +34,7 @@ class _PostWidgetState extends State<PostWidget> {
   void _handleBottomSheet() {
     showModalBottomSheet(
         context: context,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         builder: (builder) {
           return Container(
             // height: MediaQuery.of(context).size.height * 0.38,
@@ -45,9 +45,7 @@ class _PostWidgetState extends State<PostWidget> {
                 Container(
                     width: 55.0,
                     height: 6.0,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10.0),
-                        color: Colors.blueGrey[400])),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.0), color: Colors.blueGrey[400])),
                 ListTile(
                   leading: Icon(
                     Icons.delete_outline,
@@ -56,29 +54,25 @@ class _PostWidgetState extends State<PostWidget> {
                   title: Text("Delete this Post"),
                   onTap: () {
                     /// Here we're going to delete the post.
-                    BlocProvider.of<FakeLoadingBloc>(context)
-                        .add(TriggerChange.TRUE);
-                    _dbAPIforPost
-                        .removeDocumentInCollectionById(widget.post.docID);
+                    BlocProvider.of<FakeLoadingBloc>(context).add(TriggerChange.TRUE);
+                    _dbAPIforPost.removeDocumentInCollectionById(widget.post.docID);
                     if (widget.post.attached_image != null) {
-                      String filePath =
-                          widget.post.attached_image.toString()
-                              .replaceAll(
-                                  new RegExp(
-                                      'https://firebasestorage.googleapis.com/v0/b/test-flutter-twitter.appspot.com/o/twitter_clone%2F'),
-                                  '')
-                              .split('?')[0];
+                      String filePath = widget.post.attached_image
+                          .toString()
+                          .replaceAll(
+                              new RegExp(
+                                  'https://firebasestorage.googleapis.com/v0/b/test-flutter-twitter.appspot.com/o/twitter_clone%2F'),
+                              '')
+                          .split('?')[0];
 
                       FirebaseStorage.instance
                           .ref()
                           .child('twitter_clone/${filePath}')
                           .delete()
-                          .then((_) => print(
-                              'Successfully deleted $filePath storage item'));
+                          .then((_) => print('Successfully deleted $filePath storage item'));
                     }
                     Future.delayed(Duration(milliseconds: 1200), () {
-                      BlocProvider.of<FakeLoadingBloc>(context)
-                          .add(TriggerChange.FALSE);
+                      BlocProvider.of<FakeLoadingBloc>(context).add(TriggerChange.FALSE);
                     });
                     Navigator.of(context).pop();
                   },
@@ -112,7 +106,8 @@ class _PostWidgetState extends State<PostWidget> {
                         borderRadius: BorderRadius.circular(100.0),
                         child: FadeInImage.memoryNetwork(
                           placeholder: kTransparentImage,
-                          image: widget.post.user.user_imageUrl,
+                          image:
+                              widget.post.user.user_imageUrl == null ? custom_discord : widget.post.user.user_imageUrl,
                           fit: BoxFit.fitHeight,
                         ),
                       ),
@@ -127,12 +122,9 @@ class _PostWidgetState extends State<PostWidget> {
                 title: Row(
                   children: [
                     Text(
-                      widget.post.user.name,
+                      widget.post.user.name == '' ? "Anonymous" : widget.post.user.name,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontFamily: "HelveticaNeue",
-                          fontWeight: FontWeight.bold,
-                          fontSize: 17.0),
+                      style: TextStyle(fontFamily: "HelveticaNeue", fontWeight: FontWeight.bold, fontSize: 17.0),
                     ),
                     SizedBox(
                       width: 3.0,
@@ -140,7 +132,7 @@ class _PostWidgetState extends State<PostWidget> {
                     Flexible(
                       fit: FlexFit.tight,
                       child: Text(
-                        '@' + widget.post.user.email_id,
+                        '@' + widget.post.user.email_id.toString(),
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontFamily: "HelveticaNeue",
@@ -157,14 +149,11 @@ class _PostWidgetState extends State<PostWidget> {
                             margin: EdgeInsets.all(6.0),
                             height: 3.0,
                             width: 3.0,
-                            decoration: BoxDecoration(
-                                color: Colors.grey, shape: BoxShape.circle),
+                            decoration: BoxDecoration(color: Colors.grey, shape: BoxShape.circle),
                           ),
                           Flexible(
                             child: Text(
-                              timeago.format(
-                                  DateTime.fromMillisecondsSinceEpoch(
-                                      widget.post.timeStamp)),
+                              timeago.format(DateTime.fromMillisecondsSinceEpoch(widget.post.timeStamp)),
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontFamily: "HelveticaNeue",
@@ -178,12 +167,10 @@ class _PostWidgetState extends State<PostWidget> {
                     ),
                     GestureDetector(
                         onTap: () {
-                          var currentUser =
-                              BlocProvider.of<CurrentUserBloc>(context).state;
+                          var currentUser = BlocProvider.of<CurrentUserBloc>(context).state;
 
                           /// If the user want's to delete its post then.
-                          if (currentUser.email_id == widget.post.user.email_id)
-                            _handleBottomSheet();
+                          if (currentUser.email_id == widget.post.user.email_id) _handleBottomSheet();
                         },
                         child: Icon(
                           Icons.keyboard_arrow_down,
@@ -197,27 +184,22 @@ class _PostWidgetState extends State<PostWidget> {
                   children: [
                     Text(
                       widget.post.tweet,
-                      style: TextStyle(
-                          fontFamily: 'HelveticaNeue',
-                          color: Colors.black,
-                          fontSize: 16.0),
+                      style: TextStyle(fontFamily: 'HelveticaNeue', color: Colors.black, fontSize: 16.0),
                     ),
                     // Will do in the new example.
                     (widget.post.attached_image == null)
                         ? Container()
                         : Container(
                             height: MediaQuery.of(context).size.height * 0.27,
-                            decoration: BoxDecoration(
-                                color: Colors.blueGrey[200],
-                                borderRadius: BorderRadius.circular(10.0)),
+                            decoration:
+                                BoxDecoration(color: Colors.blueGrey[200], borderRadius: BorderRadius.circular(10.0)),
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => ViewImageScreen(
-                                              imageUrl:
-                                                  widget.post.attached_image,
+                                              imageUrl: widget.post.attached_image,
                                             )));
                               },
                               child: ClipRRect(
@@ -249,8 +231,7 @@ class _PostWidgetState extends State<PostWidget> {
                               ),
                               Padding(
                                   padding: const EdgeInsets.only(top: 8.0),
-                                  child: Text("90",
-                                      style: TextStyle(fontSize: 16.0)))
+                                  child: Text("90", style: TextStyle(fontSize: 16.0)))
                             ],
                           ),
                         ),
@@ -278,8 +259,7 @@ class _PostWidgetState extends State<PostWidget> {
                               ),
                               Padding(
                                   padding: const EdgeInsets.only(top: 8.0),
-                                  child: Text("22",
-                                      style: TextStyle(fontSize: 16.0)))
+                                  child: Text("22", style: TextStyle(fontSize: 16.0)))
                             ],
                           ),
                         ),

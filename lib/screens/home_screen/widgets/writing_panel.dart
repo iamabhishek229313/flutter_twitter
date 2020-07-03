@@ -12,6 +12,7 @@ import 'package:twitter_clone/core/database_models/postModel.dart';
 import 'package:twitter_clone/core/database_models/userModel.dart';
 import 'package:twitter_clone/utils/colors.dart';
 import 'package:twitter_clone/utils/constant_icons.dart';
+import 'package:twitter_clone/utils/some_const.dart';
 
 class WritingPanel extends StatefulWidget {
   final FirebaseUser user;
@@ -36,10 +37,7 @@ class _WritingPanelState extends State<WritingPanel> {
     _tweetController = TextEditingController();
     _dbAPIofPosts = DatabaseAPI("posts");
     _picker = ImagePicker();
-    user = User(
-        name: widget.user.displayName,
-        email_id: widget.user.email,
-        user_imageUrl: widget.user.photoUrl);
+    user = User(name: widget.user.displayName, email_id: widget.user.email, user_imageUrl: widget.user.photoUrl);
     print("Everthing is initialized.");
   }
 
@@ -66,9 +64,7 @@ class _WritingPanelState extends State<WritingPanel> {
   }
 
   Future _uploadFile() async {
-    StorageReference _storageReference = FirebaseStorage.instance
-        .ref()
-        .child('twitter_clone/${basename(_image.path)}');
+    StorageReference _storageReference = FirebaseStorage.instance.ref().child('twitter_clone/${basename(_image.path)}');
     StorageUploadTask _uploadTask = _storageReference.putFile(_image);
     await _uploadTask.onComplete;
     print("Tweet Image uploaded!");
@@ -94,16 +90,11 @@ class _WritingPanelState extends State<WritingPanel> {
         automaticallyImplyLeading: false,
         actions: [
           Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 12.0, horizontal: 4.0),
+            padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 4.0),
             child: RaisedButton(
               elevation: 0.0,
               disabledColor: AppColors.logoBlue.withAlpha(100),
-              child: Text("Tweet",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold)),
+              child: Text("Tweet", style: TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.bold)),
               onPressed: (_tweetController.text.isEmpty && _image == null)
                   ? null
                   : () async {
@@ -116,8 +107,7 @@ class _WritingPanelState extends State<WritingPanel> {
                                 attached_image: null,
                                 user: user,
                                 post_comments: null,
-                                timeStamp:
-                                    DateTime.now().millisecondsSinceEpoch,
+                                timeStamp: DateTime.now().millisecondsSinceEpoch,
                                 post_likes: null,
                                 tweet: _tweetController.text)
                             .toJson());
@@ -157,7 +147,7 @@ class _WritingPanelState extends State<WritingPanel> {
                           borderRadius: BorderRadius.circular(100.0),
                           child: FadeInImage.memoryNetwork(
                             placeholder: kTransparentImage,
-                            image: widget.user.photoUrl,
+                            image: widget.user.photoUrl == null ? custom_discord : widget.user.photoUrl,
                             fit: BoxFit.fitHeight,
                           ),
                         ),
@@ -182,9 +172,7 @@ class _WritingPanelState extends State<WritingPanel> {
                               ),
                               keyboardType: TextInputType.multiline,
                               // maxLength: 280, : To hide the letter count .
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(280)
-                              ],
+                              inputFormatters: [LengthLimitingTextInputFormatter(280)],
                               maxLines: null,
                               style: TextStyle(
                                   color: Colors.black,
@@ -197,16 +185,11 @@ class _WritingPanelState extends State<WritingPanel> {
                                 : Stack(
                                     children: [
                                       Container(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.27,
+                                        height: MediaQuery.of(context).size.height * 0.27,
                                         decoration: BoxDecoration(
-                                            color: Colors.indigo,
-                                            borderRadius:
-                                                BorderRadius.circular(10.0)),
+                                            color: Colors.indigo, borderRadius: BorderRadius.circular(10.0)),
                                         child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
+                                          borderRadius: BorderRadius.circular(10.0),
                                           child: Image.file(
                                             _image,
                                             width: double.infinity,
@@ -224,9 +207,7 @@ class _WritingPanelState extends State<WritingPanel> {
                                           },
                                           child: Container(
                                               decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Color.fromRGBO(
-                                                      240, 240, 240, 0.6)),
+                                                  shape: BoxShape.circle, color: Color.fromRGBO(240, 240, 240, 0.6)),
                                               child: Icon(
                                                 Icons.delete_forever,
                                                 size: 35.0,
@@ -262,8 +243,7 @@ class _WritingPanelState extends State<WritingPanel> {
             ),
             Expanded(
               child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20.0, vertical: 4.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [selectImage(), characterCount()],
@@ -283,10 +263,7 @@ class _WritingPanelState extends State<WritingPanel> {
           onPressed: getCameraImage,
           color: AppColors.logoBlue,
         ),
-        IconButton(
-            icon: Icon(AppIcon.image),
-            color: AppColors.logoBlue,
-            onPressed: getGalleryImage),
+        IconButton(icon: Icon(AppIcon.image), color: AppColors.logoBlue, onPressed: getGalleryImage),
       ],
     );
   }
@@ -296,12 +273,9 @@ class _WritingPanelState extends State<WritingPanel> {
       radius: 35.0,
       progressColor: _tweetController.text.length < 125
           ? Colors.green
-          : (_tweetController.text.length >= 125 &&
-                  _tweetController.text.length < 220)
+          : (_tweetController.text.length >= 125 && _tweetController.text.length < 220)
               ? Colors.amber
-              : _tweetController.text.length >= 220
-                  ? Colors.redAccent
-                  : Colors.transparent,
+              : _tweetController.text.length >= 220 ? Colors.redAccent : Colors.transparent,
       lineWidth: 3.0,
       percent: _tweetController.text.length / 280,
       center: Text((280 - _tweetController.text.length).toString()),
