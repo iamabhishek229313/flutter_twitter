@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/screens/login_screen/widgets/more_button.dart';
-import 'package:twitter_clone/services/google_firebase_authentication.dart';
+import 'package:twitter_clone/services/firebase_authentication.dart';
 import 'package:twitter_clone/utils/bottom_button.dart';
 
 class LoginScreen extends StatefulWidget {

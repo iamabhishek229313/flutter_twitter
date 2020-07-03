@@ -15,7 +15,7 @@ import 'package:twitter_clone/core/database_models/userModel.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/fab.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/home_drawer.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/home_navigation_bar.dart';
-import 'package:twitter_clone/services/google_firebase_authentication.dart';
+import 'package:twitter_clone/services/firebase_authentication.dart';
 import 'package:twitter_clone/utils/colors.dart';
 import 'package:twitter_clone/utils/constant_icons.dart';
 import 'package:twitter_clone/utils/post_widget.dart';
@@ -40,10 +40,8 @@ class _HomeScreenState extends State<HomeScreen> {
     user = await _authnticationDelegate.getCurrentUser();
 
     /// Register the current user in the CurrentUserBloc .
-    BlocProvider.of<CurrentUserBloc>(context).add(GetCurrentUser(User(
-        name: user.displayName,
-        email_id: user.email,
-        user_imageUrl: user.photoUrl)));
+    BlocProvider.of<CurrentUserBloc>(context)
+        .add(GetCurrentUser(User(name: user.displayName, email_id: user.email, user_imageUrl: user.photoUrl)));
     return user;
   }
 
@@ -69,32 +67,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   Scaffold.of(context).openDrawer();
                 },
               ),
-              actions: [
-                IconButton(
-                    icon: Icon(Icons.exit_to_app),
-                    onPressed: _authnticationDelegate.handleSignOut)
-              ],
+              actions: [IconButton(icon: Icon(Icons.exit_to_app), onPressed: _authnticationDelegate.handleSignOut)],
             ),
             drawer: HomeDrawer(user: user, following: 10, followers: 1),
             body: Stack(
               children: [
                 StreamBuilder(
-                  stream: Firestore.instance
-                      .collection('posts')
-                      .orderBy('timeStamp', descending: true)
-                      .snapshots(),
+                  stream: Firestore.instance.collection('posts').orderBy('timeStamp', descending: true).snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) return CircularProgressIndicator();
                     return ListView(
                       shrinkWrap: true,
                       physics: BouncingScrollPhysics(),
-                      children: List.generate(snapshot.data?.documents?.length,
-                          (index) {
-                        Post eachPost = Post.fromSnapshot(
-                            snapshot.data?.documents.elementAt(index),
-                            snapshot.data.documents
-                                .elementAt(index)
-                                .documentID);
+                      children: List.generate(snapshot.data?.documents?.length, (index) {
+                        Post eachPost = Post.fromSnapshot(snapshot.data?.documents.elementAt(index),
+                            snapshot.data.documents.elementAt(index).documentID);
                         return PostWidget(post: eachPost);
                       }),
                     );
@@ -106,13 +93,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       return toShow
                           ? ClipRect(
                               child: BackdropFilter(
-                                filter:
-                                    ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                                filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
                                 child: Container(
                                   width: double.infinity,
                                   height: double.infinity,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white.withOpacity(0.6)),
+                                  decoration: BoxDecoration(color: Colors.white.withOpacity(0.6)),
                                   child: Center(
                                     child: SpinKitFadingCircle(
                                       color: AppColors.logoBlue,
@@ -136,9 +121,12 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         }
         return Scaffold(
-          body: Center(
-            child: CircularProgressIndicator(),
-          ),
+          body: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(),
+              ]),
         );
       },
     );

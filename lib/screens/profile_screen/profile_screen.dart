@@ -146,32 +146,3 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
-
-// class ProfileScreen extends StatefulWidget {
-//   @override
-//   _ProfileScreenState createState() => _ProfileScreenState();
-// }
-
-// class _ProfileScreenState extends State<ProfileScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     double screenHeight = MediaQuery.of(context).size.height;
-//     return Scaffold(
-//         body: CustomScrollView(
-//       slivers: [
-//         SliverAppBar(
-//           pinned: true,
-//           expandedHeight: screenHeight * 0.5,
-//           automaticallyImplyLeading: true,
-//           flexibleSpace: FlexibleSpaceBar(
-//             title: Text("Abhishek Rai"),
-//             stretchModes: <StretchMode>[
-//               StretchMode.zoomBackground,
-//               StretchMode.blurBackground
-//             ],
-//           ),
-//         )
-//       ],
-//     ));
-//   }
-// }

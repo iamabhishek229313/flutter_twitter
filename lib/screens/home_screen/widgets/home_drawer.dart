@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:twitter_clone/core/database_models/userModel.dart';
 import 'package:twitter_clone/utils/constant_icons.dart';
+import 'package:twitter_clone/utils/some_const.dart';
 
 class HomeDrawer extends StatelessWidget {
   const HomeDrawer({
@@ -30,30 +31,29 @@ class HomeDrawer extends StatelessWidget {
               Navigator.pushNamed(context, '/profile');
             },
             child: UserAccountsDrawerHeader(
-              decoration: BoxDecoration(color: Colors.white),
-              accountName: Text(
-                user.displayName,
-                style: TextStyle(
-                    fontFamily: 'HelveticaNeuelt',
-                    color: Colors.black,
-                    fontSize: 17,
-                    letterSpacing: 1.1,
-                    fontWeight: FontWeight.w800),
-              ),
-              accountEmail: Text(
-                user.email,
-                style: TextStyle(
-                    fontFamily: 'HelveticaNeue', color: Colors.black87, fontSize: 14, fontWeight: FontWeight.bold),
-              ),
-              currentAccountPicture: ClipRRect(
-                borderRadius: BorderRadius.circular(100.0),
-                child: FadeInImage.memoryNetwork(
-                  placeholder: kTransparentImage,
-                  image: user.photoUrl,
-                  fit: BoxFit.fitHeight,
+                decoration: BoxDecoration(color: Colors.white),
+                accountName: Text(
+                  user.displayName.toString(),
+                  style: TextStyle(
+                      fontFamily: 'HelveticaNeuelt',
+                      color: Colors.black,
+                      fontSize: 17,
+                      letterSpacing: 1.1,
+                      fontWeight: FontWeight.w800),
                 ),
-              ),
-            ),
+                accountEmail: Text(
+                  user.email.toString(),
+                  style: TextStyle(
+                      fontFamily: 'HelveticaNeue', color: Colors.black87, fontSize: 14, fontWeight: FontWeight.bold),
+                ),
+                currentAccountPicture: ClipRRect(
+                  borderRadius: BorderRadius.circular(100.0),
+                  child: FadeInImage.memoryNetwork(
+                    placeholder: kTransparentImage,
+                    image: user.photoUrl == null ? custom_discord : user.photoUrl,
+                    fit: BoxFit.fitHeight,
+                  ),
+                )),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/screens/login_screen/login_screen.dart';
-import 'package:twitter_clone/services/google_firebase_authentication.dart';
+import 'package:twitter_clone/services/firebase_authentication.dart';
 import 'package:twitter_clone/utils/colors.dart';
 import 'package:twitter_clone/utils/google_sign_in_button.dart';
 import 'package:twitter_clone/utils/large_buttons.dart';

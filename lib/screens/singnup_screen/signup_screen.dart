@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:twitter_clone/services/google_firebase_authentication.dart';
+import 'package:twitter_clone/services/firebase_authentication.dart';
 import 'package:twitter_clone/utils/bottom_button.dart';
 
 class SignupScreen extends StatelessWidget {
@@ -109,7 +109,7 @@ class SignupScreen extends StatelessWidget {
               onPressed: () {
                 _authnticationDelegate
                     .handleSignUp(_userIdController.text, _passwordController.text)
-                    .then((value) => Navigator.pop(context));
+                    .then((value) => Navigator.popAndPushNamed(context, '/wrapper'));
               })
         ],
       ),
