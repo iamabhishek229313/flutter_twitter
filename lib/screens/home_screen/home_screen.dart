@@ -5,8 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:transparent_image/transparent_image.dart';
 import 'package:twitter_clone/bloc/current_user/current_user_bloc.dart';
 import 'package:twitter_clone/bloc/fake_loading/fake_loading_bloc.dart';
 import 'package:twitter_clone/core/database/database_api.dart';
@@ -19,6 +17,7 @@ import 'package:twitter_clone/services/firebase_authentication.dart';
 import 'package:twitter_clone/utils/colors.dart';
 import 'package:twitter_clone/utils/constant_icons.dart';
 import 'package:twitter_clone/utils/post_widget.dart';
+import 'package:twitter_clone/utils/some_const.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -40,8 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
     user = await _authnticationDelegate.getCurrentUser();
 
     /// Register the current user in the CurrentUserBloc .
-    BlocProvider.of<CurrentUserBloc>(context)
-        .add(GetCurrentUser(User(name: user.displayName, email_id: user.email, user_imageUrl: user.photoUrl)));
+    BlocProvider.of<CurrentUserBloc>(context).add(GetCurrentUser(User(
+        name: user.displayName ?? "Anonmyous", email_id: user.email, user_imageUrl: user.photoUrl ?? custom_discord)));
     return user;
   }
 

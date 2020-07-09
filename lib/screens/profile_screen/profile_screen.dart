@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -6,34 +8,26 @@ import 'package:twitter_clone/core/database_models/userModel.dart';
 import 'package:twitter_clone/screens/home_screen/widgets/fab.dart';
 import 'package:twitter_clone/utils/colors.dart';
 
-class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
-  _SliverAppBarDelegate(this._tabBar);
-
-  final TabBar _tabBar;
-
+///// Abhihsek modifications.
+class ProfileScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Container(
-      child: _tabBar,
-    );
-  }
-
-  @override
-  double get maxExtent => _tabBar.preferredSize.height;
-
-  @override
-  double get minExtent => _tabBar.preferredSize.height;
-  @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    return false;
-  }
+  _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-///// Abhihsek modifications.
-class ProfileScreen extends StatelessWidget {
+class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateMixin {
+  TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     final User user = BlocProvider.of<CurrentUserBloc>(context).state;
+    TextStyle tabBarTextStyle = TextStyle(fontWeight: FontWeight.w600, fontSize: 15.0, fontFamily: 'HelveticaNeue');
+
     final double screenHeight = MediaQuery.of(context).size.height;
     final double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -81,10 +75,7 @@ class ProfileScreen extends StatelessWidget {
                         Container(
                             height: screenHeight * 0.2,
                             width: screenWidth,
-                            child: FadeInImage.assetNetwork(
-                                fit: BoxFit.fill,
-                                placeholder: 'assets/images/mountain.jpg',
-                                image: 'assets/images/mountain.jpg')),
+                            child: Image(fit: BoxFit.fill, image: AssetImage('assets/images/mountain.jpg'))),
                         Positioned(
                           top: screenHeight * 0.2 - ((screenHeight * 0.08) / 2),
                           left: screenWidth * 0.03,
@@ -134,15 +125,92 @@ class ProfileScreen extends StatelessWidget {
                 ),
               )),
             ),
-            SliverList(delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-              if (index <= 100) return Text("Tweet $index");
-            }))
+            // SliverList(delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+            //   if (index <= 100) return Text("Tweet $index");
+            // }))
+            SliverAppBar(
+              pinned: true,
+              automaticallyImplyLeading: false,
+              title: TabBar(controller: _tabController, isScrollable: true, tabs: [
+                Container(
+                  width: screenWidth * 0.18,
+                  child: Tab(
+                    child: Text(
+                      "Tweet",
+                      style: tabBarTextStyle,
+                    ),
+                  ),
+                ),
+                Container(
+                  width: screenWidth * 0.38,
+                  child: Tab(
+                      child: Text(
+                    "Tweet & Replies",
+                    maxLines: 1,
+                    style: tabBarTextStyle,
+                  )),
+                ),
+                Container(
+                  width: screenWidth * 0.18,
+                  child: Tab(
+                      child: Text(
+                    "Media",
+                    style: tabBarTextStyle,
+                  )),
+                ),
+                Container(
+                  width: screenWidth * 0.18,
+                  child: Tab(
+                      child: Text(
+                    "Likes",
+                    style: tabBarTextStyle,
+                  )),
+                ),
+              ]),
+            ),
+            SliverList(
+                delegate: SliverChildListDelegate([
+              Container(
+                height: 900.0,
+                color: Colors.red,
+                child: TabBarView(controller: _tabController, children: [
+                  // Change this below codes. 😁
+                  ColorfulList(),
+                  ColorfulList(),
+                  ColorfulList(),
+                  ColorfulList(),
+                ]),
+              )
+            ]))
           ],
         ),
       ),
       floatingActionButton: FAB(
         screenHeight: MediaQuery.of(context).size.height,
       ),
+    );
+  }
+}
+
+class ColorfulList extends StatelessWidget {
+  const ColorfulList({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: BoxConstraints.expand(),
+      color: Colors.orange,
+      child: ListView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: 50,
+          itemBuilder: (_, index) {
+            return Container(
+              height: 150.0,
+              color: Colors.primaries[Random().nextInt(17)],
+            );
+          }),
     );
   }
 }
