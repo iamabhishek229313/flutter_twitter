@@ -106,8 +106,7 @@ class _PostWidgetState extends State<PostWidget> {
                         borderRadius: BorderRadius.circular(100.0),
                         child: FadeInImage.memoryNetwork(
                           placeholder: kTransparentImage,
-                          image:
-                              widget.post.user.user_imageUrl == null ? custom_discord : widget.post.user.user_imageUrl,
+                          image: widget.post.user.user_imageUrl ?? custom_discord,
                           fit: BoxFit.fitHeight,
                         ),
                       ),
