@@ -11,9 +11,16 @@ class GetCurrentUser extends CurrentUserEvent {
 class CurrentUserBloc extends Bloc<CurrentUserEvent, User> {
   @override
   User get initialState => User(
-    name: null,
-    email_id: null,
-    user_imageUrl: null
+    bio: null,
+    emailAddress: null,
+    firstName: null,
+    followers: null,
+    following: null,
+    lastName: null,
+    phoneNumber: null,
+    photoURL: null,
+    postCount: null,
+    username: null
   );
 
   @override

@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:twitter_clone/core/constants/constants.dart';
 
 class Authentication {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -35,6 +35,8 @@ class Authentication {
 
     user = (await _firebaseAuth.signInWithCredential(_authCredential)).user;
 
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    _prefs.setString(AppConstants.userID, user.uid);
     return user;
   }
 
@@ -86,6 +88,9 @@ class Authentication {
 
   handleSignOut() async {
     _googleSignIn.disconnect();
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    _prefs.remove(AppConstants.userID);
+    _prefs.remove(AppConstants.isRegistered);
     await _firebaseAuth.signOut().then((value) {
       print("User is Signed out");
     });

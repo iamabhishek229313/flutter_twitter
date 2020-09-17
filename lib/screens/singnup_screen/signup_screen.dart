@@ -104,13 +104,7 @@ class SignupScreen extends StatelessWidget {
               ),
             ],
           ),
-          Bottom_Button(
-              title: 'Next',
-              onPressed: () {
-                _authnticationDelegate
-                    .handleSignUp(_userIdController.text, _passwordController.text)
-                    .then((value) => Navigator.popAndPushNamed(context, '/wrapper'));
-              })
+          Bottom_Button(title: 'Submit', onPressed: () {})
         ],
       ),
     );
