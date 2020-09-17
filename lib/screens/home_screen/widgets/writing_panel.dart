@@ -16,9 +16,7 @@ import 'package:twitter_clone/utils/colors.dart';
 import 'package:twitter_clone/utils/constant_icons.dart';
 
 class WritingPanel extends StatefulWidget {
-  final FirebaseUser user;
-
-  const WritingPanel({Key key, this.user}) : super(key: key);
+  const WritingPanel({Key key}) : super(key: key);
 
   @override
   _WritingPanelState createState() => _WritingPanelState();
@@ -146,7 +144,7 @@ class _WritingPanelState extends State<WritingPanel> {
                                 borderRadius: BorderRadius.circular(100.0),
                                 child: FadeInImage.memoryNetwork(
                                   placeholder: kTransparentImage,
-                                  image: user.user_imageUrl,
+                                  image: user.photoURL,
                                   fit: BoxFit.fitHeight,
                                 ),
                               ),

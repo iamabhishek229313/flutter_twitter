@@ -94,7 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
                                 borderRadius: BorderRadius.circular(100.0),
                                 child: FadeInImage.memoryNetwork(
                                   placeholder: kTransparentImage,
-                                  image: user.user_imageUrl,
+                                  image: user.photoURL,
                                   fit: BoxFit.fitHeight,
                                 ),
                               ),
@@ -170,47 +170,45 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
             ),
             SliverList(
                 delegate: SliverChildListDelegate([
-              Container(
-                height: 900.0,
-                color: Colors.red,
-                child: TabBarView(controller: _tabController, children: [
-                  // Change this below codes. 😁
-                  ColorfulList(),
-                  ColorfulList(),
-                  ColorfulList(),
-                  ColorfulList(),
-                ]),
+              Expanded(
+                child: Container(
+                  height: 2000.0,
+                  child: TabBarView(controller: _tabController, children: [
+                    // Change this below codes. 😁
+                    ColorfulList(),
+                    ColorfulList(),
+                    ColorfulList(),
+                    ColorfulList(),
+                  ]),
+                ),
               )
             ]))
           ],
         ),
       ),
-      floatingActionButton: FAB(
-        screenHeight: MediaQuery.of(context).size.height,
-      ),
+      floatingActionButton: FAB(),
     );
   }
 }
 
 class ColorfulList extends StatelessWidget {
-  const ColorfulList({
+  ScrollController _controller = ScrollController();
+  ColorfulList({
     Key key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints.expand(),
-      color: Colors.orange,
-      child: ListView.builder(
-          physics: NeverScrollableScrollPhysics(),
-          itemCount: 50,
-          itemBuilder: (_, index) {
-            return Container(
-              height: 150.0,
-              color: Colors.primaries[Random().nextInt(17)],
-            );
-          }),
-    );
+    return ListView.builder(
+        // physics: NeverScrollableScrollPhysics(),
+        controller: _controller,
+        itemCount: 50,
+        itemBuilder: (_, index) {
+          return Container(
+            height: 150.0,
+            color: Colors.primaries[Random().nextInt(17)],
+            child: Text(index.toString()),
+          );
+        });
   }
 }

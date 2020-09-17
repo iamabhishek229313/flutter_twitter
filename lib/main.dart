@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:provider/provider.dart';
 import 'package:twitter_clone/bloc/current_user/current_user_bloc.dart';
 import 'package:twitter_clone/bloc/fake_loading/fake_loading_bloc.dart';
@@ -14,7 +15,7 @@ import 'utils/theme.dart';
 
 void main() {
   Provider.debugCheckInvalidValueType = null;
-  runApp(MyApp());
+  runApp(Phoenix(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -22,8 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<CurrentUserBloc>(
-            create: (BuildContext context) => CurrentUserBloc()),
+        RepositoryProvider<CurrentUserBloc>(create: (BuildContext context) => CurrentUserBloc()),
         RepositoryProvider<FakeLoadingBloc>(
           create: (BuildContext context) => FakeLoadingBloc(),
         )

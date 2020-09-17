@@ -14,7 +14,7 @@ class HomeDrawer extends StatelessWidget {
     @required this.followers,
   }) : super(key: key);
 
-  final FirebaseUser user;
+  final User user;
   final int following;
   final int followers;
 
@@ -33,7 +33,7 @@ class HomeDrawer extends StatelessWidget {
             child: UserAccountsDrawerHeader(
                 decoration: BoxDecoration(color: Colors.white),
                 accountName: Text(
-                  user.displayName.toString(),
+                  user.firstName + " " + user.lastName,
                   style: TextStyle(
                       fontFamily: 'HelveticaNeuelt',
                       color: Colors.black,
@@ -42,7 +42,7 @@ class HomeDrawer extends StatelessWidget {
                       fontWeight: FontWeight.w800),
                 ),
                 accountEmail: Text(
-                  user.email.toString(),
+                  user.emailAddress,
                   style: TextStyle(
                       fontFamily: 'HelveticaNeue', color: Colors.black87, fontSize: 14, fontWeight: FontWeight.bold),
                 ),
@@ -50,7 +50,7 @@ class HomeDrawer extends StatelessWidget {
                   borderRadius: BorderRadius.circular(100.0),
                   child: FadeInImage.memoryNetwork(
                     placeholder: kTransparentImage,
-                    image: user.photoUrl == null ? custom_discord : user.photoUrl,
+                    image: user.photoURL ?? custom_discord,
                     fit: BoxFit.fitHeight,
                   ),
                 )),
@@ -84,11 +84,6 @@ class HomeDrawer extends StatelessWidget {
                       Navigator.pushNamed(
                         context,
                         '/profile',
-                        arguments: User(
-                          name: user.displayName,
-                          email_id: user.email,
-                          user_imageUrl: user.photoUrl,
-                        ),
                       );
                     },
                   ),

@@ -106,7 +106,7 @@ class _PostWidgetState extends State<PostWidget> {
                         borderRadius: BorderRadius.circular(100.0),
                         child: FadeInImage.memoryNetwork(
                           placeholder: kTransparentImage,
-                          image: widget.post.user.user_imageUrl ?? custom_discord,
+                          image: widget.post.user.photoURL ?? custom_discord,
                           fit: BoxFit.fitHeight,
                         ),
                       ),
@@ -121,7 +121,7 @@ class _PostWidgetState extends State<PostWidget> {
                 title: Row(
                   children: [
                     Text(
-                      widget.post.user.name == '' ? "Anonymous" : widget.post.user.name,
+                      widget.post.user.firstName == '' ? "Anonymous" : widget.post.user.firstName,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontFamily: "HelveticaNeue", fontWeight: FontWeight.bold, fontSize: 17.0),
                     ),
@@ -131,7 +131,7 @@ class _PostWidgetState extends State<PostWidget> {
                     Flexible(
                       fit: FlexFit.tight,
                       child: Text(
-                        '@' + widget.post.user.email_id.toString(),
+                        '@' + widget.post.user.emailAddress,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                             fontFamily: "HelveticaNeue",
@@ -169,7 +169,7 @@ class _PostWidgetState extends State<PostWidget> {
                           var currentUser = BlocProvider.of<CurrentUserBloc>(context).state;
 
                           /// If the user want's to delete its post then.
-                          if (currentUser.email_id == widget.post.user.email_id) _handleBottomSheet();
+                          if (currentUser.emailAddress == widget.post.user.emailAddress) _handleBottomSheet();
                         },
                         child: Icon(
                           Icons.keyboard_arrow_down,

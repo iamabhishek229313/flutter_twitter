@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:twitter_clone/core/database_models/userModel.dart';
+
 /// These are the documents .
 class Post {
   String docID;
@@ -20,8 +23,9 @@ class Post {
       @required this.post_comments,
       @required this.post_likes});
 
-  Post.fromSnapshot(DocumentSnapshot snapshot,String docID)
-      : this.docID = docID , this.user = User.fromSnapshot(snapshot),
+  Post.fromSnapshot(DocumentSnapshot snapshot, String docID)
+      : this.docID = docID,
+        this.user = User.fromJson(snapshot["user"]),
         this.timeStamp = snapshot['timeStamp'],
         this.tweet = snapshot['tweet'],
         this.attached_image = snapshot['attached_image'],

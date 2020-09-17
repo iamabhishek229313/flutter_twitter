@@ -1,12 +1,13 @@
+import 'dart:developer';
 import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twitter_clone/bloc/current_user/current_user_bloc.dart';
 import 'package:twitter_clone/bloc/fake_loading/fake_loading_bloc.dart';
+import 'package:twitter_clone/core/constants/constants.dart';
 import 'package:twitter_clone/core/database/database_api.dart';
 import 'package:twitter_clone/core/database_models/postModel.dart';
 import 'package:twitter_clone/core/database_models/userModel.dart';
@@ -17,7 +18,6 @@ import 'package:twitter_clone/services/firebase_authentication.dart';
 import 'package:twitter_clone/utils/colors.dart';
 import 'package:twitter_clone/utils/constant_icons.dart';
 import 'package:twitter_clone/utils/post_widget.dart';
-import 'package:twitter_clone/utils/some_const.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -26,21 +26,29 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final Authentication _authnticationDelegate = Authentication();
+  User user;
   DatabaseAPI _dbAPIofPosts;
-  FirebaseUser user;
   @override
   void initState() {
     super.initState();
     _dbAPIofPosts = DatabaseAPI('posts');
   }
 
-  _handleBackend() async {
-    print("Handle BAckend is invoked");
-    user = await _authnticationDelegate.getCurrentUser();
+  _loadEngine() async {
+    // user = await _authnticationDelegate.getCurrentUser();
+
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+
+    DocumentSnapshot documentSnapshot =
+        await Firestore.instance.collection("users").document(_prefs.getString(AppConstants.userID)).get();
+
+    user = User.fromJson(documentSnapshot.data);
 
     /// Register the current user in the CurrentUserBloc .
-    BlocProvider.of<CurrentUserBloc>(context).add(GetCurrentUser(User(
-        name: user.displayName ?? "Anonmyous", email_id: user.email, user_imageUrl: user.photoUrl ?? custom_discord)));
+    BlocProvider.of<CurrentUserBloc>(context).add(GetCurrentUser(user));
+
+    log(user.toJson().toString());
+
     return user;
   }
 
@@ -48,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
     return FutureBuilder(
-      future: _handleBackend(),
+      future: _loadEngine(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           return Scaffold(
@@ -110,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     }),
               ],
             ),
-            floatingActionButton: FAB(user: user, screenHeight: screenHeight),
+            floatingActionButton: FAB(),
             bottomNavigationBar: NavigationBar(
               icon1: Icon(AppIcon.home),
               icon2: Icon(AppIcon.search),
@@ -120,13 +128,10 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         }
         return Scaffold(
-          body: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(),
-              ]),
-        );
+            body: Container(
+                color: Colors.white,
+                constraints: BoxConstraints.expand(),
+                child: Center(child: CircularProgressIndicator())));
       },
     );
   }

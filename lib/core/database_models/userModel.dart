@@ -1,27 +1,52 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
-
-
-
-/// This data will be under the each document.
-
-
 class User {
-  String name;
-  String email_id;
-  String user_imageUrl;
+  String username;
+  String firstName;
+  String lastName;
+  String phoneNumber;
+  String emailAddress;
+  String bio;
+  String photoURL;
+  String following;
+  String followers;
+  String postCount;
 
   User(
-      {@required this.name,
-      @required this.email_id,
-      @required this.user_imageUrl});
+      {this.username,
+      this.firstName,
+      this.lastName,
+      this.phoneNumber,
+      this.emailAddress,
+      this.bio,
+      this.photoURL,
+      this.following,
+      this.followers,
+      this.postCount});
 
-  User.fromSnapshot(DocumentSnapshot snapshot):
-        this.name = snapshot['user']['name'],
-        this.email_id = snapshot['user']['email_id'],
-        this.user_imageUrl = snapshot['user']['user_imageUrl'];
+  User.fromJson(Map<String, dynamic> json) {
+    username = json['username'];
+    firstName = json['firstName'];
+    lastName = json['lastName'];
+    phoneNumber = json['phoneNumber'];
+    emailAddress = json['emailAddress'];
+    bio = json['bio'];
+    photoURL = json['photoURL'];
+    following = json['following'];
+    followers = json['followers'];
+    postCount = json['postCount'];
+  }
 
-  toJson() {
-    return {"name": name, "email_id": email_id, "user_imageUrl": user_imageUrl};
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['username'] = this.username;
+    data['firstName'] = this.firstName;
+    data['lastName'] = this.lastName;
+    data['phoneNumber'] = this.phoneNumber;
+    data['emailAddress'] = this.emailAddress;
+    data['bio'] = this.bio;
+    data['photoURL'] = this.photoURL;
+    data['following'] = this.following;
+    data['followers'] = this.followers;
+    data['postCount'] = this.postCount;
+    return data;
   }
 }
