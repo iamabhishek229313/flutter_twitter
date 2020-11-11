@@ -24,6 +24,15 @@ class _WrapperScreenState extends State<WrapperScreen> {
 
   _getPrefs() async {
     _prefs = await SharedPreferences.getInstance();
+    String userID = _prefs.getString(AppConstants.userID);
+    DocumentSnapshot ds = await Firestore.instance.collection("users").document(userID).get();
+
+    if (ds.exists) {
+      log("User already registered!");
+    }
+
+    _prefs.setBool(AppConstants.isRegistered, ds.exists);
+
     return _prefs;
   }
 
@@ -104,6 +113,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   _registerUser() async {
     _prefs = await SharedPreferences.getInstance();
     String userID = _prefs.getString(AppConstants.userID);
+
+    DocumentSnapshot ds = await Firestore.instance.collection("users").document(userID).get();
+
+    // Make it's place there.
     FirebaseUser _user;
     await FirebaseAuth.instance.currentUser().then((user) {
       _user = user;
@@ -123,10 +136,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     await Firestore.instance.collection("users").document(userID).setData(userData.toJson());
 
+    log("User Registered");
+
     _prefs.setBool(AppConstants.isRegistered, true);
     Navigator.pushReplacementNamed(context, '/wrapper');
-    // Came to the Wrapper screen.
-    log("User Registered");
   }
 
   @override
@@ -139,21 +152,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           height: kToolbarHeight,
           child: Image.asset('assets/logo/icon-48.png'),
         ),
-        // actions: [
-        //   Padding(
-        //     padding: EdgeInsets.only(left: 38),
-        //     child: FlatButton(
-        //       onPressed: () {
-        //         Navigator.pushNamed(context, '/login');
-        //       },
-        //       child: Text(
-        //         'Log in',
-        //         style: TextStyle(color: Colors.blue[300]),
-        //       ),
-        //       textColor: Colors.blue,
-        //     ),
-        //   ),
-        // ],
         elevation: 0,
         leading: null,
       ),

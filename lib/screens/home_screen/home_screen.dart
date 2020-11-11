@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               actions: [IconButton(icon: Icon(Icons.exit_to_app), onPressed: _authnticationDelegate.handleSignOut)],
             ),
-            drawer: HomeDrawer(user: user, following: 10, followers: 1),
+            drawer: HomeDrawer(),
             body: Stack(
               children: [
                 StreamBuilder(
