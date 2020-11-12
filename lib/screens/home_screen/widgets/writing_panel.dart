@@ -72,7 +72,7 @@ class _WritingPanelState extends State<WritingPanel> {
       _dbAPIofPosts.addDocumentInCollection(Post(
               attached_image: _uploadedImageURL,
               user: user,
-              post_comments: null,
+              post_comments: <Comment>[],
               timeStamp: DateTime.now().millisecondsSinceEpoch,
               post_likes: <String>[],
               tweet: _tweetController.text)
@@ -107,7 +107,7 @@ class _WritingPanelState extends State<WritingPanel> {
                               _dbAPIofPosts.addDocumentInCollection(Post(
                                       attached_image: null,
                                       user: BlocProvider.of<CurrentUserBloc>(context).state,
-                                      post_comments: null,
+                                      post_comments: <Comment>[],
                                       timeStamp: DateTime.now().millisecondsSinceEpoch,
                                       post_likes: <String>[],
                                       tweet: _tweetController.text)

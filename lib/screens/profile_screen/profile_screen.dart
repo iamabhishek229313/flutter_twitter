@@ -173,9 +173,6 @@ class _ProfileScreenState extends State<ProfileScreen> with TickerProviderStateM
                 ],
               )),
             ),
-            // SliverList(delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-            //   if (index <= 100) return Text("Tweet $index");
-            // }))
             SliverAppBar(
               pinned: true,
               automaticallyImplyLeading: false,
@@ -254,7 +251,7 @@ class ColorfulList extends StatelessWidget {
         itemBuilder: (_, index) {
           return Container(
             height: 150.0,
-            color: Colors.primaries[Random().nextInt(17)],
+            color: Colors.grey[Random().nextInt(7) * 100],
             child: Text(index.toString()),
           );
         });

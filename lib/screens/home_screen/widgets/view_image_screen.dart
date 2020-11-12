@@ -1,11 +1,7 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:transparent_image/transparent_image.dart';
-import 'package:twitter_clone/utils/colors.dart';
-import 'package:twitter_clone/utils/constant_icons.dart';
 
 class ViewImageScreen extends StatefulWidget {
   final String imageUrl;
@@ -71,7 +67,9 @@ class _ViewImageScreenState extends State<ViewImageScreen> {
                 Icons.more_vert,
                 color: Colors.white,
               ),
-              onPressed: () {})
+              onPressed: () {
+                /// [Download Image] -- Functionality to be added and then show a SnackBar.
+              })
         ],
       ),
       body: PhotoView(

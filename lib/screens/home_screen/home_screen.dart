@@ -82,7 +82,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 StreamBuilder(
                   stream: Firestore.instance.collection('posts').orderBy('timeStamp', descending: true).snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (!snapshot.hasData) return CircularProgressIndicator();
+                    if (!snapshot.hasData)
+                      return Container(
+                          constraints: BoxConstraints.expand(), child: Center(child: CircularProgressIndicator()));
                     return ListView(
                       shrinkWrap: true,
                       physics: BouncingScrollPhysics(),

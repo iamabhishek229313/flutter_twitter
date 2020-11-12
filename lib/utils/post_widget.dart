@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -228,8 +229,8 @@ class _PostWidgetState extends State<PostWidget> {
                             ? Container()
                             : Container(
                                 height: MediaQuery.of(context).size.height * 0.27,
-                                decoration: BoxDecoration(
-                                    color: Colors.blueGrey[200], borderRadius: BorderRadius.circular(10.0)),
+                                decoration:
+                                    BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(10.0)),
                                 child: GestureDetector(
                                   onTap: () {
                                     Navigator.push(
@@ -255,7 +256,12 @@ class _PostWidgetState extends State<PostWidget> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (_) => CommentScreen(
+                                          postdocID: widget.post.docID,
+                                        )));
+                              },
                               child: Row(
                                 children: [
                                   Icon(
@@ -268,7 +274,8 @@ class _PostWidgetState extends State<PostWidget> {
                                   ),
                                   Padding(
                                       padding: const EdgeInsets.only(top: 8.0),
-                                      child: Text("90", style: TextStyle(fontSize: 16.0)))
+                                      child: Text(widget.post.post_comments.length.toString(),
+                                          style: TextStyle(fontSize: 16.0)))
                                 ],
                               ),
                             ),
@@ -367,6 +374,240 @@ class _PostWidgetState extends State<PostWidget> {
         );
       },
     );
+  }
+}
+
+class CommentScreen extends StatefulWidget {
+  final String postdocID;
+
+  const CommentScreen({Key key, @required this.postdocID}) : super(key: key);
+  @override
+  _CommentScreenState createState() => _CommentScreenState();
+}
+
+class _CommentScreenState extends State<CommentScreen> {
+  String currentUserID;
+  List<User> _respectiveUsers;
+  Post post;
+  TextEditingController _cmntController;
+  ProgressDialog _pr;
+
+  @override
+  void initState() {
+    super.initState();
+    _respectiveUsers = <User>[];
+    _cmntController = TextEditingController();
+    _pr = ProgressDialog(context);
+  }
+
+  getAllComments() async {
+    DocumentSnapshot ds = await Firestore.instance.collection("posts").document(widget.postdocID).get();
+    final _prefs = await SharedPreferences.getInstance();
+
+    currentUserID = _prefs.getString(AppConstants.userID);
+
+    post = Post.fromSnapshot(ds, ds.documentID);
+
+    _respectiveUsers.clear();
+    for (int i = 0; i < post.post_comments.length; ++i) {
+      DocumentSnapshot ds = await Firestore.instance.collection("users").document(post.post_comments[i].userID).get();
+      _respectiveUsers.add(User.fromJson(ds.data));
+    }
+    log("Respective users length : " + _respectiveUsers.length.toString());
+    return _respectiveUsers;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Comments"),
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: FutureBuilder(
+                future: getAllComments(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (!snapshot.hasData)
+                    return Container(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  if (_respectiveUsers.length == 0)
+                    return Container(
+                      constraints: BoxConstraints.expand(),
+                      child: Center(
+                        child: Text(
+                          "No Comments yet.",
+                          style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                    );
+
+                  return ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: _respectiveUsers.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onLongPress: (post.post_comments[index].userID != currentUserID)
+                            ? null
+                            : () async {
+                                showModalBottomSheet(
+                                    context: context,
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+                                    builder: (builder) {
+                                      return Container(
+                                        // height: MediaQuery.of(context).size.height * 0.38,
+                                        margin: const EdgeInsets.all(20.0),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Container(
+                                                width: 55.0,
+                                                height: 6.0,
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(10.0),
+                                                    color: Colors.blueGrey[400])),
+                                            ListTile(
+                                              leading: Icon(
+                                                Icons.delete_outline,
+                                                size: 28.0,
+                                              ),
+                                              title: Text("Delete comment"),
+                                              onTap: () async {
+                                                await Firestore.instance
+                                                    .collection("posts")
+                                                    .document(widget.postdocID)
+                                                    .updateData({
+                                                  "post_comments":
+                                                      FieldValue.arrayRemove([post.post_comments[index].toJson()])
+                                                });
+
+                                                log("Comment Removed!");
+                                                Navigator.pop(context);
+                                              },
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    });
+                                setState(() {});
+                              },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ListTile(
+                              leading: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.circle,
+                                  boxShadow: [BoxShadow(blurRadius: 2, color: Colors.grey.shade300, spreadRadius: 2.0)],
+                                ),
+                                child: CircleAvatar(
+                                  radius: 23.0,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100.0),
+                                    child: FadeInImage.memoryNetwork(
+                                      placeholder: kTransparentImage,
+                                      image: _respectiveUsers[index].photoURL,
+                                      fit: BoxFit.fitHeight,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              title: Text(
+                                "@" + _respectiveUsers[index].username,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontWeight: FontWeight.w600, color: Colors.grey),
+                              ),
+                              subtitle: Text(
+                                post.post_comments[index].comment,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400, color: Colors.black),
+                              ),
+                            ),
+                            Divider(
+                              endIndent: 8.0,
+                              indent: 8.0,
+                              height: 0.0,
+                              color: Colors.grey.shade200,
+                              thickness: 1.2,
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+            Material(
+              elevation: 25.0,
+              color: Colors.grey.shade200,
+              child: SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.06,
+                  child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 4.0, vertical: 4.0),
+                      child: Row(
+                        children: <Widget>[
+                          Flexible(
+                            child: Container(
+                              decoration:
+                                  BoxDecoration(color: Colors.white, borderRadius: new BorderRadius.circular(50.0)),
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: TextField(
+                                  controller: _cmntController,
+                                  style: TextStyle(fontSize: 16.0),
+                                  decoration: InputDecoration(
+                                      hintText: "Comment ...",
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: InputBorder.none,
+                                      prefixIcon: Icon(
+                                        Icons.sentiment_satisfied,
+                                        color: Colors.grey,
+                                      )),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 8.0,
+                          ),
+                          RaisedButton(
+                            onPressed: () async {
+                              /// Will [Add a Comment in db] from user.
+                              if (_cmntController.text.length == 0) {
+                                return;
+                              } else {
+                                final _prefs = await SharedPreferences.getInstance();
+                                Comment cmnt = Comment(
+                                    comment: _cmntController.text, userID: _prefs.getString(AppConstants.userID));
+                                await Firestore.instance.collection("posts").document(widget.postdocID).updateData({
+                                  "post_comments": FieldValue.arrayUnion([cmnt.toJson()])
+                                });
+                                setState(() {
+                                  _cmntController.clear();
+                                });
+
+                                log("Comment Added!");
+                              }
+                            },
+                            elevation: 0.0,
+                            child: Text("Comment",
+                                style: TextStyle(color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w500)),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                          )
+                        ],
+                      ))),
+            )
+          ],
+        ));
   }
 }
 
