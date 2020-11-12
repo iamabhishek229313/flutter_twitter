@@ -74,7 +74,7 @@ class _WritingPanelState extends State<WritingPanel> {
               user: user,
               post_comments: null,
               timeStamp: DateTime.now().millisecondsSinceEpoch,
-              post_likes: null,
+              post_likes: <String>[],
               tweet: _tweetController.text)
           .toJson());
     });
@@ -109,7 +109,7 @@ class _WritingPanelState extends State<WritingPanel> {
                                       user: BlocProvider.of<CurrentUserBloc>(context).state,
                                       post_comments: null,
                                       timeStamp: DateTime.now().millisecondsSinceEpoch,
-                                      post_likes: null,
+                                      post_likes: <String>[],
                                       tweet: _tweetController.text)
                                   .toJson());
                               Navigator.pop(context);

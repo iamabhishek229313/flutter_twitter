@@ -12,7 +12,7 @@ class Post {
   String tweet;
   String attached_image;
   List<Map<User, String>> post_comments;
-  List<User> post_likes;
+  List<String> post_likes;
 
   Post(
       {this.docID = "",
@@ -30,7 +30,7 @@ class Post {
         this.tweet = snapshot['tweet'],
         this.attached_image = snapshot['attached_image'],
         this.post_comments = snapshot['post_comments'],
-        this.post_likes = snapshot['post_likes'];
+        this.post_likes = (snapshot['post_likes'] as List).map((e) => e.toString()).toList();
 
   toJson() {
     return {
@@ -40,7 +40,7 @@ class Post {
       "tweet": tweet,
       "attached_image": attached_image,
       "post_comments": post_comments,
-      "post_likes": post_likes
+      "post_likes": post_likes.map((e) => e).toList()
     };
   }
 }
