@@ -38,7 +38,6 @@ dependencies:
   shared_preferences: ^0.5.10
   flutter_phoenix: ^0.1.0
   animated_text_kit: ^2.2.0
-  compressimage: ^0.1.1
   share: ^0.6.5+4
   progress_dialog: ^1.2.4
 
