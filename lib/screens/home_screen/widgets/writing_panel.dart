@@ -9,6 +9,7 @@ import 'package:path/path.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:twitter_clone/bloc/current_user/current_user_bloc.dart';
+import 'package:twitter_clone/bloc/fake_loading/fake_loading_bloc.dart';
 import 'package:twitter_clone/core/database/database_api.dart';
 import 'package:twitter_clone/core/database_models/postModel.dart';
 import 'package:twitter_clone/core/database_models/userModel.dart';
@@ -60,7 +61,7 @@ class _WritingPanelState extends State<WritingPanel> {
     });
   }
 
-  Future _uploadFile(User user) async {
+  Future _uploadFile(User user, BuildContext context) async {
     StorageReference _storageReference = FirebaseStorage.instance.ref().child('twitter_clone/${basename(_image.path)}');
     StorageUploadTask _uploadTask = _storageReference.putFile(_image);
     await _uploadTask.onComplete;
@@ -71,9 +72,9 @@ class _WritingPanelState extends State<WritingPanel> {
       _dbAPIofPosts.addDocumentInCollection(Post(
               attached_image: _uploadedImageURL,
               user: user,
-              post_comments: null,
+              post_comments: <Comment>[],
               timeStamp: DateTime.now().millisecondsSinceEpoch,
-              post_likes: null,
+              post_likes: <String>[],
               tweet: _tweetController.text)
           .toJson());
     });
@@ -99,16 +100,16 @@ class _WritingPanelState extends State<WritingPanel> {
                         ? null
                         : () async {
                             if (_image != null) {
-                              _uploadFile(user).then((val) {
+                              _uploadFile(user, context).then((val) {
                                 Navigator.pop(context);
                               });
                             } else {
                               _dbAPIofPosts.addDocumentInCollection(Post(
                                       attached_image: null,
                                       user: BlocProvider.of<CurrentUserBloc>(context).state,
-                                      post_comments: null,
+                                      post_comments: <Comment>[],
                                       timeStamp: DateTime.now().millisecondsSinceEpoch,
-                                      post_likes: null,
+                                      post_likes: <String>[],
                                       tweet: _tweetController.text)
                                   .toJson());
                               Navigator.pop(context);
@@ -280,7 +281,9 @@ class _WritingPanelState extends State<WritingPanel> {
           ? Colors.green
           : (_tweetController.text.length >= 125 && _tweetController.text.length < 220)
               ? Colors.amber
-              : _tweetController.text.length >= 220 ? Colors.redAccent : Colors.transparent,
+              : _tweetController.text.length >= 220
+                  ? Colors.redAccent
+                  : Colors.transparent,
       lineWidth: 3.0,
       percent: _tweetController.text.length / 280,
       center: Text((280 - _tweetController.text.length).toString()),

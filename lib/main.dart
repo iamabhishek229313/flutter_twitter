@@ -6,7 +6,7 @@ import 'package:twitter_clone/bloc/current_user/current_user_bloc.dart';
 import 'package:twitter_clone/bloc/fake_loading/fake_loading_bloc.dart';
 import 'package:twitter_clone/screens/home_screen/home_screen.dart';
 import 'package:twitter_clone/screens/login_screen/login_screen.dart';
-import 'package:twitter_clone/screens/login_screen/start_screen.dart';
+import 'package:twitter_clone/screens/login_screen/auth_screen.dart';
 import 'package:twitter_clone/screens/profile_screen/profile_screen.dart';
 import 'package:twitter_clone/screens/singnup_screen/signup_screen.dart';
 import 'package:twitter_clone/screens/splash_screen/splash_screen.dart';
@@ -24,6 +24,8 @@ class MyApp extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<CurrentUserBloc>(create: (BuildContext context) => CurrentUserBloc()),
+
+        /// [Should be removed]
         RepositoryProvider<FakeLoadingBloc>(
           create: (BuildContext context) => FakeLoadingBloc(),
         )
@@ -37,7 +39,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => SplashScreen(),
           '/wrapper': (context) => WrapperScreen(),
-          '/start': (context) => StartScreen(),
+          '/auth': (context) => AuthScreen(),
           '/login': (context) => LoginScreen(),
           '/signup': (context) => SignupScreen(),
           '/home': (context) => HomeScreen(),

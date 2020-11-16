@@ -6,12 +6,12 @@ import 'package:twitter_clone/utils/colors.dart';
 import 'package:twitter_clone/utils/google_sign_in_button.dart';
 import 'package:twitter_clone/utils/large_buttons.dart';
 
-class StartScreen extends StatefulWidget {
+class AuthScreen extends StatefulWidget {
   @override
-  _StartScreeneState createState() => _StartScreeneState();
+  _AuthScreenState createState() => _AuthScreenState();
 }
 
-class _StartScreeneState extends State<StartScreen> {
+class _AuthScreenState extends State<AuthScreen> {
   final Authentication _authenticationDelegate = Authentication();
 
   @override

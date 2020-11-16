@@ -9,7 +9,7 @@ import 'package:twitter_clone/core/constants/constants.dart';
 import 'package:twitter_clone/core/database/database_api.dart';
 import 'package:twitter_clone/core/database_models/userModel.dart';
 import 'package:twitter_clone/screens/home_screen/home_screen.dart';
-import 'package:twitter_clone/screens/login_screen/start_screen.dart';
+import 'package:twitter_clone/screens/login_screen/auth_screen.dart';
 import 'package:twitter_clone/utils/bottom_button.dart';
 
 class WrapperScreen extends StatefulWidget {
@@ -20,39 +20,72 @@ class WrapperScreen extends StatefulWidget {
 // The use of wrapper class is, it listens to the Firebase User if it find that there is no user then it
 // will trigger the StartScren and if it finds the user registered then it will return the HomePage .
 class _WrapperScreenState extends State<WrapperScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: StreamBuilder(
+            stream: FirebaseAuth.instance.onAuthStateChanged,
+            builder: (BuildContext context, snapshot) {
+              print("Snapshot Data is : " + snapshot.data.toString());
+              if (snapshot.hasData) {
+                return ProfilerScreen();
+              }
+              return AuthScreen(); // Contains option for Google sign in.
+            })); // For this time being we are triggering scrren to the startscreen .
+  }
+}
+
+class ProfilerScreen extends StatefulWidget {
+  @override
+  _ProfilerScreenState createState() => _ProfilerScreenState();
+}
+
+class _ProfilerScreenState extends State<ProfilerScreen> {
   SharedPreferences _prefs;
 
   _getPrefs() async {
+    /// [First take the user-uid from the shared preferences.]
     _prefs = await SharedPreferences.getInstance();
+    String userID = _prefs.getString(AppConstants.userID);
+    log("User id is :" + userID ?? "null");
+
+    /// [Verify whether that documnet (in "users" Collection) is present or not.]
+    DocumentSnapshot ds = await Firestore.instance.collection("users").document(userID).get();
+    log("DB is there :" + ds.exists.toString());
+
+    if (ds.exists) {
+      log("User already registered!");
+    }
+
+    /// [Change the state of isRegistred pref as per the document existence.]
+    await _prefs.setBool(AppConstants.isRegistered, ds.exists);
+
     return _prefs;
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _getPrefs(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData)
-          return Container(
-            constraints: BoxConstraints.expand(),
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        return StreamBuilder(
-            stream: FirebaseAuth.instance.onAuthStateChanged,
-            builder: (BuildContext context, snapshot) {
-              print("Snapshot Data is : " + snapshot.data.toString());
-              if (snapshot.hasData) {
-                if (!(_prefs.getBool(AppConstants.isRegistered) ?? false))
-                  return RegistrationScreen();
-                else
-                  return HomeScreen();
-              }
-              return StartScreen(); // Contains option for Google sign in.
-            });
-      },
-    ); // For this time being we are triggering scrren to the startscreen .
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: FutureBuilder(
+        future: _getPrefs(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (!snapshot.hasData)
+            return Container(
+              constraints: BoxConstraints.expand(),
+              child: Center(child: CircularProgressIndicator()),
+            );
+          if (!(_prefs.getBool(AppConstants.isRegistered)))
+
+            /// [If there is no registery document is there in DB -- then show up RegistrationScreen].
+            return RegistrationScreen();
+          else
+
+            /// [Else show up the HomeScreen]
+            return HomeScreen();
+        },
+      ),
+    );
   }
 }
 
@@ -104,6 +137,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   _registerUser() async {
     _prefs = await SharedPreferences.getInstance();
     String userID = _prefs.getString(AppConstants.userID);
+
+    DocumentSnapshot ds = await Firestore.instance.collection("users").document(userID).get();
+
+    // Make it's place there.
     FirebaseUser _user;
     await FirebaseAuth.instance.currentUser().then((user) {
       _user = user;
@@ -123,10 +160,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     await Firestore.instance.collection("users").document(userID).setData(userData.toJson());
 
+    log("User Registered");
+
     _prefs.setBool(AppConstants.isRegistered, true);
     Navigator.pushReplacementNamed(context, '/wrapper');
-    // Came to the Wrapper screen.
-    log("User Registered");
   }
 
   @override
@@ -139,21 +176,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           height: kToolbarHeight,
           child: Image.asset('assets/logo/icon-48.png'),
         ),
-        // actions: [
-        //   Padding(
-        //     padding: EdgeInsets.only(left: 38),
-        //     child: FlatButton(
-        //       onPressed: () {
-        //         Navigator.pushNamed(context, '/login');
-        //       },
-        //       child: Text(
-        //         'Log in',
-        //         style: TextStyle(color: Colors.blue[300]),
-        //       ),
-        //       textColor: Colors.blue,
-        //     ),
-        //   ),
-        // ],
         elevation: 0,
         leading: null,
       ),

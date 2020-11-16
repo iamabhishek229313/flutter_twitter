@@ -76,13 +76,15 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               actions: [IconButton(icon: Icon(Icons.exit_to_app), onPressed: _authnticationDelegate.handleSignOut)],
             ),
-            drawer: HomeDrawer(user: user, following: 10, followers: 1),
+            drawer: HomeDrawer(),
             body: Stack(
               children: [
                 StreamBuilder(
                   stream: Firestore.instance.collection('posts').orderBy('timeStamp', descending: true).snapshots(),
                   builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (!snapshot.hasData) return CircularProgressIndicator();
+                    if (!snapshot.hasData)
+                      return Container(
+                          constraints: BoxConstraints.expand(), child: Center(child: CircularProgressIndicator()));
                     return ListView(
                       shrinkWrap: true,
                       physics: BouncingScrollPhysics(),

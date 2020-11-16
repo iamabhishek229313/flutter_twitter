@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -37,6 +39,8 @@ class Authentication {
 
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     _prefs.setString(AppConstants.userID, user.uid);
+
+    log("Google user signed as :" + _prefs.getString(AppConstants.userID));
     return user;
   }
 

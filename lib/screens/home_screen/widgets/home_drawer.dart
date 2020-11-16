@@ -1,7 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:twitter_clone/bloc/current_user/current_user_bloc.dart';
 import 'package:twitter_clone/core/database_models/userModel.dart';
 import 'package:twitter_clone/utils/constant_icons.dart';
 import 'package:twitter_clone/utils/some_const.dart';
@@ -9,17 +10,11 @@ import 'package:twitter_clone/utils/some_const.dart';
 class HomeDrawer extends StatelessWidget {
   const HomeDrawer({
     Key key,
-    @required this.user,
-    @required this.following,
-    @required this.followers,
   }) : super(key: key);
-
-  final User user;
-  final int following;
-  final int followers;
 
   @override
   Widget build(BuildContext context) {
+    final User user = BlocProvider.of<CurrentUserBloc>(context).state;
     return Drawer(
       elevation: 10.0,
       child: Container(
@@ -60,12 +55,12 @@ class HomeDrawer extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  '$following Following',
+                  '${user.following} Following',
                   style: TextStyle(
                       fontFamily: 'HelveticaNeue', color: Colors.grey[10], fontSize: 14, fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  '  $followers Followers',
+                  '  ${user.followers} Followers',
                   style: TextStyle(
                       fontFamily: 'HelveticaNeue', color: Colors.grey[10], fontSize: 14, fontWeight: FontWeight.bold),
                 ),
