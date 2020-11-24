@@ -2,33 +2,30 @@
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/iamabhishek229313/flutter_twitter) ![GitHub last commit](https://img.shields.io/github/last-commit/iamabhishek229313/flutter_twitter)  ![GitHub issues](https://img.shields.io/github/issues-raw/iamabhishek229313/flutter_twitter) [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/iamabhishek229313/flutter_twitter)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Mozilla
+
 
 # Twitter Clone
 
 Building this app with intention of learning flutter better .
 
 ## 📱 Screenshots
-|                                                     Splash Screen                                                      |                                                   Login Page                                                   |
+|                                                     Splash Screen                                                      |                                                   Authentication Screen                                                   |
 |:----------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------:|
-| ![](https://github.com/iamabhishek229313/tinder_clone/blob/master/screenshots/tinder_clone_splash_screen.png?raw=true) | ![](https://github.com/iamabhishek229313/tinder_clone/blob/master/screenshots/tinder_clone_login.png?raw=true) |
+| ![](https://github.com/iamabhishek229313//flutter_twitter/blob/master/screenshots/splash.png?raw=true) | ![](https://github.com/iamabhishek229313//flutter_twitter/blob/master/screenshots/auth.png.png?raw=true) |
 
-|                                          Phone number verification                                           |                                                  Profile Screen                                                  |
+|                                          Drawer                                           |                                                  Post actions                                                  |
 |:------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------:|
-| ![](https://github.com/iamabhishek229313/tinder_clone/blob/master/screenshots/tinder_clone_otp.png?raw=true) | ![](https://github.com/iamabhishek229313/tinder_clone/blob/master/screenshots/tinder_clone_profile.png?raw=true) |
+| ![](https://github.com/iamabhishek229313/flutter_twitter/blob/master/screenshots/drawer.png?raw=true) | ![](https://github.com/iamabhishek229313/flutter_twitter/blob/master/screenshots/post_actions.png?raw=true) |
 
 
-|                                                    Messages and Feeds                                                     |                                                    In person chat                                                     |
+|                                                    Tweet Writing Panel                                                     |                                                    Make your post                                                     |
 |:-------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------------------------------:|
-| ![](https://github.com/iamabhishek229313/tinder_clone/blob/master/screenshots/tinder_clone_messagesandfeeds.png?raw=true) | ![](https://github.com/iamabhishek229313/tinder_clone/blob/master/screenshots/tinder_clone_InChatScreen.png?raw=true) |
+| ![](https://github.com/iamabhishek229313/flutter_twitter/blob/master/screenshots/wrting.png?raw=true) | ![](https://github.com/iamabhishek229313/flutter_twitter/blob/master/screenshots/pre_tweet.png?raw=true) |
 
-|                                              Tinder Right Swipe                                               |                                               Tinder Left Swipe                                               |
-|:-------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------:|
-| ![](https://github.com/iamabhishek229313/tinder_clone/blob/master/screenshots/tinder_clone_nope.png?raw=true) | ![](https://github.com/iamabhishek229313/tinder_clone/blob/master/screenshots/tinder_clone_like.png?raw=true) |
+|                                              Home Screen                                               |   
+|:-------------------------------------------------------------------------------------------------------------:|
+| ![](https://github.com/iamabhishek229313/flutter_twitter/blob/master/screenshots/home.png?raw=true) |
 
- Matchings     |
-:-------------------------:|
-![](https://github.com/iamabhishek229313/tinder_clone/blob/master/screenshots/tinder_clone_main.png)
 
 
 ## 📚 Technical Details
@@ -38,9 +35,18 @@ Flutter SDK
 ```
 ## ⚛ Future Releases
 ```
-End to End encryption .
-Use of Download and Delete approcah at Database .
-More functionality is welcomed .
+Re-tweets.
+More actions on a post.
+Reply to a comment.
+Profile Page.
+State Managment.
+Direct Messages.
+Hash tags.
+Tagging other users.
+End-to-end encryption.
+Cache Images.
+Animations 
+& more ...
 ```
 
 ## ⚒ Pull Request 
