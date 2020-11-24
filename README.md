@@ -11,7 +11,7 @@ Building this app with intention of learning flutter better .
 ## 📱 Screenshots
 |                                                     Splash Screen                                                      |                                                   Authentication Screen                                                   |
 |:----------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------:|
-| ![](https://github.com/iamabhishek229313//flutter_twitter/blob/master/screenshots/splash.png?raw=true) | ![](https://github.com/iamabhishek229313//flutter_twitter/blob/master/screenshots/auth.png.png?raw=true) |
+| ![](https://github.com/iamabhishek229313//flutter_twitter/blob/master/screenshots/splash.png?raw=true) | ![](https://github.com/iamabhishek229313//flutter_twitter/blob/master/screenshots/auth.png?raw=true) |
 
 |                                          Drawer                                           |                                                  Post actions                                                  |
 |:------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------:|
